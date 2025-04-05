@@ -70,3 +70,12 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+/Temp_Menu_project/Library
+/Temp_Menu_project/obj/Debug
+/Temp_Menu_project/UserSettings
+/ludum_dare_57/Library
+/ludum_dare_57/obj/Debug
+/ludum_dare_57/Temp
+/ludum_dare_57/UserSettings
+ludum_dare_57/Packages/packages-lock.json
+/ludum_dare_57/Logs
