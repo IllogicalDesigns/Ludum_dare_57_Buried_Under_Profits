@@ -22,6 +22,8 @@ public class TransitionManager : MonoBehaviour
         }
         _instance = this;
 
+        transition?.gameObject.SetActive(true);
+
         transition?.PlayInTransition();
     }
 
@@ -33,6 +35,8 @@ public class TransitionManager : MonoBehaviour
 
     public void TransitionToLevel(string levelName) {
         if (isTransitioning) return;
+
+        transition?.gameObject.SetActive(true);
 
         OnTransitionStart?.Invoke();
         isTransitioning = true;

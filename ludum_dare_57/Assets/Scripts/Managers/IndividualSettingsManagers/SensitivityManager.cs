@@ -21,7 +21,10 @@ public class SensitivityManager : MonoBehaviour {
     }
 
     void SetSens(float value) {
-        //if (GameManager.player != null)
-        //    GameManager.player.rotationSpeed = Mathf.Clamp(value, minSens, maxSens);
+        var player = FindAnyObjectByType<Player>();
+
+        if(player != null) {
+            player.rotationSpeed = value;
+        }
     }
 }

@@ -3,12 +3,23 @@ using UnityEngine;
 public class PauseManager : MonoBehaviour
 {
     [SerializeField] GameObject pauseCanvas;
+    [SerializeField] Player player;
+    [SerializeField] PlayerGun playerGun;
+
+    [SerializeField] GameObject tutorialCanvas;
+    [SerializeField] GameObject gemCanvas;
+
+    GameManager gameManager;
+
     bool isPaused = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         pauseCanvas.SetActive(isPaused);
+        player = FindAnyObjectByType<Player>();
+        playerGun = FindAnyObjectByType<PlayerGun>();
+        gameManager = FindAnyObjectByType<GameManager>();   
     }
 
     // Update is called once per frame
@@ -22,5 +33,14 @@ public class PauseManager : MonoBehaviour
     public void TogglePause() {
         isPaused = !isPaused;
         pauseCanvas.SetActive(isPaused);
+
+        player.SetPaused(isPaused);
+        playerGun.SetPaused(isPaused);
+
+        if (tutorialCanvas != null) 
+            tutorialCanvas.SetActive(!isPaused);
+
+        if (gemCanvas != null)
+            gemCanvas.SetActive(!isPaused);
     }
 }

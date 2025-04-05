@@ -199,7 +199,7 @@ MonoBehaviour:
       m_Calls: []
   fadeImage: {fileID: 1879855118545898610}
   loadingText: {fileID: 926407718997237421}
-  duration: 0.25
+  duration: 1
 --- !u!1 &8098304660150296771
 GameObject:
   m_ObjectHideFlags: 0
