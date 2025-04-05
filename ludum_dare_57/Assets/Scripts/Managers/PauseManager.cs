@@ -10,6 +10,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] GameObject gemCanvas;
 
     GameManager gameManager;
+    GameManager.GameState lastGameState;
 
     bool isPaused = false;
 
@@ -31,6 +32,15 @@ public class PauseManager : MonoBehaviour
     }
 
     public void TogglePause() {
+
+
+        if (gameManager.currentGameState != GameManager.GameState.paused) {
+            lastGameState = gameManager.currentGameState;
+            gameManager.currentGameState = GameManager.GameState.paused;
+        }
+        else
+            gameManager.currentGameState = lastGameState;
+
         isPaused = !isPaused;
         pauseCanvas.SetActive(isPaused);
 

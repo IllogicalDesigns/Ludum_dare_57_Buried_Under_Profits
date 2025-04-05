@@ -64,9 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5149cb12b1ad3904db0336d3bf9c4b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSens: 75
+  maxSens: 15
   minSens: 25
-  defaultSens: 50
+  defaultSens: 75
   sensValue: 0
 --- !u!114 &3664850157657787038
 MonoBehaviour:

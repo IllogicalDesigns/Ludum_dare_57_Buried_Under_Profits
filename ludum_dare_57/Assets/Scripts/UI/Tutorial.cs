@@ -6,6 +6,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject wASDPanel;
     [SerializeField] GameObject deadzonePanel;
     [SerializeField] GameObject shootPanel;
+    [SerializeField] GameObject dodgePanel;
 
     Player player;
     public float deadzone = 0.75f;
@@ -15,6 +16,7 @@ public class Tutorial : MonoBehaviour
         wasd,
         deadzone,
         shoot,
+        dodge,
         None
     }
 
@@ -27,6 +29,7 @@ public class Tutorial : MonoBehaviour
         wASDPanel.SetActive(false);
         deadzonePanel.SetActive(false);
         shootPanel.SetActive(false);
+        dodgePanel.SetActive(false);
 
         player = FindAnyObjectByType<Player>();
     }
@@ -39,6 +42,7 @@ public class Tutorial : MonoBehaviour
         wASDPanel.SetActive(false);
         deadzonePanel.SetActive(false);
         shootPanel.SetActive(false);
+        dodgePanel.SetActive(false);
 
         if (Input.GetKeyUp(KeyCode.T)) {
             Destroy(gameObject);
@@ -63,6 +67,11 @@ public class Tutorial : MonoBehaviour
             case tutorialState.shoot:
                 shootPanel.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.Mouse0))
+                    currentState = tutorialState.dodge;
+                break;
+            case tutorialState.dodge:
+                dodgePanel.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.LeftShift))
                     currentState = tutorialState.None;
                 break;
             default:

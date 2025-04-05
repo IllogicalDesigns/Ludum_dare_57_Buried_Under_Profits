@@ -4,9 +4,12 @@ public class PlayerGun : MonoBehaviour
 {
     bool isPaused;
     public float maxDist = 100f;
-    public int damage = 25;
+    public int baseDamage = 20;
+    public int minExtra = 5;
+    public int maxExtra = 10;
 
     [SerializeField] AudioSource gunSfx;
+    [SerializeField] AudioSource hitMarkerSfx;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,7 +38,12 @@ public class PlayerGun : MonoBehaviour
             gunSfx.Play();
             if (Physics.Raycast(ray, out hit, maxDist)) {
                 Debug.Log("Hit: " + hit.transform.name);
-                hit.collider.SendMessage(Health.OnHitString, damage, SendMessageOptions.DontRequireReceiver);
+                var damage = baseDamage + Random.Range(minExtra, maxExtra);
+                hit.collider.SendMessage(Health.OnHitString, new DamageInstance(damage, 0), SendMessageOptions.DontRequireReceiver);
+
+                if(hit.collider.TryGetComponent<Health>(out Health hp)) {
+                    hitMarkerSfx.Play();
+                }
             }
             else {
                 Debug.Log("Missed");

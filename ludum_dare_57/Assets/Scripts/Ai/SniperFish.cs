@@ -13,7 +13,19 @@ public class SniperFish : MonoBehaviour
     public float cooldown = 10f;
     float timer;
 
+    public float maxPitch = 1.5f;
+
     public int damage = 50;
+    public int airDamage = 2;
+
+    public float dotRequirement = -0.65f;
+    public LayerMask layerMask = ~0;
+
+    [SerializeField] AudioSource start;
+    [SerializeField] AudioSource gunshot;
+    [SerializeField] AudioSource windup;
+
+    bool isCharging;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,28 +40,52 @@ public class SniperFish : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(timer > timeBeforeSnipeLands) {
+        if (GameManager.instance.currentGameState != GameManager.GameState.playing) return;
+
+        if (timer > timeBeforeSnipeLands) {
             lineRenderer.enabled = false;
             timer -= Time.deltaTime;  //We are in cooldown
+            start.Stop();
+            windup.Stop();
+            isCharging = false;
+            gameObject.SendMessage(Threat.unBecomeThreat);
             return;
         }
 
-
-        if (Vector3.Distance(transform.position, attackPoint.position) < activationDistance) {
+        if (isCharging) {
             lineRenderer.enabled = true;
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, attackPoint.position);
 
+            if (!windup.isPlaying) {
+                windup.Play();
+            }
+
+            float pitchFactor = 1 - (timer / timeBeforeSnipeLands);
+            windup.pitch = Mathf.Lerp(1.0f, maxPitch, pitchFactor);
+
             timer -= Time.deltaTime;
             if (timer < 0) {
                 lineRenderer.enabled = false;
-                playerHealth.OnHit(damage);
+                if (!gunshot.isPlaying) gunshot.Play();
+
+                bool hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
+                if(hasPlayersLineOfSight && !player.isDodging) {
+                    playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
+                }
+
                 timer = cooldown;
             }
         }
         else {
             lineRenderer.enabled = false;
             timer = timeBeforeSnipeLands;
+        }
+
+        if (!isCharging && AIHelpers.canThePlayerSeeUs(transform, attackPoint, activationDistance, 0f, dotRequirement, layerMask)) {
+            isCharging = true;
+            start.Play();
+            gameObject.SendMessage(Threat.becomeThreatString);
         }
     }
 
@@ -59,8 +95,8 @@ public class SniperFish : MonoBehaviour
     //Can we see the player?
     //Is there an avaliable snipe slot?
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, attackPoint.position);
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.gray;
+        Gizmos.DrawWireSphere(transform.position, activationDistance);
     }
 }

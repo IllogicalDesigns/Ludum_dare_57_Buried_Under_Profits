@@ -6,18 +6,23 @@ public class GameManager : MonoBehaviour
 
     public int gemCount;
     public float air = 10;
+    public AnimationCurve airDecayCurve;
 
-    public GameState currentGameState;
+    public GameState currentGameState = GameState.waiting;
     [SerializeField] GameObject pauseCanvas;
     [SerializeField] GameObject deadCanvas;
     [SerializeField] GameObject inGameCanvas;
     [SerializeField] GameObject tutorialCanvas;
     [SerializeField] GameObject wonCanvas;
 
+    [SerializeField] GameObject godActivated;
+    bool godMode;
+
     Player player;
     public float surfacingHeight = 20f;
 
     public enum GameState {
+        waiting,
         playing,
         dead,
         won,
@@ -39,14 +44,30 @@ public class GameManager : MonoBehaviour
         //}
 
         if (currentGameState == GameState.playing)
-            air -= Time.deltaTime;
+            air -= airDecayCurve.Evaluate(air) * Time.deltaTime;
 
-        if(air < 0) {
-            player.GetComponent<Health>().OnHit(1000);
+        if (godMode) air = 777;
+
+        if (air < 0 && currentGameState == GameState.playing) {
+            player.GetComponent<Health>().OnHit(new DamageInstance(1000, 1000));
         }
 
-        if(currentGameState == GameState.playing && player.transform.position.y > surfacingHeight) {
+        if (currentGameState == GameState.waiting && player.transform.position.y < surfacingHeight)
+        {
+            currentGameState = GameState.playing;
+        }
+
+        if (currentGameState == GameState.playing && player.transform.position.y > surfacingHeight) {
             WinGame();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Keypad0)) {
+            if(godActivated) godActivated.SetActive(true);
+            godMode = true;
+            Debug.Log("Activated god mode");
+            var playerHealthy = player.GetComponent<Health>();
+            playerHealthy.hp = 10000;
+            playerHealthy.maxHp = 10000;
         }
     }
 
@@ -60,14 +81,26 @@ public class GameManager : MonoBehaviour
     }
 
     public void PlayerDeath() {
+        currentGameState = GameState.dead;
         if (pauseCanvas) pauseCanvas?.SetActive(false);
         if (deadCanvas) deadCanvas?.SetActive(true);
         if (inGameCanvas) inGameCanvas?.SetActive(false);
         if (tutorialCanvas) tutorialCanvas?.SetActive(false);
         if (wonCanvas) wonCanvas?.SetActive(false);
+
+        //TODO pause everything
     }
 
     public void AddGem(int value) {
         gemCount += value;
+    }
+
+    public void DamageAir(int value) {
+        air -= value;
+        FindAnyObjectByType<AirCounter>().DamagedAir(value);
+    }
+
+    public void ProvideAir(int value) {
+        air += value;
     }
 }

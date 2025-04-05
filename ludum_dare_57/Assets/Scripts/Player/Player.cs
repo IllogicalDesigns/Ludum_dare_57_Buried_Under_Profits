@@ -16,6 +16,15 @@ public class Player : MonoBehaviour
     [Space]
     public float distanceMultiplier = 2f;
 
+    public float dodgeTimer = 1f;
+    public bool isDodging;
+    public float dgTimer;
+    public float refillSpeed = 0.25f;
+    public float dodgeSpeed = 4f;
+    public int dodgeCost = 1;
+
+    Vector3 dodgeMovement;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -49,6 +58,29 @@ public class Player : MonoBehaviour
 
         if (normalizedPos.magnitude > deadzone) {
             HandleRotation(normalizedPos);
+        }
+
+        Vector3 movement = GetMovementVector();
+
+        if (dgTimer >= dodgeTimer && Input.GetKeyDown(KeyCode.LeftShift)) {
+            isDodging = true;
+            movement = Quaternion.LookRotation(camTrans.forward) * movement;
+            Vector3 dodgeDirection = movement;
+            if(dodgeMovement == Vector3.zero) dodgeMovement = dodgeDirection * moveSpeed * dodgeSpeed;
+            GameManager.instance.DamageAir(1);
+        }
+
+        if (dgTimer > 0 && isDodging) {
+            controller.Move(dodgeMovement * Time.deltaTime);
+            dgTimer -= Time.deltaTime;
+        } else {
+            isDodging = false;
+            dodgeMovement = Vector3.zero;
+        }
+
+        if (!isDodging) {
+            if(dgTimer <= dodgeTimer)
+                dgTimer += Time.deltaTime * refillSpeed;
         }
     }
 
@@ -87,11 +119,17 @@ public class Player : MonoBehaviour
         controller.Move(verticalMovement * Time.deltaTime);
     }
 
-    private void CameraBasedVerticalAndHorizontalMovement() {
+    Vector3 GetMovementVector() {
         float moveX = Input.GetAxis("Horizontal") * moveSpeed;
         float moveZ = Input.GetAxis("Vertical") * moveSpeed;
         Vector3 movement = new Vector3(moveX, 0, moveZ);
+        if (movement.magnitude > 1) movement = movement.normalized;
+        return movement;
+    }
+
+    private void CameraBasedVerticalAndHorizontalMovement() {
+        Vector3 movement = GetMovementVector();
         movement = Quaternion.LookRotation(camTrans.forward) * movement;
-        controller.Move(movement * Time.deltaTime);
+        controller.Move(movement * moveSpeed * Time.deltaTime);
     }
 }
