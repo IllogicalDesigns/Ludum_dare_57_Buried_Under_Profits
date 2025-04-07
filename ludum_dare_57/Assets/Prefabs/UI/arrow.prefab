@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 288056491066946124}
   - component: {fileID: 7739804727070847942}
   - component: {fileID: 2556699693590116066}
-  - component: {fileID: 7564502356677533770}
   m_Layer: 5
   m_Name: arrow
   m_TagString: Untagged
@@ -77,33 +76,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7564502356677533770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768738170219606613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f20be8971f17aa8498a9f3a53163a4e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  threat: {fileID: 0}
-  playerTransform: {fileID: 0}
-  arrowTransform: {fileID: 6931566680316866455}
-  arrowRectTransform: {fileID: 0}
-  arrowGameObject: {fileID: 0}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  minSize: {x: 10, y: 10}
-  maxSize: {x: 50, y: 50}
-  minDistance: 30
-  maxDistance: 5
-  pulseTime: 0.25
-  pulseScale: 1.4
-  pulseTrigger: 10
 --- !u!1 &6492406371594615413
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,11 @@ public class SniperFish : MonoBehaviour
     [SerializeField] AudioSource gunshot;
     [SerializeField] AudioSource windup;
 
-    bool isCharging;
+    [SerializeField] Material laser1, laser2, laser3;
+
+    [SerializeField] Transform MouthPoint;
+
+    bool isSniping;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +39,11 @@ public class SniperFish : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         player = FindAnyObjectByType<Player>();
         playerHealth = player.GetComponent<Health>();
+    }
+
+    public void OnRam(Vector3 dir) {
+        timer = cooldown;
+        isSniping = false;
     }
 
     // Update is called once per frame
@@ -47,15 +56,23 @@ public class SniperFish : MonoBehaviour
             timer -= Time.deltaTime;  //We are in cooldown
             start.Stop();
             windup.Stop();
-            isCharging = false;
+            isSniping = false;
             gameObject.SendMessage(Threat.unBecomeThreat);
             return;
         }
 
-        if (isCharging) {
+        if (isSniping) {
+            transform.LookAt(attackPoint.position);
             lineRenderer.enabled = true;
-            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(0, MouthPoint.position);
             lineRenderer.SetPosition(1, attackPoint.position);
+
+            if (timer <= timeBeforeSnipeLands * 0.3f)
+                lineRenderer.material = laser3;
+            else if (timer <= timeBeforeSnipeLands * 0.6f)
+                lineRenderer.material = laser2;
+            else
+                lineRenderer.material = laser1;
 
             if (!windup.isPlaying) {
                 windup.Play();
@@ -82,11 +99,21 @@ public class SniperFish : MonoBehaviour
             timer = timeBeforeSnipeLands;
         }
 
-        if (!isCharging && AIHelpers.canThePlayerSeeUs(transform, attackPoint, activationDistance, 0f, dotRequirement, layerMask)) {
-            isCharging = true;
-            start.Play();
-            gameObject.SendMessage(Threat.becomeThreatString);
+        if (!isSniping && AIHelpers.canThePlayerSeeUs(transform, attackPoint, activationDistance, 0f, dotRequirement, layerMask)) {
+            StartSniping();
         }
+    }
+
+    private void StartSniping() {
+        if(isSniping) { return; }
+
+        isSniping = true;
+        start.Play();
+        gameObject.SendMessage(Threat.becomeThreatString);
+    }
+
+    public void OnHit(DamageInstance damageInstance) {
+        StartSniping();
     }
 
     //Can we snipe

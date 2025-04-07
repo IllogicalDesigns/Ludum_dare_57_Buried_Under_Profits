@@ -26,7 +26,7 @@ public class SoundOnHit : MonoBehaviour
             onHit.Play();
         } else {
             if (onHitClip != null)
-                AudioSource.PlayClipAtPoint(onHitClip, transform.position);
+                AudioManager.instance.PlaySoundOnPoint(onHitClip, transform.position);
         }
     }
 

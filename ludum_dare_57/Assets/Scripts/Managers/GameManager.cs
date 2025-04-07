@@ -16,10 +16,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject wonCanvas;
 
     [SerializeField] GameObject godActivated;
+    [SerializeField] AudioClip bubbles;
+    [SerializeField] AudioClip ammo;
     bool godMode;
 
     Player player;
     public float surfacingHeight = 20f;
+
+    Health playerHealth;
 
     public enum GameState {
         waiting,
@@ -34,6 +38,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = FindAnyObjectByType<Player>();
+        playerHealth = player.GetComponent<Health>();
     }
 
     // Update is called once per frame
@@ -78,6 +83,9 @@ public class GameManager : MonoBehaviour
         if (inGameCanvas) inGameCanvas?.SetActive(false);
         if (tutorialCanvas) tutorialCanvas?.SetActive(false);
         if (wonCanvas) wonCanvas?.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void PlayerDeath() {
@@ -88,19 +96,27 @@ public class GameManager : MonoBehaviour
         if (tutorialCanvas) tutorialCanvas?.SetActive(false);
         if (wonCanvas) wonCanvas?.SetActive(false);
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         //TODO pause everything
     }
 
     public void AddGem(int value) {
         gemCount += value;
+        FindAnyObjectByType<GemCounter>().BounceCounter();
     }
 
     public void DamageAir(int value) {
+        if (!playerHealth.canTakeDamage) return;
+
         air -= value;
         FindAnyObjectByType<AirCounter>().DamagedAir(value);
     }
 
     public void ProvideAir(int value) {
         air += value;
+        FindAnyObjectByType<AirCounter>().ProvidedAir(value);
+        AudioManager.instance.PlaySoundOnPlayer(bubbles);
     }
 }

@@ -8,8 +8,8 @@ public class SensitivityManager : MonoBehaviour {
     public float sensValue;
 
     void Start() {
-        //sensValue = PlayerPrefs.GetFloat(sens, defaultSens);
-        //SetSens(sensValue);
+        sensValue = PlayerPrefs.GetFloat(sens, defaultSens);
+        SetSens(sensValue);
     }
 
     public void OnSensChanged(float value) {

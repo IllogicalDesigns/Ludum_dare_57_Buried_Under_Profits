@@ -11,8 +11,8 @@ public class Threat : MonoBehaviour
     public void BecomeThreat() {
         var panelTransform = GameObject.Find("Threat Panel")?.transform;
         myThreatIndicator = Instantiate(threatIndicatorPrefab, panelTransform);
-        ThreatActor threatActor = myThreatIndicator.GetComponent<ThreatActor>();
-        threatActor.threat = transform;
+        DamageIndicator threatActor = myThreatIndicator.GetComponent<DamageIndicator>();
+        threatActor.damageLocation = this.transform;
     }
 
     public void UnBecomeThreat() {

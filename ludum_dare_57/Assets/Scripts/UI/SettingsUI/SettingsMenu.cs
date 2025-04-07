@@ -19,10 +19,10 @@ public class SettingsMenu : MonoBehaviour {
 
     private void Awake() {
         volumeManager = FindAnyObjectByType<VolumeManager>();
-        fovManager = FindAnyObjectByType<FOVManager>();
+        //fovManager = FindAnyObjectByType<FOVManager>();
         sensManager = FindAnyObjectByType<SensitivityManager>();
-        fullManager = FindAnyObjectByType<FullscreenManager>();
-        resolutionManager = FindAnyObjectByType<ResolutionManager>();
+        //fullManager = FindAnyObjectByType<FullscreenManager>();
+        //resolutionManager = FindAnyObjectByType<ResolutionManager>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,24 +32,24 @@ public class SettingsMenu : MonoBehaviour {
         volumeSlider.maxValue = 1f;
         volumeSlider.value = volumeManager.volumeValue;
 
-        fovSlider.onValueChanged.AddListener(delegate { OnFovChanged(); });
-        fovSlider.minValue = fovManager.minFov;
-        fovSlider.maxValue = fovManager.maxFov;
-        fovSlider.value = fovManager.fovValue;
+        //fovSlider.onValueChanged.AddListener(delegate { OnFovChanged(); });
+        //fovSlider.minValue = fovManager.minFov;
+        //fovSlider.maxValue = fovManager.maxFov;
+        //fovSlider.value = fovManager.fovValue;
 
         sensSlider.onValueChanged.AddListener(delegate { OnSensChanged(); });
         sensSlider.minValue = sensManager.minSens;
         sensSlider.maxValue = sensManager.maxSens;
         sensSlider.value = sensManager.sensValue;
 
-        fullToggle.onValueChanged.AddListener(delegate { OnFullscreenChanged(); });
-        fullToggle.isOn = !fullManager.isFullscreenValue;
-#if UNITY_WEBGL
-        fullToggle.gameObject.transform.parent.gameObject.SetActive(false);
-#endif
+//        fullToggle.onValueChanged.AddListener(delegate { OnFullscreenChanged(); });
+//        fullToggle.isOn = !fullManager.isFullscreenValue;
+//#if UNITY_WEBGL
+//        fullToggle.gameObject.transform.parent.gameObject.SetActive(false);
+//#endif
 
-        resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChanged(); });
-        SetResolutions();
+//        resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChanged(); });
+//        SetResolutions();
     }
 
     void SetResolutions() {

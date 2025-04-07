@@ -1,6 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AirCounter : MonoBehaviour
 {
@@ -16,15 +17,30 @@ public class AirCounter : MonoBehaviour
     [SerializeField] float pulseTime = 0.25f;
     [SerializeField] float pulseScale = 1.4f;
 
+    public Slider slider;
+    public Slider underSlider;
+
+    Vector3 origanlScale;
+
     Tween tween;
 
     [Space]
     [SerializeField] GameObject airLostText;
 
+    [SerializeField] float bounceStrength = 0.1f;
+    [SerializeField] float bounceDuration = 0.75f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        origanlScale = transform.localScale;
+
+        var air = GameManager.instance.air;
+        slider.maxValue = air;
+        slider.value = air;
+
+        underSlider.maxValue = air;
+        underSlider.value = air;
     }
 
     // Update is called once per frame
@@ -43,22 +59,29 @@ public class AirCounter : MonoBehaviour
 
         if (tween != null && air > pulseThreshold) {
             tween.Kill(true);
-            airText.transform.localScale = Vector3.one;
+            airText.transform.localScale = origanlScale;
             tween = null;
         }
 
         if (airText != null)
             airText.text = colorText + preText + air.ToString(Format) + postText;
+
+        slider.value = air;
+
+        if (underSlider.value > slider.value)
+            underSlider.value -= Time.deltaTime;
+
+        if (underSlider.value < slider.value)
+            underSlider.value = slider.value;
     }
 
     public void DamagedAir(int value) {
-        var newText = Instantiate(airLostText, airText.transform.parent);
-        newText.GetComponent<TextMeshProUGUI>().text = "-" + value.ToString("D");
-        //newText.transform.DOScale(Vector3.zero, 3f);
-            //newText.transform.DOPunchScale(transform.localScale * 1.1f, 1f).OnComplete(() => { 
-            //    newText.transform.DOScale(Vector3.zero, 1f).OnComplete(() => { 
-            //    newText.transform.DOKill(); 
-            //    Destroy(newText);
-            //}); });
+        airText.transform.DOKill(true);
+        airText.transform.DOPunchScale(transform.localScale * bounceStrength, bounceDuration);
         }
+
+    public void ProvidedAir(int value) {
+        airText.transform.DOKill(true);
+        airText.transform.DOPunchScale(transform.localScale * bounceStrength, bounceDuration);
+    }
 }

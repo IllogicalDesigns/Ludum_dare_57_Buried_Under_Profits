@@ -19,6 +19,13 @@ public class ThreatActor : MonoBehaviour
     [SerializeField] float pulseTime = 0.25f;
     [SerializeField] float pulseScale = 1.4f;
     [SerializeField] float pulseTrigger = 10f;
+    //[Space]
+    //[SerializeField] float minXClamp = 0.05f;
+    //[SerializeField] float maxXClamp = 0.95f;
+    //[Space]
+    //[SerializeField] float minYClamp = 0.05f;
+    //[SerializeField] float maxYClamp = 0.95f;
+    [SerializeField] float radius = 0.4f; // Adjust radius as needed (normalized to viewport space)
 
     private Vector2 targetSize;
 
@@ -35,10 +42,8 @@ public class ThreatActor : MonoBehaviour
         targetSize = minSize;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (threat == null) { 
+    void Update() {
+        if (threat == null) {
             Destroy(gameObject);
             return;
         }
@@ -52,15 +57,15 @@ public class ThreatActor : MonoBehaviour
 
         if (arrowRectTransform == null) return;
 
-        // Check if threat is behind camera
-        if (screenPos.z <= 0) {
-            // Place arrow at bottom of screen for threats behind player
-            Vector2 bottomScreenPoint = new Vector2(Screen.width / 2f, 50f); // Adjust "50f" for padding from bottom
-            arrowRectTransform.position = bottomScreenPoint;
+        //// Check if threat is behind camera
+        //if (screenPos.z <= 0) {
+        //    // Place arrow at bottom of screen for threats behind player
+        //    Vector2 bottomScreenPoint = new Vector2(Screen.width / 2f, 50f); // Adjust "50f" for padding from bottom
+        //    arrowRectTransform.position = bottomScreenPoint;
 
-            arrowGameObject.SetActive(true);
-            return;
-        }
+        //    arrowGameObject.SetActive(true);
+        //    return;
+        //}
 
         var distance = Vector3.Distance(threatPosition, playerTransform.position);
         float t = Mathf.InverseLerp(minDistance, maxDistance, distance);
@@ -73,16 +78,28 @@ public class ThreatActor : MonoBehaviour
             tween = null;
         }
 
-            // Check if threat is off-screen
-            bool isOffScreen = screenPos.x < 0 || screenPos.x > 1 || screenPos.y < 0 || screenPos.y > 1;
+        // Check if threat is off-screen
+        bool isOffScreen = screenPos.x < 0 || screenPos.x > 1 || screenPos.y < 0 || screenPos.y > 1;
 
-        //|| Physics.Linecast(playerTransform.position, arrowTransform.position, layerMask)
-        if (isOffScreen ) {
-            // Clamp position to viewport edges
-            screenPos.x = Mathf.Clamp(screenPos.x, 0.05f, 0.95f);
-            screenPos.y = Mathf.Clamp(screenPos.y, 0.05f, 0.95f);
+        if (isOffScreen) {
+            // Calculate center of screen in viewport space
+            Vector2 viewportCenter = new Vector2(0.5f, 0.5f);
 
-            // Convert viewport position to screen space
+            // Calculate direction from center to threat's viewport position
+            Vector2 directionFromCenter = new Vector2(screenPos.x - viewportCenter.x, screenPos.y - viewportCenter.y);
+
+            // Calculate distance from center to threat's viewport position
+            float distanceFromCenter = directionFromCenter.magnitude;
+
+            // Clamp position within a circle around the center of the screen
+
+            if (distanceFromCenter > radius) {
+                directionFromCenter.Normalize(); // Get unit vector for direction
+                screenPos.x = viewportCenter.x + directionFromCenter.x * radius;
+                screenPos.y = viewportCenter.y + directionFromCenter.y * radius;
+            }
+
+            // Convert clamped viewport position to screen space
             Vector2 screenPoint = Camera.main.ViewportToScreenPoint(screenPos);
 
             // Set arrow position on canvas
@@ -96,4 +113,5 @@ public class ThreatActor : MonoBehaviour
             arrowGameObject.SetActive(false);
         }
     }
+
 }

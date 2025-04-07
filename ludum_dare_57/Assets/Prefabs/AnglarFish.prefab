@@ -13,14 +13,17 @@ GameObject:
   - component: {fileID: 507665399345300533}
   - component: {fileID: 208515129650137497}
   - component: {fileID: 175798957480633903}
-  - component: {fileID: 5232944360544789536}
   - component: {fileID: 3301226747137818295}
   - component: {fileID: 6034027071061050133}
   - component: {fileID: 7516994227649851031}
   - component: {fileID: 257813730372628309}
+  - component: {fileID: 6128572757793482499}
+  - component: {fileID: 8524622426262566348}
+  - component: {fileID: 1626872025870586237}
+  - component: {fileID: 5605872770009681064}
   m_Layer: 7
   m_Name: AnglarFish
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,21 +132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a721a8e3769564c9a4c5cfa43c30fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
-  maxHp: 100
+  hp: 200
+  maxHp: 200
   canTakeDamage: 1
---- !u!114 &5232944360544789536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767218170182335757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0b53d5f649fb148ad1820ae245b468, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3301226747137818295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,14 +163,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activationDistance: 10
-  minActivationDistance: 2
+  minActivationDistance: 3
   speed: 5
-  damage: 50
+  damage: 25
+  airDamage: 10
   impactDistance: 3
   jitterRange: 1
   jitterUpdate: 2
   start: {fileID: 5925513730399061225}
-  dotRequirement: -0.85
+  dotRequirement: -0.7
   layerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -211,7 +203,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3effd1ae44636e74bbe54b02838d8b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threatIndicatorPrefab: {fileID: 768738170219606613, guid: 916fba8ea9406b54b8879a1de0fcd88f, type: 3}
+  threatIndicatorPrefab: {fileID: 3352981927554087797, guid: 19d3bc604d1b52b44acda36fa050beaa, type: 3}
+--- !u!114 &6128572757793482499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767218170182335757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe7c3c391c350445887c99b44a16d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystem: {fileID: 0}
+--- !u!114 &8524622426262566348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767218170182335757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8af44790ef6a4b49a01d598301aa4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drop: {fileID: 7146195601594310455, guid: 9e78de257ac6cb94b9462f17673d31dd, type: 3}
+  dropRate: 100
+--- !u!114 &1626872025870586237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767218170182335757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b62e88806dfa24582263ff398ff6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replacement: {fileID: 4194499063703746276, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+--- !u!54 &5605872770009681064
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767218170182335757}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &944722879214267888
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Version: 3
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
+  m_AdditionalLightsShadowResolutionTier: 0
   m_LightLayerMask: 1
   m_RenderingLayers: 1
   m_CustomShadowLayers: 0

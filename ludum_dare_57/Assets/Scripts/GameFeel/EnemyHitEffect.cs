@@ -10,18 +10,32 @@ public class EnemyHitEffect : MonoBehaviour
 
     [SerializeField] Vector3 punchScale = Vector3.one * 0.5f;
     [SerializeField] float duration = 0.1f;
+    Rigidbody rb;
 
     private void Reset() {
         renderer = gameObject.GetComponent<Renderer>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Start() {
         originalMat = renderer.material;
         flashMat = Resources.Load<Material>("FlashMaterial"); // Load your flash material
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     public void OnHit(DamageInstance damageInstance) {
         StartCoroutine(Flash());
+    }
+
+    public void OnRam(Vector3 dir) {
+        rb.isKinematic = false;
+        rb.AddForce(dir, ForceMode.Impulse);
+
+        Invoke(nameof(ReEnableRigidBody), 1f);
+    }
+
+    void ReEnableRigidBody() {
+        rb.isKinematic = true;
     }
 
     IEnumerator Flash() {

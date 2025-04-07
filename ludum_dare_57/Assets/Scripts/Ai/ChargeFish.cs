@@ -42,14 +42,7 @@ public class ChargeFish : MonoBehaviour
         var distance = Vector3.Distance(transform.position, attackPoint.position);
 
         if (!isCharging && AIHelpers.canThePlayerSeeUs(transform, attackPoint, activationDistance, minActivationDistance, dotRequirement, layerMask)) {
-            jitterX = Random.Range(-jitterRange, jitterRange);
-            jitterY = Random.Range(-jitterRange, jitterRange);
-            jitterZ = Random.Range(-jitterRange, jitterRange);
-
-            isCharging = true;
-            gameObject.SendMessage(Threat.becomeThreatString);
-            start.Play();
-            swim.Play();
+            StartCharging();
         }
 
         if (isCharging) {
@@ -71,6 +64,23 @@ public class ChargeFish : MonoBehaviour
                 swim.Stop();
             }
         }
+    }
+
+    private void StartCharging() {
+        if (isCharging) return;
+
+        jitterX = Random.Range(-jitterRange, jitterRange);
+        jitterY = Random.Range(-jitterRange, jitterRange);
+        jitterZ = Random.Range(-jitterRange, jitterRange);
+
+        isCharging = true;
+        gameObject.SendMessage(Threat.becomeThreatString);
+        start.Play();
+        swim.Play();
+    }
+
+    public void OnHit(DamageInstance damageInstance) {
+        StartCharging();
     }
 
     private void OnDrawGizmosSelected() {

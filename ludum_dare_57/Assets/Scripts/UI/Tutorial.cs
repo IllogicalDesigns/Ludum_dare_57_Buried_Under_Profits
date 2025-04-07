@@ -57,7 +57,7 @@ public class Tutorial : MonoBehaviour
             case tutorialState.wasd:
                 wASDPanel.SetActive(true);
                 if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
-                    currentState = tutorialState.deadzone;
+                    currentState = tutorialState.shoot;
                 break;
             case tutorialState.deadzone:
                 deadzonePanel.SetActive(true);

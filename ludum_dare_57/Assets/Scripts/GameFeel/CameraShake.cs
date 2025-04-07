@@ -19,16 +19,26 @@ public class CameraShake : MonoBehaviour
         
     }
 
+    public void PunchScreen() {
+        PunchScreen(duration, positionPunch, rotationPunch);
+    }
+
+    public void PunchScreen(float _duration, Vector3 _positionPunch, Vector3 _rotationPunch) {
+        cameraTRans.DOKill(true);
+
+        var x = Random.Range(-_positionPunch.x, _positionPunch.x);
+        var y = Random.Range(-_positionPunch.y, _positionPunch.y);
+        var z = Random.Range(-_positionPunch.z, _positionPunch.z);
+
+        cameraTRans.DOPunchPosition(new Vector3(x, y, z), _duration);
+
+        x = Random.Range(-_rotationPunch.x, _rotationPunch.x);
+        y = Random.Range(-_rotationPunch.y, _rotationPunch.y);
+        z = Random.Range(-_rotationPunch.z, _rotationPunch.z);
+        cameraTRans.DOPunchRotation(new Vector3(x, y, z), _duration);
+    }
+
     public void OnHit(DamageInstance damageInstance) {
-        var x = Random.Range(-positionPunch.x, positionPunch.x);
-        var y = Random.Range(-positionPunch.y, positionPunch.y);
-        var z = Random.Range(-positionPunch.z, positionPunch.z);
-
-        cameraTRans.DOPunchPosition(new Vector3(x,y,z), duration);
-
-        x = Random.Range(-rotationPunch.x, rotationPunch.x);
-        y = Random.Range(-rotationPunch.y, rotationPunch.y);
-        z = Random.Range(-rotationPunch.z, rotationPunch.z);
-        cameraTRans.DOPunchRotation(new Vector3(x, y, z), duration);
+        PunchScreen();
     }
 }

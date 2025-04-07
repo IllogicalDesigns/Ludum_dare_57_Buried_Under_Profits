@@ -1,0 +1,33 @@
+Flicker is a set of fonts based on a type of alphanumeric display, consisting
+of segmented pixels, and sometimes seen in airports or on trains.
+The set consists of several fonts; these are:
+
+  Flicker - the basic alphanumeric font set.  
+    Lowercase is a copy of uppercase; there are no accented characters.
+
+  FlickerDamaged - A version of Flicker simulating a malfunctioning 
+    display.  Some segments are missing; others elsewhere are lit.
+
+  Flicker03 - A version of Flicker with only the bottom 3 rows visible.
+
+  Flicker15 - A version of Flicker with only the top 4 rows visible.
+
+  FlickerRandom - A font based on the segmented display grid used in Flicker,
+    only each character has a random assortment of pixels lit.  Different
+    characters have different densities of lit pixels, and may be overlaid.
+
+The Flicker font set is monospaced; consequently, characters from different
+fonts may be overlaid to achieve multi-layered effects.
+
+Note: Flicker is intended as a display font only, and is not suitable for 
+setting text.  The designer takes no responsibility for use or misuse of 
+this font set.
+
+This font set is freeware; if you find it useful, the designer requests that 
+you make a small donation to the Electronic Frontier Foundation 
+(http://www.eff.org/) or the Free Software Foundation (http://www.fsf.org/).
+
+
+Andrew C. Bulhak
+http://dev.null.org/
+2002/12/01

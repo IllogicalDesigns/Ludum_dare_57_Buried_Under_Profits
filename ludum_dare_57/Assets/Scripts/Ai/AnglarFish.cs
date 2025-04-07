@@ -12,6 +12,7 @@ public class AnglarFish : MonoBehaviour {
     bool isCharging;
 
     public int damage = 50;
+    public int airDamage = 10;
 
     public float impactDistance = 3f;
 
@@ -25,6 +26,9 @@ public class AnglarFish : MonoBehaviour {
 
     public float dotRequirement = -0.85f;
     public LayerMask layerMask = ~0;
+
+    float coolDown = 2f;
+    float timer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -45,8 +49,12 @@ public class AnglarFish : MonoBehaviour {
     void Update() {
         if (GameManager.instance.currentGameState != GameManager.GameState.playing) return;
 
+        if(timer > 0 && !isCharging) {
+            timer -= Time.deltaTime;
+        }
+
         var distance = Vector3.Distance(transform.position, attackPoint.position);
-        if (!isCharging && AIHelpers.canThePlayerSeeUs(transform, attackPoint, activationDistance, minActivationDistance, dotRequirement, layerMask)) {
+        if (!isCharging && timer <= 0 && AIHelpers.canThePlayerSeeUs(transform, attackPoint, activationDistance, minActivationDistance, dotRequirement, layerMask)) {
             StartCharge();
         }
 
@@ -63,9 +71,11 @@ public class AnglarFish : MonoBehaviour {
 
             if (distance < impactDistance) {
                 //impact
-                playerHealth.SendMessage(Health.OnHitString, damage);
+                Debug.Log("Hitting player");
+                playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
                 isCharging = false;
                 gameObject.SendMessage(Threat.unBecomeThreat);
+                timer = coolDown;
             }
         }
     }
@@ -76,6 +86,7 @@ public class AnglarFish : MonoBehaviour {
         isCharging = true;
         gameObject.SendMessage(Threat.becomeThreatString);
         start.Play();
+        timer = coolDown;
     }
 
     public void OnHit(DamageInstance damageInstance) {
