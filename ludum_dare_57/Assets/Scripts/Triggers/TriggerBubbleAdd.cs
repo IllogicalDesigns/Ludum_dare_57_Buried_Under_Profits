@@ -2,9 +2,9 @@ using UnityEngine;
 
 
 public class TriggerBubbleAdd : TriggerBase {
-    //public int airProvided = 5;
     public AudioClip popSFX;
     public AnimationCurve airProvidedCurve;
+    public AnimationCurve difficultyCurve;
 
     protected override void OnTriggerEnter(Collider other) {
         if (!IsCorrectTag(other)) {
@@ -17,7 +17,12 @@ public class TriggerBubbleAdd : TriggerBase {
     }
 
     private void PopBubble() {
-        GameManager.instance.ProvideAir(Mathf.RoundToInt(airProvidedCurve.Evaluate(GameManager.instance.air)));
+        var diffMultii = difficultyCurve.Evaluate(GameManager.instance.difficulty);
+        var airAmount = airProvidedCurve.Evaluate(GameManager.instance.air);
+
+        var providedAir = Mathf.RoundToInt(airAmount * diffMultii);
+
+        GameManager.instance.ProvideAir(providedAir);
         AudioManager.instance.PlaySoundOnPoint(popSFX, transform.position);
 
         Destroy(gameObject);

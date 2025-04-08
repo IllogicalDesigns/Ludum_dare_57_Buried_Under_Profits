@@ -5,16 +5,18 @@ using System.Collections.Generic;
 
 public class SettingsMenu : MonoBehaviour {
     [SerializeField] Slider volumeSlider;
-    [SerializeField] Slider fovSlider;
+    //[SerializeField] Slider fovSlider;
     [SerializeField] Slider sensSlider;
-    [SerializeField] Toggle fullToggle;
-    [SerializeField] TMP_Dropdown resolutionDropdown;
+    [SerializeField] Slider difficultySlider;
+    //[SerializeField] Toggle fullToggle;
+    //[SerializeField] TMP_Dropdown resolutionDropdown;
     [Space]
     [SerializeField] VolumeManager volumeManager;
-    [SerializeField] FOVManager fovManager;
+    //[SerializeField] FOVManager fovManager;
     [SerializeField] SensitivityManager sensManager;
-    [SerializeField] FullscreenManager fullManager;
-    [SerializeField] ResolutionManager resolutionManager;
+    //[SerializeField] FullscreenManager fullManager;
+    //[SerializeField] ResolutionManager resolutionManager;
+    [SerializeField] DifficultyManager difficultyManager;
 
 
     private void Awake() {
@@ -23,6 +25,7 @@ public class SettingsMenu : MonoBehaviour {
         sensManager = FindAnyObjectByType<SensitivityManager>();
         //fullManager = FindAnyObjectByType<FullscreenManager>();
         //resolutionManager = FindAnyObjectByType<ResolutionManager>();
+        difficultyManager = FindAnyObjectByType<DifficultyManager>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,56 +45,66 @@ public class SettingsMenu : MonoBehaviour {
         sensSlider.maxValue = sensManager.maxSens;
         sensSlider.value = sensManager.sensValue;
 
-//        fullToggle.onValueChanged.AddListener(delegate { OnFullscreenChanged(); });
-//        fullToggle.isOn = !fullManager.isFullscreenValue;
-//#if UNITY_WEBGL
-//        fullToggle.gameObject.transform.parent.gameObject.SetActive(false);
-//#endif
+        //        fullToggle.onValueChanged.AddListener(delegate { OnFullscreenChanged(); });
+        //        fullToggle.isOn = !fullManager.isFullscreenValue;
+        //#if UNITY_WEBGL
+        //        fullToggle.gameObject.transform.parent.gameObject.SetActive(false);
+        //#endif
 
-//        resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChanged(); });
-//        SetResolutions();
+        //        resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChanged(); });
+        //        SetResolutions();
+
+        difficultySlider.onValueChanged.AddListener(delegate { OnDifficultyChanged(); });
+        difficultySlider.minValue = difficultyManager.minDifficulty;
+        difficultySlider.maxValue = difficultyManager.maxDifficulty;
+        difficultySlider.value = difficultyManager.difficultyValue;
     }
 
-    void SetResolutions() {
-        Resolution[] resolutions = Screen.resolutions;
+    
+    //void SetResolutions() {
+    //    Resolution[] resolutions = Screen.resolutions;
 
-        resolutionDropdown.ClearOptions();
+    //    resolutionDropdown.ClearOptions();
 
-        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+    //    List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
 
-        int currentResolutionIndex = 0;
-        for (int i = 0; i < resolutions.Length; i++) {
-            string optionText = resolutions[i].width + "x" + resolutions[i].height;
-            options.Add(new TMP_Dropdown.OptionData(optionText));
+    //    int currentResolutionIndex = 0;
+    //    for (int i = 0; i < resolutions.Length; i++) {
+    //        string optionText = resolutions[i].width + "x" + resolutions[i].height;
+    //        options.Add(new TMP_Dropdown.OptionData(optionText));
 
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
-                currentResolutionIndex = i;
-        }
+    //        if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+    //            currentResolutionIndex = i;
+    //    }
 
-        resolutionDropdown.options = options;
+    //    resolutionDropdown.options = options;
 
-        // Set the initial selected index
-        resolutionDropdown.value = currentResolutionIndex;
-    }
+    //    // Set the initial selected index
+    //    resolutionDropdown.value = currentResolutionIndex;
+    //}
 
     public void OnVolumeChanged() {
         volumeManager.OnVolumeChanged(volumeSlider.value);
     }
 
-    public void OnFovChanged() {
+    //public void OnFovChanged() {
 
-        fovManager.OnFovChanged(fovSlider.value);
-    }
+    //    fovManager.OnFovChanged(fovSlider.value);
+    //}
 
     public void OnSensChanged() {
         sensManager.OnSensChanged(sensSlider.value);
     }
 
-    public void OnFullscreenChanged() {
-        fullManager.OnFullscreenToggle(fullToggle.isOn);
-    }
+    //public void OnFullscreenChanged() {
+    //    fullManager.OnFullscreenToggle(fullToggle.isOn);
+    //}
 
-    public void OnResolutionChanged() {
-        resolutionManager.OnResolutionChange(resolutionDropdown.value);
+    //public void OnResolutionChanged() {
+    //    resolutionManager.OnResolutionChange(resolutionDropdown.value);
+    //}
+
+    public void OnDifficultyChanged() {
+        difficultyManager.OnDifficultyChanged(difficultySlider.value);
     }
 }

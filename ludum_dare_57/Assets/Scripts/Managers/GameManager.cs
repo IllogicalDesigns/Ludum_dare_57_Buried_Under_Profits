@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     Health playerHealth;
 
+    public float difficulty = 1f;
+
     public enum GameState {
         waiting,
         playing,
@@ -34,7 +36,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         instance = this;
         player = FindAnyObjectByType<Player>();

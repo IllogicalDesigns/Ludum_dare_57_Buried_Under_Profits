@@ -10,6 +10,7 @@ public class SniperFish : MonoBehaviour
     LineRenderer lineRenderer;
 
     public float timeBeforeSnipeLands = 2f;
+    [SerializeField] AnimationCurve timeDifficulty;
     public float cooldown = 10f;
     float timer;
 
@@ -33,6 +34,9 @@ public class SniperFish : MonoBehaviour
 
     bool isSniping;
 
+    const float whiteThresh = 0.75f;
+    const float redThresh = 1.5f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -53,9 +57,11 @@ public class SniperFish : MonoBehaviour
     {
         if (GameManager.instance.currentGameState != GameManager.GameState.playing) return;
 
+        var diffMulti = timeDifficulty.Evaluate(GameManager.instance.difficulty);
+
         if (timer > timeBeforeSnipeLands) {
             lineRenderer.enabled = false;
-            timer -= Time.deltaTime;  //We are in cooldown
+            timer -= diffMulti * Time.deltaTime;  //We are in cooldown
             start.Stop();
             windup.Stop();
             isSniping = false;
@@ -69,9 +75,10 @@ public class SniperFish : MonoBehaviour
             lineRenderer.SetPosition(0, MouthPoint.position);
             lineRenderer.SetPosition(1, attackPoint.position);
 
-            if (timer <= timeBeforeSnipeLands * 0.3f)
+            var playerDodgeTime = player.dodgeTimer * diffMulti;
+            if (timer <= playerDodgeTime * whiteThresh)
                 lineRenderer.material = laser3;
-            else if (timer <= timeBeforeSnipeLands * 0.6f)
+            else if (timer <= playerDodgeTime * redThresh)
                 lineRenderer.material = laser2;
             else
                 lineRenderer.material = laser1;
@@ -83,7 +90,8 @@ public class SniperFish : MonoBehaviour
             float pitchFactor = 1 - (timer / timeBeforeSnipeLands);
             windup.pitch = Mathf.Lerp(1.0f, maxPitch, pitchFactor);
 
-            timer -= Time.deltaTime;
+
+            timer -= diffMulti * Time.deltaTime;
             if (timer < 0) {
                 lineRenderer.enabled = false;
                 if (!gunshot.isPlaying) gunshot.Play();
