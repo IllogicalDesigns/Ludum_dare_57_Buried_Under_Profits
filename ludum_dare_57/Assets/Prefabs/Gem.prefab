@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: f1f72f56a11e3794997c7ddfe1ba0191, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f1f72f56a11e3794997c7ddfe1ba0191, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f1f72f56a11e3794997c7ddfe1ba0191, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f1f72f56a11e3794997c7ddfe1ba0191, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -76,6 +88,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f1f72f56a11e3794997c7ddfe1ba0191, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5401074942831771777}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f1f72f56a11e3794997c7ddfe1ba0191, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6524229357323693379}
   m_SourcePrefab: {fileID: 100100000, guid: f1f72f56a11e3794997c7ddfe1ba0191, type: 3}
 --- !u!1 &4075176347754621620 stripped
 GameObject:
@@ -139,4 +154,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe7c3c391c350445887c99b44a16d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particleNameFinder: Gem Particle System
   particleSystem: {fileID: 8700691592096938754, guid: 2a7a1de053fb6cc469fb55a46c68911b, type: 3}
+--- !u!114 &-6524229357323693379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4075176347754621620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b62e88806dfa24582263ff398ff6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replacement: {fileID: 6760389247726803193, guid: bff81a23adfaa134ea24d09032e93ec3, type: 3}

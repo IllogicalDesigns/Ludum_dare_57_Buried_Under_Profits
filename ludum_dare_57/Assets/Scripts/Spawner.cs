@@ -4,13 +4,13 @@ using UnityEngine;
 public class SpawnerWithRaycast : MonoBehaviour {
     [Header("Spawner Settings")]
     public GameObject prefabToSpawn; // The prefab to spawn
-    public BoxCollider spawnCube;    // The box collider defining the spawn area
     public float spawnHeight = 10f;  // Height at which the object is initially spawned
     public float groundOffset = 0.5f; // Offset above the ground after raycasting
+    public float spawnRadius = 50f;  // Radius of the circle for spawning
 
     [Header("Player Settings")]
     public Transform player;         // Reference to the player transform
-    public float spawnDistance = 50f; // Minimum distance from the player to spawn
+    public float minSpawnDistance = 20f; // Minimum distance from the player to spawn
 
     [Header("Layer Settings")]
     public LayerMask groundLayer;    // Layer mask for detecting ground
@@ -21,9 +21,13 @@ public class SpawnerWithRaycast : MonoBehaviour {
     public float spawnRate = 1f;
     [Space]
     public Vector3 spawnRotation = Vector3.zero;
+    public bool randomRotation;
+    public Transform spawnCenter;
+
+    private int maxAttempts = 10; // Prevent infinite loops
 
     private void Start() {
-        if (prefabToSpawn == null || spawnCube == null || player == null) {
+        if (prefabToSpawn == null || player == null) {
             Debug.LogError("Please assign all required references in the inspector.");
             return;
         }
@@ -39,16 +43,23 @@ public class SpawnerWithRaycast : MonoBehaviour {
     }
 
     private void SpawnObject() {
-        // Get a random position within the bounds of the BoxCollider
-        Vector3 randomPosition = GetRandomPositionInBox(spawnCube);
+        Vector3 randomPosition = Vector3.zero;
+        bool validPositionFound = false;
 
-        // Adjust the position to be at the specified height
-        randomPosition.y = spawnHeight;
-
-        // Ensure the spawn position is out of sight of the player (distance check)
-        while (Vector3.Distance(randomPosition, player.position) < spawnDistance) {
-            randomPosition = GetRandomPositionInBox(spawnCube);
+        // Try to find a valid position within maxAttempts
+        for (int attempt = 0; attempt < maxAttempts; attempt++) {
+            randomPosition = GetRandomPositionInCircle(spawnCenter.position, spawnRadius);
             randomPosition.y = spawnHeight;
+
+            if (Vector3.Distance(randomPosition, player.position) >= minSpawnDistance) {
+                validPositionFound = true;
+                break;
+            }
+        }
+
+        if (!validPositionFound) {
+            Debug.LogWarning("Failed to find a valid spawn position after maximum attempts.");
+            return;
         }
 
         // Raycast down to find the ground position
@@ -57,26 +68,42 @@ public class SpawnerWithRaycast : MonoBehaviour {
             randomPosition.y = hitInfo.point.y + groundOffset;
 
             // Instantiate the prefab at the calculated position
-            GameObject spawnedObject = Instantiate(prefabToSpawn, randomPosition, Quaternion.EulerAngles(spawnRotation));
+            if (randomRotation) {
+                spawnRotation = new Vector3(
+                    Random.Range(-180, 180),
+                    Random.Range(-180, 180),
+                    Random.Range(-180, 180)
+                    );
+            }
+
+            GameObject spawnedObject = Instantiate(prefabToSpawn, randomPosition, Quaternion.Euler(spawnRotation));
             spawnedObjects.Add(spawnedObject);
-            //Debug.Log($"Spawned {spawnedObject.name} at {randomPosition}");
         }
         else {
             Debug.LogWarning("Raycast did not hit any ground. Object not spawned.");
         }
     }
 
-    private Vector3 GetRandomPositionInBox(BoxCollider boxCollider) {
-        // Get the bounds of the BoxCollider in world space
-        Bounds bounds = boxCollider.bounds;
+    private Vector3 GetRandomPositionInCircle(Vector3 center, float radius) {
+        // Generate a random point inside a unit circle and scale it by the radius
+        Vector2 randomPoint2D = Random.insideUnitCircle * radius;
 
-        // Generate a random position within the bounds
-        float randomX = Random.Range(bounds.min.x, bounds.max.x);
-        float randomY = Random.Range(bounds.min.y, bounds.max.y);
-        float randomZ = Random.Range(bounds.min.z, bounds.max.z);
-
-        return new Vector3(randomX, randomY, randomZ);
+        // Convert 2D point to 3D space around the center position
+        return new Vector3(center.x + randomPoint2D.x, center.y, center.z + randomPoint2D.y);
     }
 
+    private void OnDrawGizmosSelected() {
+        if (player == null) return;
+
+        // Set the color of the Gizmos
+        Gizmos.color = Color.green;
+
+        // Draw a wireframe circle to represent the spawn radius
+        Gizmos.DrawWireSphere(spawnCenter.position, spawnRadius);
+
+        // Optionally, draw another circle to represent the minimum spawn distance
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(player.position, minSpawnDistance);
+    }
 
 }

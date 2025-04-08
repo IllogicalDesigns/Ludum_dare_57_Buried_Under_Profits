@@ -29,6 +29,8 @@ public class SniperFish : MonoBehaviour
 
     [SerializeField] Transform MouthPoint;
 
+    [SerializeField] ParticleSystem gunSmoke;
+
     bool isSniping;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -85,6 +87,7 @@ public class SniperFish : MonoBehaviour
             if (timer < 0) {
                 lineRenderer.enabled = false;
                 if (!gunshot.isPlaying) gunshot.Play();
+                gunSmoke.Play();
 
                 bool hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
                 if(hasPlayersLineOfSight && !player.isDodging) {

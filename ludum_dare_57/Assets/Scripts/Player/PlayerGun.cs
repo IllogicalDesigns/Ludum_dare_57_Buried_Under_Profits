@@ -30,6 +30,8 @@ public class PlayerGun : MonoBehaviour
     float origZ;
     [SerializeField] float bounceDuration = 0.2f;
 
+    public float lightDuration = 0.2f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -75,7 +77,7 @@ public class PlayerGun : MonoBehaviour
                 hit.collider.SendMessage(Health.OnHitString, new DamageInstance(damage, 0), SendMessageOptions.DontRequireReceiver);
 
                 pointLight.gameObject.SetActive(true);
-                Invoke(nameof(HideLight), 0.1f);
+                Invoke(nameof(HideLight), lightDuration);
 
                 gunBarrel.DOKill(true);
                 gunBarrel.DOLocalMoveY(localZBounce, bounceDuration/2).SetLoops(2, LoopType.Yoyo);

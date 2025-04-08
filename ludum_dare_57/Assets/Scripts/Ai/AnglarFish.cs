@@ -23,6 +23,7 @@ public class AnglarFish : MonoBehaviour {
     float jitterZ = 0f;
 
     [SerializeField] AudioSource start;
+    [SerializeField] AudioSource swim;
 
     public float dotRequirement = -0.85f;
     public LayerMask layerMask = ~0;
@@ -76,6 +77,7 @@ public class AnglarFish : MonoBehaviour {
                 isCharging = false;
                 gameObject.SendMessage(Threat.unBecomeThreat);
                 timer = coolDown;
+                swim.Stop();
             }
         }
     }
@@ -86,6 +88,7 @@ public class AnglarFish : MonoBehaviour {
         isCharging = true;
         gameObject.SendMessage(Threat.becomeThreatString);
         start.Play();
+        swim.Play();
         timer = coolDown;
     }
 

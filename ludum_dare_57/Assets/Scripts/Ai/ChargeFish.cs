@@ -26,6 +26,8 @@ public class ChargeFish : MonoBehaviour
     public float dotRequirement = 0.5f;
     public LayerMask layerMask = ~0;
 
+    public float distanceToHit = 3f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -56,7 +58,7 @@ public class ChargeFish : MonoBehaviour
             
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
 
-            if (distance < 2f) {
+            if (distance < distanceToHit) {
                 //impact
                 playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
                 isCharging = false;

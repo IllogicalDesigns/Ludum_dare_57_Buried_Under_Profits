@@ -77,7 +77,8 @@ public class Player : MonoBehaviour
             //dgTimer = 0;
         } else {
             if (hit.gameObject.CompareTag("Enemy")) return;
-            if(hit.gameObject.CompareTag("Mine")) hit.gameObject.SendMessage("OnHit", new DamageInstance(100, 100), SendMessageOptions.DontRequireReceiver);
+            if (hit.gameObject.CompareTag("Bubble")) return;
+            if (hit.gameObject.CompareTag("Mine")) hit.gameObject.SendMessage("OnHit", new DamageInstance(100, 100), SendMessageOptions.DontRequireReceiver);
             gameObject.SendMessage("OnHit", new DamageInstance(collisionDamage, collisionAirDamage), SendMessageOptions.DontRequireReceiver);  //We hit something, take damage
         }
     }

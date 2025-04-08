@@ -258,6 +258,76 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &1445065806252405044
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5231188049118853107}
+    m_Modifications:
+    - target: {fileID: 4194499063703746276, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_Name
+      value: DeadFish Particle System (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194499063703746276, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8700691592096938754, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+--- !u!4 &5438720514954077788 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6879196547281278824, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
+  m_PrefabInstance: {fileID: 1445065806252405044}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5697705186601078808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -331,6 +401,9 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1bd2691bc00b0a04193688489917fd85, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 5438720514954077788}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1bd2691bc00b0a04193688489917fd85, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 8112300429450469108}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1bd2691bc00b0a04193688489917fd85, type: 3}
       insertIndex: -1
@@ -396,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab82ab5c94c63f64980b87a4b552f4bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activationDistance: 25
+  activationDistance: 35
   minActivationDistance: 5
   speed: 4.5
   damage: 5
@@ -408,6 +481,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1
+  distanceToHit: 3
 --- !u!114 &935156874403996504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleNameFinder: blood Particle System
-  particleSystem: {fileID: 1201016661168513704, guid: 0c5158e6983ff164db7c8d75e68a3f2a, type: 3}
+  particleSystem: {fileID: 0}
 --- !u!114 &5105084835948771650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,7 +566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b62e88806dfa24582263ff398ff6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  replacement: {fileID: 1734318965489384529, guid: dc8bae698df411548adc6f8669dfab97, type: 3}
+  replacement: {fileID: 4194499063703746276, guid: 20ae8afccee7e6e48840b68e9205ab3b, type: 3}
 --- !u!54 &5614799586162596143
 Rigidbody:
   m_ObjectHideFlags: 0

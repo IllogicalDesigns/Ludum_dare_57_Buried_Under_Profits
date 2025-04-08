@@ -20,7 +20,10 @@ public class MineDamage : MonoBehaviour
             Health healthComponent = hitCollider.GetComponent<Health>();
             if (healthComponent != null) {
                 // Apply damage to the health component
-                healthComponent.SendMessage("OnHit", new DamageInstance(damageAmount, damageAmount));
+                if(hitCollider.CompareTag("Enemy"))
+                    healthComponent.SendMessage("OnHit", new DamageInstance(1000, 1000));
+                else
+                    healthComponent.SendMessage("OnHit", new DamageInstance(damageAmount, damageAmount));
             }
         }
     }

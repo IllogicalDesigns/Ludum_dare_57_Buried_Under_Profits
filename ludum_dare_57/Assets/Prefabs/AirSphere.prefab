@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6174196017382530580}
   m_Layer: 0
   m_Name: AirSphere
-  m_TagString: Untagged
+  m_TagString: Bubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,9 +159,9 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 6
-      inSlope: -0.16666667
-      outSlope: -0.16666667
+      value: 7
+      inSlope: -0.2
+      outSlope: -0.2
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -169,8 +169,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 30
       value: 1
-      inSlope: -0.16666667
-      outSlope: -0.16666667
+      inSlope: -0.2
+      outSlope: -0.2
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -190,4 +190,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe7c3c391c350445887c99b44a16d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystem: {fileID: 8422382823756457318, guid: 475941bb758f20b438c4a6b15779a77b, type: 3}
+  particleNameFinder: Bubble Particle System
+  particleSystem: {fileID: 0}

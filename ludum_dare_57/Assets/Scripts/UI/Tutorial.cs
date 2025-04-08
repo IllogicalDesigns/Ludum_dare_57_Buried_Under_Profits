@@ -7,8 +7,12 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject deadzonePanel;
     [SerializeField] GameObject shootPanel;
     [SerializeField] GameObject dodgePanel;
+    [SerializeField] GameObject missionPanel;
 
     Player player;
+    PlayerGun playerGun;
+    [SerializeField] GameObject spawner;
+    
     public float deadzone = 0.75f;
 
     public enum tutorialState {
@@ -17,6 +21,7 @@ public class Tutorial : MonoBehaviour
         deadzone,
         shoot,
         dodge,
+        mission,
         None
     }
 
@@ -32,6 +37,10 @@ public class Tutorial : MonoBehaviour
         dodgePanel.SetActive(false);
 
         player = FindAnyObjectByType<Player>();
+        player.enabled = false;
+
+        playerGun = FindAnyObjectByType<PlayerGun>();
+        playerGun.enabled = false;
     }
 
 
@@ -43,6 +52,7 @@ public class Tutorial : MonoBehaviour
         deadzonePanel.SetActive(false);
         shootPanel.SetActive(false);
         dodgePanel.SetActive(false);
+        missionPanel.SetActive(false);
 
         if (Input.GetKeyUp(KeyCode.T)) {
             Destroy(gameObject);
@@ -51,18 +61,18 @@ public class Tutorial : MonoBehaviour
         switch (currentState) {
             case tutorialState.altitude:
                 altitudePanel.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Space))
                     currentState = tutorialState.wasd;
                 break;
             case tutorialState.wasd:
                 wASDPanel.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
                     currentState = tutorialState.shoot;
                 break;
             case tutorialState.deadzone:
-                deadzonePanel.SetActive(true);
-                if (player.GetPlayerMousePos().magnitude > deadzone)
-                    currentState = tutorialState.shoot;
+                //deadzonePanel.SetActive(true);
+                //if (player.GetPlayerMousePos().magnitude > deadzone)
+                //    currentState = tutorialState.shoot;
                 break;
             case tutorialState.shoot:
                 shootPanel.SetActive(true);
@@ -71,8 +81,20 @@ public class Tutorial : MonoBehaviour
                 break;
             case tutorialState.dodge:
                 dodgePanel.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.LeftShift))
+                    currentState = tutorialState.mission;
+                break;
+            case tutorialState.mission:
+                missionPanel.SetActive(true);
+                if (Input.GetMouseButtonDown(0)) {
                     currentState = tutorialState.None;
+
+                    spawner.SetActive(true);
+                    player.enabled = true;
+                    playerGun.enabled = true;
+
+                    Destroy(gameObject);
+                }
                 break;
             default:
                 break;
