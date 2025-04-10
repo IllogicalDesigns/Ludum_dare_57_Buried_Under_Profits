@@ -22,6 +22,7 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] Vector3 rotationPunch = Vector3.one * 15f;
 
     [SerializeField] ParticleSystem bloodSystem;
+    [SerializeField] GameObject bloodDecal;
     [SerializeField] ParticleSystem sparksSystem;
     [SerializeField] GameObject pointLight;
 
@@ -84,6 +85,11 @@ public class PlayerGun : MonoBehaviour
 
                 if (hit.collider.TryGetComponent<Health>(out Health hp)) {
                     hitMarkerSfx.Play();
+                }
+
+                if (hit.collider.CompareTag("Enemy")) {
+                    var hitDecal = Instantiate(bloodDecal, hit.point, Quaternion.EulerAngles(-hit.normal))as GameObject;
+                    hitDecal.transform.SetParent(hit.transform);
                 }
 
                 if (hit.collider.TryGetComponent<OnHitSpawnParticle>(out OnHitSpawnParticle spawnParticle)) {

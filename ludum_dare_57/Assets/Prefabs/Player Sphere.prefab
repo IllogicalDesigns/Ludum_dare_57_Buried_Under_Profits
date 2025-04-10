@@ -4743,11 +4743,13 @@ MonoBehaviour:
   positionPunch: {x: 0.1, y: 0.1, z: 0.1}
   rotationPunch: {x: 1, y: 1, z: 1}
   bloodSystem: {fileID: 0}
+  bloodDecal: {fileID: 4419967644885193991, guid: c09939bdfb6151b44b701cad9d342f08, type: 3}
   sparksSystem: {fileID: 7077504671446156284}
   pointLight: {fileID: 2625681094580664141}
   gunBarrel: {fileID: 5087948550370622990}
   localZBounce: -0.5
   bounceDuration: 0.2
+  lightDuration: 0.2
 --- !u!114 &8003256324471472209
 MonoBehaviour:
   m_ObjectHideFlags: 0
