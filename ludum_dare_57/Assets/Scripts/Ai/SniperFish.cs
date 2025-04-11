@@ -31,6 +31,7 @@ public class SniperFish : MonoBehaviour
     [SerializeField] Transform MouthPoint;
 
     [SerializeField] ParticleSystem gunSmoke;
+    [SerializeField] ParticleSystem bubbleFire;
 
     bool isSniping;
 
@@ -96,6 +97,10 @@ public class SniperFish : MonoBehaviour
                 lineRenderer.enabled = false;
                 if (!gunshot.isPlaying) gunshot.Play();
                 gunSmoke.Play();
+
+                bubbleFire.transform.position = MouthPoint.position;
+                bubbleFire.transform.LookAt(attackPoint.position);
+                bubbleFire.Play();
 
                 bool hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
                 if(hasPlayersLineOfSight && !player.isDodging) {
