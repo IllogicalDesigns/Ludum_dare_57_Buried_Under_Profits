@@ -21,6 +21,7 @@ public class TriggerBubbleAdd : TriggerBase {
         var airAmount = airProvidedCurve.Evaluate(GameManager.instance.air);
 
         var providedAir = Mathf.RoundToInt(airAmount * diffMultii);
+        if (providedAir <= 0) providedAir = 1;
 
         GameManager.instance.ProvideAir(providedAir);
         AudioManager.instance.PlaySoundOnPoint(popSFX, transform.position);
