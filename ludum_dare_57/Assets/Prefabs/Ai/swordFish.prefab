@@ -5353,7 +5353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3effd1ae44636e74bbe54b02838d8b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threatIndicatorPrefab: {fileID: 3352981927554087797, guid: 19d3bc604d1b52b44acda36fa050beaa, type: 3}
+  threatIndicatorPrefab: {fileID: 7793858747763764434, guid: fe108c176112cc54aacb77914ef3d108, type: 3}
 --- !u!114 &2000222807601083691
 MonoBehaviour:
   m_ObjectHideFlags: 0

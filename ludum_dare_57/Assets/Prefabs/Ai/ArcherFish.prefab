@@ -484,7 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3effd1ae44636e74bbe54b02838d8b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threatIndicatorPrefab: {fileID: 3352981927554087797, guid: 19d3bc604d1b52b44acda36fa050beaa, type: 3}
+  threatIndicatorPrefab: {fileID: 6393024316143050638, guid: 26d46168e59e0f244b15e4730e18decf, type: 3}
 --- !u!114 &8123121651416438678
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5317301335256971865}
   - component: {fileID: 2734056602071668388}
   - component: {fileID: 7914478692138151649}
+  - component: {fileID: 6372752418037210433}
   m_Layer: 0
   m_Name: PistolShrimp
   m_TagString: Untagged
@@ -135,6 +136,9 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  gunShotSFX: {fileID: 8300000, guid: 39c86c36fdfc10d4892f1ffb51331a12, type: 3}
+  preGunShot: 1
+  preGunShotSfx: {fileID: 8300000, guid: effb7672af571124a8411e90b7eeb3fd, type: 3}
 --- !u!114 &2734056602071668388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +167,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   replacement: {fileID: 6760389247726803193, guid: bff81a23adfaa134ea24d09032e93ec3, type: 3}
+--- !u!114 &6372752418037210433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684039866174806399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3effd1ae44636e74bbe54b02838d8b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threatIndicatorPrefab: {fileID: 791591918575834853, guid: b5b54b0b96f0ce84ab1a0f18319ad7f5, type: 3}
 --- !u!1 &4367141264698633430
 GameObject:
   m_ObjectHideFlags: 0
