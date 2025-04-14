@@ -40,6 +40,10 @@ public class Player : MonoBehaviour
 
     private HashSet<GameObject> collidedObjects = new HashSet<GameObject>();
 
+    [Space]
+    [SerializeField] float maxSlowTime = 5f;
+    float slowTimer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -107,7 +111,18 @@ public class Player : MonoBehaviour
     void Update() {
         if (isPaused) { return; }
 
-        Time.timeScale = Input.GetKey(KeyCode.Mouse1) ? sloMoSpeed : normalSpeed;
+        //Time.timeScale = Input.GetKey(KeyCode.Mouse1) ? sloMoSpeed : normalSpeed;
+
+        if (Input.GetKeyDown(KeyCode.Mouse1)) {
+            slowTimer = 0;
+        } else if (Input.GetKey(KeyCode.Mouse1) && slowTimer < maxSlowTime) {
+            slowTimer += Time.unscaledDeltaTime;
+            Time.timeScale = sloMoSpeed;
+        } else if (Input.GetKeyUp(KeyCode.Mouse1) || slowTimer >= maxSlowTime) {
+            Time.timeScale = normalSpeed;
+            GameManager.instance.DamageAir(Mathf.RoundToInt(slowTimer));
+            slowTimer = 0;
+        }
 
         CameraBasedVerticalAndHorizontalMovement();
 
