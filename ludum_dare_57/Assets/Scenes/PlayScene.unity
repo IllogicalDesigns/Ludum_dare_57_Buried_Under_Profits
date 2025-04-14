@@ -21994,6 +21994,7 @@ GameObject:
   - component: {fileID: 1371830345}
   - component: {fileID: 1371830346}
   - component: {fileID: 1371830348}
+  - component: {fileID: 1371830349}
   m_Layer: 2
   m_Name: SpawnCube
   m_TagString: Untagged
@@ -22132,7 +22133,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371830340}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98278868122de694e8831bf814c393bf, type: 3}
   m_Name: 
@@ -22147,10 +22148,38 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   spawnedObjects: []
-  desiredSpawnCount: 2
+  desiredSpawnCount: 10
   spawnDelay: 20
   spawnRate: 10
   spawnRotation: {x: -70, y: 0, z: 0}
+  randomRotation: 0
+  spawnCenter: {fileID: 1460174582}
+--- !u!114 &1371830349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371830340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98278868122de694e8831bf814c393bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabToSpawn: {fileID: 1684039866174806399, guid: d7eb2267ad171df4da90bb56bda738bc, type: 3}
+  spawnHeight: 40
+  groundOffset: 1
+  spawnRadius: 60
+  player: {fileID: 2027511189}
+  minSpawnDistance: 40
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  spawnedObjects: []
+  desiredSpawnCount: 2
+  spawnDelay: 1
+  spawnRate: 4
+  spawnRotation: {x: 0, y: 0, z: 0}
   randomRotation: 0
   spawnCenter: {fileID: 1460174582}
 --- !u!4 &1373647989 stripped
@@ -32964,18 +32993,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2105209662537572908, guid: da52383f29311294ab2a5401dbb76796, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2636291427291344085, guid: da52383f29311294ab2a5401dbb76796, type: 3}
-      propertyPath: m_Range
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2636291427291344085, guid: da52383f29311294ab2a5401dbb76796, type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3009333320408815333, guid: da52383f29311294ab2a5401dbb76796, type: 3}
-      propertyPath: m_AdditionalLightsShadowResolutionTier
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4004691821152263464, guid: da52383f29311294ab2a5401dbb76796, type: 3}
