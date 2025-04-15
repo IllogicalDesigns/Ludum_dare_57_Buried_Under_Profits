@@ -21,9 +21,8 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] Vector3 positionPunch = Vector3.one;
     [SerializeField] Vector3 rotationPunch = Vector3.one * 15f;
 
-    [SerializeField] ParticleSystem bloodSystem;
     [SerializeField] GameObject bloodDecal;
-    [SerializeField] ParticleSystem sparksSystem;
+    [SerializeField] ParticleSystem gunSparksSystem;
     [SerializeField] GameObject pointLight;
 
     [SerializeField] Transform gunBarrel;
@@ -67,47 +66,80 @@ public class PlayerGun : MonoBehaviour
         RaycastHit hit;
 
         if (Input.GetMouseButtonDown(0) && ammo > 0) {
-            gunSfx.Play();
-            sparksSystem.Play();
-            cameraShake.PunchScreen(duration, positionPunch, rotationPunch);
+            PlayGunFireEffects();
             ammo--;
 
-            if (Physics.Raycast(ray, out hit, maxDist)) {
-                Debug.Log("Hit: " + hit.transform.name);
-                var damage = baseDamage + Random.Range(minExtra, maxExtra);
-                hit.collider.SendMessage(Health.OnHitString, new DamageInstance(damage, 0), SendMessageOptions.DontRequireReceiver);
-
-                pointLight.gameObject.SetActive(true);
-                Invoke(nameof(HideLight), lightDuration);
-
-                gunBarrel.DOKill(true);
-                gunBarrel.DOLocalMoveY(localZBounce, bounceDuration/2).SetLoops(2, LoopType.Yoyo);
-
-                if (hit.collider.TryGetComponent<Health>(out Health hp)) {
-                    hitMarkerSfx.Play();
-                }
-
-                if (hit.collider.CompareTag("Enemy")) {
-                    var hitDecal = Instantiate(bloodDecal, hit.point, Quaternion.EulerAngles(-hit.normal))as GameObject;
-                    hitDecal.transform.SetParent(hit.transform);
-                }
-
-                if (hit.collider.TryGetComponent<OnHitSpawnParticle>(out OnHitSpawnParticle spawnParticle)) {
-                    spawnParticle.particleSystem.transform.position = hit.point;
-                    spawnParticle.particleSystem.transform.forward = hit.normal;
-                    spawnParticle.particleSystem.Play();
-                } else {
-                    bloodSystem.transform.position = hit.point;
-                    bloodSystem.transform.forward = hit.normal;
-                    bloodSystem.Play();
-                }
-            }
-            else {
-                Debug.Log("Missed");
-            }
+            FireRayAndHandleEffects(ray);
         }
         else if(Input.GetMouseButtonDown(0) && ammo <= 0) {
-            AudioManager.instance.PlaySoundOnPlayer(outOfAmmoSfx);
+            PlayOutOfAmmoEffects();
+        }
+    }
+
+    private void FireRayAndHandleEffects(Ray ray) {
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, maxDist)) {
+            Debug.Log("Hit: " + hit.transform.name);
+
+            ApplyDamage(hit);
+            PlayHitMarkerOnEnemy(hit);
+            PlaceDecalOnHit(hit);
+            PlayParticleAtHit(hit);
+        }
+        else {
+            Debug.Log("Missed");
+        }
+    }
+
+    private void PlayOutOfAmmoEffects() {
+        AudioManager.instance.PlaySoundOnPlayer(outOfAmmoSfx);
+    }
+
+    private void ApplyDamage(RaycastHit hit) {
+        var damage = baseDamage + Random.Range(minExtra, maxExtra);
+        hit.collider.SendMessage(Health.OnHitString, new DamageInstance(damage, 0), SendMessageOptions.DontRequireReceiver);
+    }
+
+    private void PlayHitMarkerOnEnemy(RaycastHit hit) {
+        if (hit.collider.TryGetComponent<Health>(out Health hp)) {
+            hitMarkerSfx.Play();
+        }
+    }
+
+    private void PlaceDecalOnHit(RaycastHit hit) {
+        if (hit.collider.CompareTag("Enemy")) {
+            var hitDecal = Instantiate(bloodDecal, hit.point, Quaternion.EulerAngles(-hit.normal)) as GameObject;
+            hitDecal.transform.SetParent(hit.transform);
+        }
+        else {
+            //Add non enemy hit decal
+        }
+    }
+
+    private void PlayGunFireEffects() {
+        gunSfx.Play();
+        gunSparksSystem.Play();
+        cameraShake.PunchScreen(duration, positionPunch, rotationPunch);
+
+        pointLight.gameObject.SetActive(true);
+        Invoke(nameof(HideLight), lightDuration);
+
+        gunBarrel.DOKill(true);
+        gunBarrel.DOLocalMoveY(localZBounce, bounceDuration / 2).SetLoops(2, LoopType.Yoyo);
+    }
+
+    private static void PlayParticleAtHit(RaycastHit hit) {
+        if (hit.collider.TryGetComponent<OnHitSpawnParticle>(out OnHitSpawnParticle spawnParticle)) {
+            ParticleManager.instance?.PlayParticle(spawnParticle.typeOfParticles, hit.point, hit.normal);
+            //spawnParticle.particleSystem.transform.position = hit.point;
+            //spawnParticle.particleSystem.transform.forward = hit.normal;
+            //spawnParticle.particleSystem.Play();
+        }
+        else {
+            ParticleManager.instance?.PlayParticle(ParticleManager.Particles.sand, hit.point, hit.normal);
+            //sandSystem.transform.position = hit.point;
+            //sandSystem.transform.forward = hit.normal;
+            //sandSystem.Play();
         }
     }
 }

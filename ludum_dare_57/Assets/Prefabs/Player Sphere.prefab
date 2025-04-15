@@ -4717,6 +4717,7 @@ MonoBehaviour:
   ramForce: 10
   dodgeSound: {fileID: 1327856562260874570}
   metal: {fileID: 8300000, guid: 92853b46a1f801d429c2a819eb4fdefe, type: 3}
+  maxSlowTime: 5
 --- !u!114 &8105508544190408356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4742,9 +4743,8 @@ MonoBehaviour:
   duration: 0.1
   positionPunch: {x: 0.1, y: 0.1, z: 0.1}
   rotationPunch: {x: 1, y: 1, z: 1}
-  bloodSystem: {fileID: 0}
   bloodDecal: {fileID: 4419967644885193991, guid: c09939bdfb6151b44b701cad9d342f08, type: 3}
-  sparksSystem: {fileID: 7077504671446156284}
+  gunSparksSystem: {fileID: 7077504671446156284}
   pointLight: {fileID: 2625681094580664141}
   gunBarrel: {fileID: 5087948550370622990}
   localZBounce: -0.5
@@ -6750,7 +6750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6337373313575932058, guid: f2cbd75b313a6d54db4813f2b284e9d4, type: 3}
       propertyPath: m_Name
-      value: Sparks Particle System (1)
+      value: gunSparks Particle System
       objectReference: {fileID: 0}
     - target: {fileID: 6337373313575932058, guid: f2cbd75b313a6d54db4813f2b284e9d4, type: 3}
       propertyPath: m_Layer

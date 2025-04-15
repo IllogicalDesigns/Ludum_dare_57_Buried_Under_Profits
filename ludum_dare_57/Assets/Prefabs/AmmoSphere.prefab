@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 3063442800111882638}
   - component: {fileID: 6212908666273704439}
   - component: {fileID: 955328372311133136}
+  - component: {fileID: 5725356653230677777}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: AmmoBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,6 +109,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5725356653230677777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7115565503055798930}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfb0ac2b0e20c1d42b47ee12c36c51fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTransform: {fileID: 0}
+  speed: 20
+  destroyRadius: 3
 --- !u!1 &9167316292766969684
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +303,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  ammoBox: {fileID: 2932293161628412362}
+  toPoint: {fileID: 5725356653230677777}
 --- !u!114 &6809434662723492711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,3 +319,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleNameFinder: Bubble Particle System
   particleSystem: {fileID: 0}
+  typeOfParticles: 3

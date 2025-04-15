@@ -44,6 +44,13 @@ public class Player : MonoBehaviour
     [SerializeField] float maxSlowTime = 5f;
     float slowTimer;
 
+    private const float clearColliderTimer = 2f;
+
+    private const string OnRamStr = "OnRam";
+    private const string EnemyTagStr = "Enemy";
+    private const string BubbleTagStr = "Bubble";
+    private const string MineTagStr = "Mine";
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -54,7 +61,7 @@ public class Player : MonoBehaviour
         camTrans = cam.transform;
         health = GetComponent<Health>();
 
-        InvokeRepeating(nameof(clearCollided), 2f, 2f);
+        InvokeRepeating(nameof(clearCollided), clearColliderTimer, clearColliderTimer);
     }
 
     void clearCollided() {
@@ -76,14 +83,13 @@ public class Player : MonoBehaviour
 
         // Check if the object has a Health component and send damage
         if (isDodging && hit.gameObject.TryGetComponent<Health>(out Health hp)) {
-            hp.gameObject.SendMessage("OnHit", new DamageInstance(dodgeDamage, 0));
-            hp.gameObject.SendMessage("OnRam", (transform.position - hit.transform.position) * -ramForce);
+            hp.gameObject.SendMessage(Health.OnHitString, new DamageInstance(dodgeDamage, 0));
+            hp.gameObject.SendMessage(OnRamStr, (transform.position - hit.transform.position) * -ramForce);
             //dgTimer = 0;
         } else {
-            if (hit.gameObject.CompareTag("Enemy")) return;
-            if (hit.gameObject.CompareTag("Bubble")) return;
-            if (hit.gameObject.CompareTag("Mine")) hit.gameObject.SendMessage("OnHit", new DamageInstance(100, 100), SendMessageOptions.DontRequireReceiver);
-            gameObject.SendMessage("OnHit", new DamageInstance(collisionDamage, collisionAirDamage), SendMessageOptions.DontRequireReceiver);  //We hit something, take damage
+            if (hit.gameObject.CompareTag(EnemyTagStr) || hit.gameObject.CompareTag(BubbleTagStr)) return;
+            if (hit.gameObject.CompareTag(MineTagStr)) hit.gameObject.SendMessage(Health.OnHitString, new DamageInstance(100, 100), SendMessageOptions.DontRequireReceiver);
+            gameObject.SendMessage(Health.OnHitString, new DamageInstance(collisionDamage, collisionAirDamage), SendMessageOptions.DontRequireReceiver);  //We hit something, take damage
         }
     }
 
@@ -111,61 +117,44 @@ public class Player : MonoBehaviour
     void Update() {
         if (isPaused) { return; }
 
-        //Time.timeScale = Input.GetKey(KeyCode.Mouse1) ? sloMoSpeed : normalSpeed;
+        HandleSlowMotion();
+        CameraBasedVerticalAndHorizontalMovement();
+        AltitudeControls();
+        HandleRotation();
+        HandleDodging();
+    }
 
+    private void HandleSlowMotion() {
         if (Input.GetKeyDown(KeyCode.Mouse1)) {
             slowTimer = 0;
-        } else if (Input.GetKey(KeyCode.Mouse1) && slowTimer < maxSlowTime) {
+        }
+        else if (Input.GetKey(KeyCode.Mouse1) && slowTimer < maxSlowTime) {
             slowTimer += Time.unscaledDeltaTime;
             Time.timeScale = sloMoSpeed;
-        } else if (Input.GetKeyUp(KeyCode.Mouse1) || slowTimer >= maxSlowTime) {
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse1) || slowTimer >= maxSlowTime) {
             Time.timeScale = normalSpeed;
             GameManager.instance.DamageAir(Mathf.RoundToInt(slowTimer));
             slowTimer = 0;
         }
-
-        CameraBasedVerticalAndHorizontalMovement();
-
-        AltitudeControls();
-
-        //The below code is panned by critics, so its gone
-        //Vector2 normalizedPos = GetMouseVectorBasedOnScreen();
-        //if (normalizedPos.magnitude > deadzone) {
-        //    HandleRotation(normalizedPos);
-        //}
-
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-        HandleRotation(mouseX, mouseY);
-
-        Vector3 movement = GetMovementVector();
-
-        if (dgTimer >= dodgeTimer && Input.GetKeyDown(KeyCode.LeftShift) && movement.magnitude != 0) {
-            isDodging = true;
-            dodgeSound.Play();
-            movement = Quaternion.LookRotation(camTrans.forward) * movement;
-            Vector3 dodgeDirection = movement;
-            if(dodgeMovement == Vector3.zero) dodgeMovement = dodgeDirection * moveSpeed * dodgeSpeed;
-            GameManager.instance.DamageAir(2);
-            health.canTakeDamage = false;
-        }
-
-        if (dgTimer > 0 && isDodging) {
-            controller.Move(dodgeMovement * Time.deltaTime);
-            dgTimer -= Time.deltaTime;
-        } else {
-            isDodging = false;
-            dodgeMovement = Vector3.zero;
-            health.canTakeDamage = true;
-        }
-
-        if (!isDodging) {
-            if(dgTimer <= dodgeTimer)
-                dgTimer += Time.deltaTime * refillSpeed;
-        }
     }
 
-    private void HandleRotation(float mouseX, float mouseY) {
+    private void CameraBasedVerticalAndHorizontalMovement() {
+        Vector3 movement = GetMovementVector();
+        movement = Quaternion.LookRotation(camTrans.forward) * movement;
+        controller.Move(movement * moveSpeed * Time.deltaTime);
+    }
+
+    private void AltitudeControls() {
+        float moveY = Input.GetAxis("Altitude") * moveSpeed;
+        Vector3 verticalMovement = new Vector3(0, moveY, 0);
+        controller.Move(verticalMovement * Time.deltaTime);
+    }
+
+    private void HandleRotation() {
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
         float yaw = mouseX * rotationSpeed * Time.deltaTime;
         float pitch = -mouseY * rotationSpeed * Time.deltaTime;
 
@@ -181,9 +170,34 @@ public class Player : MonoBehaviour
         transform.localEulerAngles = euler;
     }
 
+    private void HandleDodging() {
+        Vector3 movement = GetMovementVector();
 
+        if (dgTimer >= dodgeTimer && Input.GetKeyDown(KeyCode.LeftShift) && movement.magnitude != 0) {
+            isDodging = true;
+            dodgeSound.Play();
+            movement = Quaternion.LookRotation(camTrans.forward) * movement;
+            Vector3 dodgeDirection = movement;
+            if (dodgeMovement == Vector3.zero) dodgeMovement = dodgeDirection * moveSpeed * dodgeSpeed;
+            GameManager.instance.DamageAir(2);
+            health.canTakeDamage = false;
+        }
 
+        if (dgTimer > 0 && isDodging) {
+            controller.Move(dodgeMovement * Time.deltaTime);
+            dgTimer -= Time.deltaTime;
+        }
+        else {
+            isDodging = false;
+            dodgeMovement = Vector3.zero;
+            health.canTakeDamage = true;
+        }
 
+        if (!isDodging) {
+            if (dgTimer <= dodgeTimer)
+                dgTimer += Time.deltaTime * refillSpeed;
+        }
+    }
 
     private Vector2 GetMouseVectorBasedOnScreen() {
         float normalizedX = (Input.mousePosition.x / Screen.width) * 2f - 1f;
@@ -198,39 +212,11 @@ public class Player : MonoBehaviour
         return normalizedPos;
     }
 
-    //The below code is panned by critics, so its gone
-    //private void HandleRotation(Vector2 normPos) {
-    //    Vector3 currentRotation = transform.localEulerAngles;
-
-    //    float distanceMulti = normPos.magnitude * distanceMultiplier;
-
-    //    float currentXRotation = currentRotation.x;
-    //    if (currentXRotation > 180) currentXRotation -= 360;
-    //    float newXRotation = currentXRotation + normPos.y * -rotationSpeed * distanceMulti * Time.deltaTime;
-
-    //    float currentYRotation = currentRotation.y;
-    //    float newYRotation = currentYRotation + -normPos.x * -rotationSpeed * distanceMulti * normPos.magnitude * Time.deltaTime;
-
-    //    transform.localEulerAngles = new Vector3(newXRotation, newYRotation, currentRotation.z);
-    //}
-
-    private void AltitudeControls() {
-        float moveY = Input.GetAxis("Altitude") * moveSpeed;
-        Vector3 verticalMovement = new Vector3(0, moveY, 0);
-        controller.Move(verticalMovement * Time.deltaTime);
-    }
-
     Vector3 GetMovementVector() {
         float moveX = Input.GetAxis("Horizontal") * moveSpeed;
         float moveZ = Input.GetAxis("Vertical") * moveSpeed;
         Vector3 movement = new Vector3(moveX, 0, moveZ);
         if (movement.magnitude > 1) movement = movement.normalized;
         return movement;
-    }
-
-    private void CameraBasedVerticalAndHorizontalMovement() {
-        Vector3 movement = GetMovementVector();
-        movement = Quaternion.LookRotation(camTrans.forward) * movement;
-        controller.Move(movement * moveSpeed * Time.deltaTime);
     }
 }

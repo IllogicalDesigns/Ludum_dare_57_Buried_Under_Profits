@@ -164,6 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleNameFinder: Gem Particle System
   particleSystem: {fileID: 8700691592096938754, guid: 2a7a1de053fb6cc469fb55a46c68911b, type: 3}
+  typeOfParticles: 4
 --- !u!114 &-6524229357323693379
 MonoBehaviour:
   m_ObjectHideFlags: 0

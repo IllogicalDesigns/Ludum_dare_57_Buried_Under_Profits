@@ -225,3 +225,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleNameFinder: Bubble Particle System
   particleSystem: {fileID: 0}
+  typeOfParticles: 3

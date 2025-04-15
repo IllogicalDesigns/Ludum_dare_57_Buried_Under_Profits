@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2734056602071668388}
   - component: {fileID: 7914478692138151649}
   - component: {fileID: 6372752418037210433}
+  - component: {fileID: 7870551112486240486}
   m_Layer: 0
   m_Name: PistolShrimp
   m_TagString: Untagged
@@ -180,6 +181,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   threatIndicatorPrefab: {fileID: 791591918575834853, guid: b5b54b0b96f0ce84ab1a0f18319ad7f5, type: 3}
+--- !u!114 &7870551112486240486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684039866174806399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe7c3c391c350445887c99b44a16d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleNameFinder: blood Particle System
+  particleSystem: {fileID: 0}
+  typeOfParticles: 2
 --- !u!1 &4367141264698633430
 GameObject:
   m_ObjectHideFlags: 0

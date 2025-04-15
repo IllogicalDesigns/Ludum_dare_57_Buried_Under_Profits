@@ -5129,6 +5129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleNameFinder: blood Particle System
   particleSystem: {fileID: 0}
+  typeOfParticles: 2
 --- !u!114 &2454596374562420471
 MonoBehaviour:
   m_ObjectHideFlags: 0
