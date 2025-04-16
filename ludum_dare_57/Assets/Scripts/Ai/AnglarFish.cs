@@ -55,7 +55,7 @@ public class AnglarFish : MonoBehaviour {
         }
 
         var distance = Vector3.Distance(transform.position, attackPoint.position);
-        if (!isCharging && timer <= 0 && AIHelpers.canThePlayerSeeUs(transform, attackPoint, activationDistance, minActivationDistance, dotRequirement, layerMask)) {
+        if (!isCharging && timer <= 0 && AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, minActivationDistance, dotRequirement, layerMask)) {
             StartCharge();
         }
 

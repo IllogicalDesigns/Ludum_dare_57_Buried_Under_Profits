@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8510054532299676419}
   - component: {fileID: 6740097682831101234}
   - component: {fileID: 8104606291317727668}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 3368753058305405144}
   - component: {fileID: 7667246837574161970}
   - component: {fileID: 1265351656452364153}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: blood Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5018,7 +5018,7 @@ GameObject:
   - component: {fileID: 5749373720904203114}
   - component: {fileID: 3033010742717875720}
   - component: {fileID: 8064299229819977040}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AngularFish
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -5098,7 +5098,7 @@ MonoBehaviour:
   jitterUpdate: 2
   start: {fileID: 6374907336175538388}
   swim: {fileID: 6524328781177096200}
-  dotRequirement: -0.7
+  dotRequirement: 0.5
   layerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -5127,8 +5127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe7c3c391c350445887c99b44a16d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleNameFinder: blood Particle System
-  particleSystem: {fileID: 0}
   typeOfParticles: 2
 --- !u!114 &2454596374562420471
 MonoBehaviour:
@@ -5348,7 +5346,7 @@ GameObject:
   - component: {fileID: 820513400503181194}
   - component: {fileID: 3472127797799088798}
   - component: {fileID: 1226740444317356170}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5456,7 +5454,7 @@ GameObject:
   - component: {fileID: 8254052686194320446}
   - component: {fileID: 1014945047955342049}
   - component: {fileID: 6430700199924988303}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DeadFish Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10349,7 +10347,7 @@ GameObject:
   - component: {fileID: 4830657952412951228}
   - component: {fileID: 73203856852576991}
   - component: {fileID: 1686913631700023249}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

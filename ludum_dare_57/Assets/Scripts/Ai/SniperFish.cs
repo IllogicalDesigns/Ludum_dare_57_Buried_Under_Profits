@@ -71,6 +71,12 @@ public class SniperFish : MonoBehaviour
         }
 
         if (isSniping) {
+            bool hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
+            if(!hasPlayersLineOfSight) {
+                timer = cooldown;
+                lineRenderer.enabled = false;
+            }
+
             transform.LookAt(attackPoint.position);
             lineRenderer.enabled = true;
             lineRenderer.SetPosition(0, MouthPoint.position);
@@ -102,7 +108,7 @@ public class SniperFish : MonoBehaviour
                 bubbleFire.transform.LookAt(attackPoint.position);
                 bubbleFire.Play();
 
-                bool hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
+                hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
                 if(hasPlayersLineOfSight && !player.isDodging) {
                     playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
                 }
@@ -115,7 +121,7 @@ public class SniperFish : MonoBehaviour
             timer = timeBeforeSnipeLands;
         }
 
-        if (!isSniping && AIHelpers.canThePlayerSeeUs(transform, attackPoint, activationDistance, 0f, dotRequirement, layerMask)) {
+        if (!isSniping && AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, 0f, dotRequirement, layerMask)) {
             StartSniping();
         }
     }

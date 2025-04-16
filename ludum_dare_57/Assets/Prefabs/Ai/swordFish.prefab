@@ -5305,7 +5305,7 @@ MonoBehaviour:
   jitterRange: 4
   start: {fileID: 2247394612984329514}
   swim: {fileID: 8324368788209869677}
-  dotRequirement: -0.9
+  dotRequirement: 0.8
   layerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -5366,8 +5366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe7c3c391c350445887c99b44a16d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleNameFinder: blood Particle System
-  particleSystem: {fileID: 0}
   typeOfParticles: 2
 --- !u!114 &7272533705169312444
 MonoBehaviour:

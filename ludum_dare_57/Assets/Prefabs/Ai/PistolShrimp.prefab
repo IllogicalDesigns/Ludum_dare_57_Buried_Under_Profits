@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6372752418037210433}
   - component: {fileID: 7870551112486240486}
   - component: {fileID: 3663121281267663859}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PistolShrimp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,10 +134,10 @@ MonoBehaviour:
   launchedObject: {fileID: 4261524308620940799, guid: b11dc9595fe683141b158f931fa8e6ea, type: 3}
   damage: 50
   airDamage: 2
-  dotRequirement: -0.65
+  dotRequirement: 0.8
   layerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1
   gunShotSFX: {fileID: 8300000, guid: 39c86c36fdfc10d4892f1ffb51331a12, type: 3}
   preGunShot: 1
   preGunShotSfx: {fileID: 8300000, guid: effb7672af571124a8411e90b7eeb3fd, type: 3}
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 8485368678731382505}
   - component: {fileID: 1339775081554717574}
   - component: {fileID: 8319441878819689982}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8698978204407787994}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Launch
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}

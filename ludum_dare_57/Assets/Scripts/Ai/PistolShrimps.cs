@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PistolShrimps : MonoBehaviour {
     public float activationDistance = 15f;
@@ -27,6 +28,8 @@ public class PistolShrimps : MonoBehaviour {
     [SerializeField] AudioClip preGunShotSfx;
     bool hasPreShotPlayed;
 
+    Tween dashTween;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         attackPoint = GameObject.Find("AttackPoint").transform;
@@ -44,7 +47,7 @@ public class PistolShrimps : MonoBehaviour {
     void Update() {
         if (GameManager.instance.currentGameState != GameManager.GameState.playing) return;
 
-        if (!isShooting && AIHelpers.canThePlayerSeeUs(transform, attackPoint, activationDistance, 0f, dotRequirement, layerMask)) {
+        if (!isShooting && AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, 0f, dotRequirement, layerMask)) {
             StartShooting();
         }
 
@@ -64,8 +67,19 @@ public class PistolShrimps : MonoBehaviour {
             var shot = Instantiate(launchedObject, launchPoint.transform.position, launchPoint.transform.rotation);
             shot.transform.LookAt(player.transform);
 
+            DashToNewPosition();
+
             AudioManager.instance.PlaySoundOnPoint(gunShotSFX, transform.position);
             hasPreShotPlayed = false;
+        }
+    }
+
+    private void DashToNewPosition() {
+        Vector3 direction = Random.value < 0.5f ? Vector3.left : Vector3.right;
+        var newPosition = transform.position + direction * 5f;
+
+        if (NavMesh.SamplePosition(newPosition, out NavMeshHit hit, 5f, NavMesh.AllAreas)) {
+            dashTween = transform.DOMove(hit.position, cooldown * 0.5f);
         }
     }
 

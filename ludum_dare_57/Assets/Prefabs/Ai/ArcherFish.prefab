@@ -306,7 +306,7 @@ MonoBehaviour:
   maxPitch: 1.5
   damage: 5
   airDamage: 4
-  dotRequirement: -0.8
+  dotRequirement: 0.9
   layerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -497,8 +497,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe7c3c391c350445887c99b44a16d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleNameFinder: blood Particle System
-  particleSystem: {fileID: 0}
   typeOfParticles: 2
 --- !u!114 &2098532448967893667
 MonoBehaviour:

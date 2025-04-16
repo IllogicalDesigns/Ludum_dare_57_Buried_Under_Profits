@@ -43,7 +43,7 @@ public class ChargeFish : MonoBehaviour
 
         var distance = Vector3.Distance(transform.position, attackPoint.position);
 
-        if (!isCharging && AIHelpers.canThePlayerSeeUs(transform, attackPoint, activationDistance, minActivationDistance, dotRequirement, layerMask)) {
+        if (!isCharging && AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, minActivationDistance, dotRequirement, layerMask)) {
             StartCharging();
         }
 
