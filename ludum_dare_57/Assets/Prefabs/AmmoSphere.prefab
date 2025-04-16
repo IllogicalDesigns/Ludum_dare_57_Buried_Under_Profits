@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   speed: 20
-  destroyRadius: 3
+  destroyRadius: 1
 --- !u!1 &9167316292766969684
 GameObject:
   m_ObjectHideFlags: 0

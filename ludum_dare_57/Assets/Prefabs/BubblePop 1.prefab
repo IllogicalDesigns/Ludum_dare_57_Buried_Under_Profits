@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   speed: 21
-  destroyRadius: 3
+  destroyRadius: 1
 --- !u!1 &2785771756303573500
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   speed: 18
-  destroyRadius: 3
+  destroyRadius: 1
 --- !u!1 &5093434034006281667
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   speed: 20
-  destroyRadius: 3
+  destroyRadius: 1
 --- !u!1 &6632110996039828138
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   speed: 22
-  destroyRadius: 3
+  destroyRadius: 1
 --- !u!1001 &4105442139935081629
 PrefabInstance:
   m_ObjectHideFlags: 0

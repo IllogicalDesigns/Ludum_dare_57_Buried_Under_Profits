@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   speed: 21
-  destroyRadius: 3
+  destroyRadius: 1
 --- !u!1 &1726743901649169436
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   speed: 18
-  destroyRadius: 3
+  destroyRadius: 1
 --- !u!1 &4018858027642692741
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,7 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   speed: 20
-  destroyRadius: 3
+  destroyRadius: 1
 --- !u!1 &4702530930923372979
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   speed: 22
-  destroyRadius: 3
+  destroyRadius: 1
 --- !u!1 &6760389247726803193
 GameObject:
   m_ObjectHideFlags: 0
