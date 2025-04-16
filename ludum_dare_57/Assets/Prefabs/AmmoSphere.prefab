@@ -305,6 +305,39 @@ MonoBehaviour:
     m_RotationOrder: 4
   ammoBox: {fileID: 2932293161628412362}
   toPoint: {fileID: 5725356653230677777}
+  pickupDistance:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 15
+      inSlope: -7.000001
+      outSlope: -7.000001
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8960953
+      value: 8.727332
+      inSlope: -7
+      outSlope: -7
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 1
+      inSlope: -6.999999
+      outSlope: -6.999999
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &6809434662723492711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +350,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe7c3c391c350445887c99b44a16d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleNameFinder: Bubble Particle System
-  particleSystem: {fileID: 0}
   typeOfParticles: 3

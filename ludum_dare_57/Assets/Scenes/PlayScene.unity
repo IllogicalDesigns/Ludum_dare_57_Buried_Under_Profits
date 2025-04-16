@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.027450982, g: 0.16470589, b: 0.22352943, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.035
@@ -19040,7 +19040,7 @@ GameObject:
   - component: {fileID: 1353435857}
   - component: {fileID: 1353435856}
   m_Layer: 0
-  m_Name: Decal Projector
+  m_Name: Caustics Decal Projector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19078,12 +19078,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1353435855}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 81, y: 38, z: 119}
+  m_LocalRotation: {x: -0.35355103, y: 0.6123738, z: -0.6123738, w: -0.35355103}
+  m_LocalPosition: {x: -143.55713, y: 38, z: 10.646927}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1878889773}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1354744417
 GameObject:
@@ -25906,6 +25906,7 @@ Transform:
   - {fileID: 531492972}
   - {fileID: 1282849351}
   - {fileID: 826345424}
+  - {fileID: 1353435857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -240, z: 0}
 --- !u!1001 &1881944677
@@ -29484,7 +29485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7152538896649115815, guid: da52383f29311294ab2a5401dbb76796, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 40.352
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: 7152538896649115815, guid: da52383f29311294ab2a5401dbb76796, type: 3}
       propertyPath: m_LocalPosition.z
@@ -30147,6 +30148,5 @@ SceneRoots:
   - {fileID: 1878889773}
   - {fileID: 1410993327}
   - {fileID: 455302917}
-  - {fileID: 1185093135453054466}
-  - {fileID: 1353435857}
   - {fileID: 1966342130}
+  - {fileID: 1185093135453054466}

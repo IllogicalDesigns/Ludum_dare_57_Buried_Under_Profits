@@ -16,7 +16,7 @@ public class MoveToPoint : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, targetTransform.position, speed * Time.deltaTime);
 
         if(Vector3.Distance(transform.position, targetTransform.position) < destroyRadius) {
-            Destroy(targetTransform);
+            Destroy(gameObject);
         }
     }
 }

@@ -10,10 +10,15 @@ public class HullHealthEffects : MonoBehaviour
     public Material missingWindow3;
     public Renderer windowRenderer;
 
+    [Space]
     public AudioClip crack;
     bool cracked1;
     bool cracked2;
     bool missing3;
+
+    [Space]
+    public ParticleSystem waterParticles2;
+    public ParticleSystem waterParticles1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -27,12 +32,16 @@ public class HullHealthEffects : MonoBehaviour
     {
         if(hullHealth.hp <= 0) {
             SetMissingWindow();
+            if (waterParticles2.isPlaying) waterParticles2.Stop();
+            if (waterParticles1.isPlaying) waterParticles1.Stop();
         }
         else if(hullHealth.hp < 33) {
             SetHeavyCrack2();
+            if(!waterParticles2.isPlaying) waterParticles2.Play();
         }
         else if(hullHealth.hp < 66) {
             SetCrack1();
+            if (!waterParticles1.isPlaying) waterParticles1.Play();
         }
         else {
             windowRenderer.material = window;
