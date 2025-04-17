@@ -16,17 +16,20 @@ public class Player : MonoBehaviour
     public float maxX = 120f;
     [Space]
     public float distanceMultiplier = 2f;
-
+    [Space]
     public float dodgeTimer = 1f;
     public bool isDodging;
     public float dgTimer;
-    public float refillSpeed = 0.25f;
+    //public float refillSpeed = 0.25f;
+    public AnimationCurve refillSpeedCurve = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(1f, 0.25f));
     public float dodgeSpeed = 4f;
     public int dodgeCost = 1;
-
+    [Space]
     public float sloMoSpeed = 0.5f;
     public float normalSpeed = 1f;
-
+    [SerializeField] float maxSlowTime = 5f;
+    float slowTimer;
+    [Space]
     public int dodgeDamage = 100;
     public int collisionDamage = 1;
     public int collisionAirDamage = 1;
@@ -35,14 +38,11 @@ public class Player : MonoBehaviour
     Vector3 dodgeMovement;
 
     public AudioSource dodgeSound;
+    [Space]
     public AudioClip metal;
     Health health;
 
     private HashSet<GameObject> collidedObjects = new HashSet<GameObject>();
-
-    [Space]
-    [SerializeField] float maxSlowTime = 5f;
-    float slowTimer;
 
     private const float clearColliderTimer = 2f;
 
@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
     }
 
     private void HandleSlowMotion() {
-        if (Input.GetKeyDown(KeyCode.Mouse1)) {
+        if (Input.GetKeyDown(KeyCode.Mouse1) && slowTimer <= maxSlowTime) {
             slowTimer = 0;
         }
         else if (Input.GetKey(KeyCode.Mouse1) && slowTimer < maxSlowTime) {
@@ -135,7 +135,8 @@ public class Player : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Mouse1) || slowTimer >= maxSlowTime) {
             Time.timeScale = normalSpeed;
             GameManager.instance.DamageAir(Mathf.RoundToInt(slowTimer));
-            slowTimer = 0;
+        } else if(slowTimer > 0) {
+            slowTimer -= Time.deltaTime;
         }
     }
 
@@ -195,7 +196,7 @@ public class Player : MonoBehaviour
 
         if (!isDodging) {
             if (dgTimer <= dodgeTimer)
-                dgTimer += Time.deltaTime * refillSpeed;
+                dgTimer += Time.deltaTime * refillSpeedCurve.Evaluate(GameManager.instance.difficulty);
         }
     }
 

@@ -35,6 +35,8 @@ public class PlayerGun : MonoBehaviour
     public float fireRate = 0.2f;
     float nextFireTime;
 
+    [SerializeField] LayerMask layerMask;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -97,7 +99,7 @@ public class PlayerGun : MonoBehaviour
 
     private void FireRayAndHandleEffects(Ray ray) {
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, maxDist)) {
+        if (Physics.Raycast(ray, out hit, maxDist, layerMask)) {
             Debug.Log("Hit: " + hit.transform.name);
 
             ApplyDamage(hit);
