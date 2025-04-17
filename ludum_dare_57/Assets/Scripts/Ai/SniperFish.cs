@@ -73,8 +73,9 @@ public class SniperFish : MonoBehaviour
         if (isSniping) {
             bool hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
             if(!hasPlayersLineOfSight) {
-                timer = cooldown;
+                timer = 0;
                 lineRenderer.enabled = false;
+                isSniping = false;
             }
 
             transform.LookAt(attackPoint.position);
@@ -96,7 +97,6 @@ public class SniperFish : MonoBehaviour
 
             float pitchFactor = 1 - (timer / timeBeforeSnipeLands);
             windup.pitch = Mathf.Lerp(1.0f, maxPitch, pitchFactor);
-
 
             timer -= diffMulti * Time.deltaTime;
             if (timer < 0) {

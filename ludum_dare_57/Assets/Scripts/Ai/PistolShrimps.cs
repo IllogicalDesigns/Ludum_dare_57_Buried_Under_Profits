@@ -29,6 +29,11 @@ public class PistolShrimps : MonoBehaviour {
     bool hasPreShotPlayed;
 
     Tween dashTween;
+    [Space]
+    [SerializeField] Vector3 dashOffset = Vector3.up * 1f;
+    [SerializeField] float dashDistance = 5f;
+    const float PER_OF_CD = 0.5f;
+    const float ADJ_RNG = 5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -75,11 +80,11 @@ public class PistolShrimps : MonoBehaviour {
     }
 
     private void DashToNewPosition() {
-        Vector3 direction = Random.value < 0.5f ? Vector3.left : Vector3.right;
-        var newPosition = transform.position + direction * 5f;
+        Vector3 direction = Random.value < 0.5f ? transform.right : -transform.right;
+        var newPosition = transform.position + direction * dashDistance;
 
-        if (NavMesh.SamplePosition(newPosition, out NavMeshHit hit, 5f, NavMesh.AllAreas)) {
-            dashTween = transform.DOMove(hit.position, cooldown * 0.5f);
+        if (NavMesh.SamplePosition(newPosition, out NavMeshHit hit, ADJ_RNG, NavMesh.AllAreas)) {
+            dashTween = transform.DOMove(hit.position + dashOffset, cooldown * PER_OF_CD);
         }
     }
 

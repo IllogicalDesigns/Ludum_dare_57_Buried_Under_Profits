@@ -32,6 +32,9 @@ public class PlayerGun : MonoBehaviour
 
     public float lightDuration = 0.2f;
 
+    public float fireRate = 0.2f;
+    float nextFireTime;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -65,15 +68,31 @@ public class PlayerGun : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Input.GetMouseButtonDown(0) && ammo > 0) {
-            PlayGunFireEffects();
-            ammo--;
+        bool waitedForFireRate = Time.time > nextFireTime;
+        if(Input.GetMouseButtonDown(0)) {
+            FireGun(ray);
+        }
+        else if (Input.GetMouseButton(0) && waitedForFireRate && ammo > 0) {
+            FireGun(ray);
+        }
+        else if(Input.GetMouseButton(0) && waitedForFireRate && ammo <= 0) {
+            OutOfAmmo();
+        }
+        else if (Input.GetMouseButtonDown(0) && waitedForFireRate && ammo <= 0) {
+            OutOfAmmo();
+        }
+    }
 
-            FireRayAndHandleEffects(ray);
-        }
-        else if(Input.GetMouseButtonDown(0) && ammo <= 0) {
-            PlayOutOfAmmoEffects();
-        }
+    private void OutOfAmmo() {
+        PlayOutOfAmmoEffects();
+        nextFireTime = Time.time + fireRate;
+    }
+
+    private void FireGun(Ray ray) {
+        PlayGunFireEffects();
+        ammo--;
+        nextFireTime = Time.time + fireRate;
+        FireRayAndHandleEffects(ray);
     }
 
     private void FireRayAndHandleEffects(Ray ray) {
