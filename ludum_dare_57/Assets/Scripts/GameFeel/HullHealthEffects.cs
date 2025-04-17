@@ -1,3 +1,5 @@
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class HullHealthEffects : MonoBehaviour
@@ -20,11 +22,18 @@ public class HullHealthEffects : MonoBehaviour
     public ParticleSystem waterParticles2;
     public ParticleSystem waterParticles1;
 
+    [Space]
+    public TextMeshProUGUI criticalText;
+    Tween criticalTween;
+    [SerializeField] Vector3 punchScale = Vector3.one * 0.3f;
+    [SerializeField] float duration = 0.5f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         hullHealth = GetComponent<Health>();
         windowRenderer.material = window;
+        criticalText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,6 +43,11 @@ public class HullHealthEffects : MonoBehaviour
             SetMissingWindow();
             if (waterParticles2.isPlaying) waterParticles2.Stop();
             if (waterParticles1.isPlaying) waterParticles1.Stop();
+        }
+        else if (hullHealth.hp < 20 && criticalTween == null) {
+            criticalText.gameObject.SetActive(true);
+            criticalText.transform.DOKill(true);
+            criticalTween = criticalText.transform.DOPunchScale(punchScale, duration).OnComplete(() => criticalTween = null);
         }
         else if(hullHealth.hp < 33) {
             SetHeavyCrack2();

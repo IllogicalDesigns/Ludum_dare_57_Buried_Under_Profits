@@ -5,6 +5,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] GameObject pauseCanvas;
     [SerializeField] Player player;
     [SerializeField] PlayerGun playerGun;
+    [SerializeField] SloMotion slowMotion;
 
     [SerializeField] GameObject tutorialCanvas;
     [SerializeField] GameObject gemCanvas;
@@ -20,6 +21,7 @@ public class PauseManager : MonoBehaviour
         pauseCanvas.SetActive(isPaused);
         player = FindAnyObjectByType<Player>();
         playerGun = FindAnyObjectByType<PlayerGun>();
+        slowMotion = FindAnyObjectByType<SloMotion>();
         gameManager = FindAnyObjectByType<GameManager>();   
     }
 
@@ -46,6 +48,7 @@ public class PauseManager : MonoBehaviour
 
         player.SetPaused(isPaused);
         playerGun.SetPaused(isPaused);
+        slowMotion.SetPaused(isPaused);
 
         if (tutorialCanvas != null) 
             tutorialCanvas.SetActive(!isPaused);

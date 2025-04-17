@@ -25,11 +25,6 @@ public class Player : MonoBehaviour
     public float dodgeSpeed = 4f;
     public int dodgeCost = 1;
     [Space]
-    public float sloMoSpeed = 0.5f;
-    public float normalSpeed = 1f;
-    [SerializeField] float maxSlowTime = 5f;
-    float slowTimer;
-    [Space]
     public int dodgeDamage = 100;
     public int collisionDamage = 1;
     public int collisionAirDamage = 1;
@@ -117,27 +112,10 @@ public class Player : MonoBehaviour
     void Update() {
         if (isPaused) { return; }
 
-        HandleSlowMotion();
         CameraBasedVerticalAndHorizontalMovement();
         AltitudeControls();
         HandleRotation();
         HandleDodging();
-    }
-
-    private void HandleSlowMotion() {
-        if (Input.GetKeyDown(KeyCode.Mouse1) && slowTimer <= maxSlowTime) {
-            slowTimer = 0;
-        }
-        else if (Input.GetKey(KeyCode.Mouse1) && slowTimer < maxSlowTime) {
-            slowTimer += Time.unscaledDeltaTime;
-            Time.timeScale = sloMoSpeed;
-        }
-        else if (Input.GetKeyUp(KeyCode.Mouse1) || slowTimer >= maxSlowTime) {
-            Time.timeScale = normalSpeed;
-            GameManager.instance.DamageAir(Mathf.RoundToInt(slowTimer));
-        } else if(slowTimer > 0) {
-            slowTimer -= Time.deltaTime;
-        }
     }
 
     private void CameraBasedVerticalAndHorizontalMovement() {
