@@ -69,7 +69,7 @@ public class PlayerGun : MonoBehaviour
         RaycastHit hit;
 
         bool waitedForFireRate = Time.time > nextFireTime;
-        if(Input.GetMouseButtonDown(0)) {
+        if(Input.GetMouseButtonDown(0) && ammo > 0) {
             FireGun(ray);
         }
         else if (Input.GetMouseButton(0) && waitedForFireRate && ammo > 0) {

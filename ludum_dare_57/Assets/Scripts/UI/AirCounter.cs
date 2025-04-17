@@ -69,7 +69,7 @@ public class AirCounter : MonoBehaviour
         slider.value = air;
 
         if (underSlider.value > slider.value)
-            underSlider.value -= Time.deltaTime;
+            underSlider.value -= Time.deltaTime * 0.9f;
 
         if (underSlider.value < slider.value)
             underSlider.value = slider.value;
