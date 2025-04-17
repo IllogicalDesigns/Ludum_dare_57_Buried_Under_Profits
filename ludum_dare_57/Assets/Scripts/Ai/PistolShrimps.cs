@@ -84,7 +84,11 @@ public class PistolShrimps : MonoBehaviour {
         var newPosition = transform.position + direction * dashDistance;
 
         if (NavMesh.SamplePosition(newPosition, out NavMeshHit hit, ADJ_RNG, NavMesh.AllAreas)) {
-            dashTween = transform.DOMove(hit.position + dashOffset, cooldown * PER_OF_CD);
+            var blocked = NavMesh.Raycast(transform.position, hit.position, out NavMeshHit navHit, NavMesh.AllAreas);
+
+            if(!blocked)
+                dashTween = transform.DOMove(hit.position + dashOffset, cooldown * PER_OF_CD);
+            
         }
     }
 
