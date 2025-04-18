@@ -1,7 +1,8 @@
 using DG.Tweening;
 using System;
-using UnityEditor.Experimental.GraphView;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Crab : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class Crab : MonoBehaviour
     public float pitchUpSpeed = 0.5f;
     public ParticleSystem windupParticles;
     public float preLaserLookSpeed = 5f;
+    public float preLaserAgentSpeed = 5f;
 
     [Space]
     public Transform laseringCube;
@@ -38,12 +40,13 @@ public class Crab : MonoBehaviour
     Tween lasering;
     public LayerMask layerMask;
     public float maxLaserDistance = 40f;
+    public float laserAgentSpeed = 2.5f;
 
     [Space]
     public Renderer laserHotBitsRender;
-    public Material coolMaterial;
-    public Material warmMaterial;
-    public Material hotMaterial;
+    Material hotBitMaterial;
+    public Gradient heatGradient;
+    public float boostAmount = 2f;
 
     [Space]
     float coolDownTime = 3f;
@@ -53,10 +56,22 @@ public class Crab : MonoBehaviour
 
     Transform attackPoint;
 
+    [Space]
+    public NavMeshAgent agent;
+    public float agentDistance = 10f;
+
+    [Space]
+    Dictionary<Collider, float> hitObjects = new Dictionary<Collider, float>();
+    float timeBetweenTicks = 1f;
+    int damage = 2;
+    int airDamage = 1;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        attackPoint = Player.Instance.attackPoint;
+        attackPoint = Player.Instance.transform;
+        hotBitMaterial = laserHotBitsRender.material;
+        hotBitMaterial.EnableKeyword("_EMISSION");
     }
 
     // Update is called once per frame
@@ -82,9 +97,11 @@ public class Crab : MonoBehaviour
     private void HandleIdle() {
         var distance = Vector3.Distance(transform.position, attackPoint.transform.position);
 
-        if (distance < activationDistance)
+        if (distance < activationDistance) {
+            gameObject.SendMessage(Threat.becomeThreatString);
             TransitionToPreLasering();
-
+        }
+            
         //wander?
     }
 
@@ -96,6 +113,8 @@ public class Crab : MonoBehaviour
 
         if (windupParticles != null) windupParticles.Play();
 
+        agent.speed = preLaserAgentSpeed;
+
         preLaserTime = preLaserTimeAnimationCurve.Evaluate(GameManager.instance.difficulty);
         preLaserTimer = preLaserTime;
     }
@@ -104,6 +123,8 @@ public class Crab : MonoBehaviour
         laserWindup.pitch += Time.deltaTime * pitchUpSpeed;
 
         lasering = laseringCube.DODynamicLookAt(attackPoint.position, preLaserLookSpeed).SetSpeedBased(true);
+
+        MoveIntoActRange();
 
         if (preLaserTimer <= 0) {
             if (laserWindup != null) laserWindup.Stop();
@@ -125,6 +146,10 @@ public class Crab : MonoBehaviour
 
         laseringTime = laseringTimeAnimationCurve.Evaluate(GameManager.instance.difficulty);
         laseringTimer = laseringTime;
+
+        hitObjects.Clear();
+
+        agent.speed = laserAgentSpeed;
     }
 
     private void HandleLasering() {
@@ -132,29 +157,17 @@ public class Crab : MonoBehaviour
 
         lasering = laseringCube.DODynamicLookAt(attackPoint.position, laserLookSpeed).SetSpeedBased(true);
 
-        if (laseringTimer < laseringTime * 0.3)
-            laserHotBitsRender.material = hotMaterial;
-        else if (laseringTimer < laseringTime * 0.6)
-            laserHotBitsRender.material = warmMaterial;
-        else
-            laserHotBitsRender.material = coolMaterial;
+        float t = Mathf.Clamp01(laseringTimer / laseringTime);
+
+        Color emissionColor = heatGradient.Evaluate(t) * boostAmount; // Boost intensity if needed
+        hotBitMaterial.SetColor("_EmissionColor", emissionColor);
+
+        MoveIntoActRange();
 
         Debug.DrawRay(laseringEnd.position, laseringEnd.forward * maxLaserDistance, Color.red);
         RaycastHit hit;
         if(Physics.Raycast(laseringEnd.position, laseringEnd.forward, out hit, maxLaserDistance, layerMask)) {
-            lineRenderer.SetPosition(1, hit.point);
-
-            laserFiring.transform.position = Vector3.Lerp(laseringEnd.position, hit.point, 0.5f);  //Place laser sound near center of laser
-
-            Debug.DrawLine(transform.position, hit.point, Color.green);
-
-            if (hit.collider.CompareTag("Player")) {
-                hit.collider.SendMessage("OnHit", new DamageInstance(1, 1));
-            } else if (hit.collider.CompareTag("Enemy")) {
-                hit.collider.SendMessage("OnHit", new DamageInstance(1, 1));
-            } else if (hit.collider.CompareTag("Mine")) {
-                hit.collider.SendMessage("OnHit", new DamageInstance(1, 1));
-            }
+            OnRaycastHit(hit);
         }
         else {
             var distantLaserPoint = laseringEnd.position + laseringEnd.forward * maxLaserDistance;
@@ -175,6 +188,27 @@ public class Crab : MonoBehaviour
             laseringTimer -= Time.deltaTime;
     }
 
+    private void OnRaycastHit(RaycastHit hit) {
+        lineRenderer.SetPosition(1, hit.point);
+
+        laserFiring.transform.position = Vector3.Lerp(laseringEnd.position, hit.point, 0.5f);  //Place laser sound near center of laser
+
+        Debug.DrawLine(transform.position, hit.point, Color.green);
+
+        if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Mine")) {
+            const float nudge = 0.1f;
+
+            if (!hitObjects.ContainsKey(hit.collider)) {
+                hitObjects.Add(hit.collider, Time.time-nudge);
+            } 
+            
+            if(hitObjects[hit.collider] < Time.time) {
+                hit.collider.SendMessage("OnHit", new DamageInstance(damage, airDamage));
+                hitObjects[hit.collider] = Time.time + timeBetweenTicks;
+            }
+        }
+    }
+
     private void TransitionToCooldown() {
         state = CrabState.coolingDown;
 
@@ -185,18 +219,31 @@ public class Crab : MonoBehaviour
     }
 
     private void HandleCoolingDown() {
-        if (coolDownTimer < coolDownTime * 0.3)
-            laserHotBitsRender.material = coolMaterial; 
-        else if (coolDownTimer < coolDownTime * 0.6)
-            laserHotBitsRender.material = warmMaterial;
-        else
-            laserHotBitsRender.material = hotMaterial;
+        float t = Mathf.Clamp01(coolDownTimer / coolDownTime);
+        float invertedT = 1.0f - t;
+
+        Color emissionColor = heatGradient.Evaluate(invertedT) * boostAmount; // Boost intensity if needed
+        hotBitMaterial.SetColor("_EmissionColor", emissionColor);
+
+        lasering = laseringCube.DODynamicLookAt(attackPoint.position, preLaserLookSpeed).SetSpeedBased(true);
 
         if (coolDownTimer <= 0) {
             if (smokeParticles != null) smokeParticles.Stop();
+            lasering.Kill();
+            lasering = null;
             TransitionToPreLasering();
         }
         else
             coolDownTimer -= Time.deltaTime;
+    }
+
+    private void MoveIntoActRange() {
+        var distance = Vector3.Distance(transform.position, attackPoint.transform.position);
+        if (distance > agentDistance) {
+            agent.SetDestination(attackPoint.position);
+            agent.isStopped = false;
+        }
+        else if (!agent.isStopped)
+            agent.isStopped = true;
     }
 }

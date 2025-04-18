@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778367a3fb964a84d8b22b4dfb8193f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDifficulty: 0.75
+  defaultDifficulty: 0.3
   minDifficulty: 0.1
   maxDifficulty: 2
   difficultyValue: 0

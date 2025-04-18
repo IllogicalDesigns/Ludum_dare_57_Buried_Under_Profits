@@ -42837,7 +42837,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 435
-  knockbackForce: 80
+  knockbackForce: 50
 --- !u!114 &2223535657354466694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42981,6 +42981,8 @@ MonoBehaviour:
   hardToBreath2Thresh: 7
   vignette: {fileID: 0}
   dur: 0.2
+  playerCamera: {fileID: 5915951905047567589}
+  deadRotation: {x: -90, y: 0, z: 0}
   airCritical: {fileID: 2727497356225773484}
 --- !u!114 &3576513698799779526
 MonoBehaviour:

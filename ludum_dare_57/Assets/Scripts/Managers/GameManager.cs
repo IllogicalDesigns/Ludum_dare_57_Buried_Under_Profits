@@ -50,6 +50,10 @@ public class GameManager : MonoBehaviour
         //    WinGame();  // you win by getting out
         //}
 
+        if (Input.GetKeyDown(KeyCode.Keypad8)) {
+            FindFirstObjectByType<PlayerGun>().addAmmo(10);
+        }
+
         if (currentGameState == GameState.playing)
             air -= airDecayCurve.Evaluate(air) * Time.deltaTime;
 

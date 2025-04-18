@@ -14,6 +14,9 @@ public class AirSupplyHealth : MonoBehaviour
     [Space]
     [SerializeField] Image vignette;
     [SerializeField] float dur = 0.2f;
+    public Transform playerCamera;
+    public Vector3 deadRotation = new Vector3(-90,0,0);
+    [SerializeField] float deadRotationDur = 2f;
     Tween tween;
 
     [SerializeField] AudioSource airCritical;
@@ -78,6 +81,7 @@ public class AirSupplyHealth : MonoBehaviour
     public void OnDead() {
         vignette.DOKill(true);
         vignette.DOFade(1f, 0f);
+        playerCamera.transform.DOLocalRotate(deadRotation, deadRotationDur);
         tween = null;
     }
 

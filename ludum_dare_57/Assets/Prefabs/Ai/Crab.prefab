@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529168714507611821}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.4999996, z: -0, w: 0.8660257}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -32,7 +32,7 @@ Transform:
   - {fileID: 1936106194967647777}
   - {fileID: 1731546383244760263}
   m_Father: {fileID: 8058503823745847754}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 60, z: 0}
 --- !u!1 &2053918754341414674
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 68008493512049382}
   - component: {fileID: 6753987929139397652}
   - component: {fileID: 5311488372080423082}
+  - component: {fileID: 6320611958590465336}
   m_Layer: 0
   m_Name: CrabModel
   m_TagString: Untagged
@@ -62,7 +63,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053918754341414674}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.25826296, z: -0, w: 0.9660747}
+  m_LocalRotation: {x: -0, y: 0.70669925, z: -0, w: 0.7075141}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.8561, y: 1.6681908, z: 2.8561}
   m_ConstrainProportionsScale: 0
@@ -70,7 +71,7 @@ Transform:
   - {fileID: 6034215088375447963}
   - {fileID: 4601004948722455970}
   m_Father: {fileID: 8058503823745847754}
-  m_LocalEulerAnglesHint: {x: 0, y: 29.934, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 89.934, z: 0}
 --- !u!33 &1816751062755029428
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -160,7 +161,6 @@ MonoBehaviour:
   activationDistance: 20
   alerted: {fileID: 6281800935046714931}
   state: 0
-  preLaserTime: 3
   preLaserTimeAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -189,11 +189,11 @@ MonoBehaviour:
   minPitch: 0.7
   pitchUpSpeed: 1
   windupParticles: {fileID: 5044067063004508401}
-  preLaserLookSpeed: 5
+  preLaserLookSpeed: 7
+  preLaserAgentSpeed: 5
   laseringCube: {fileID: 3936050371792536384}
   laseringEnd: {fileID: 8223725021585824416}
   lineRenderer: {fileID: 7057509498009461635}
-  laseringTime: 3
   laseringTimeAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -219,16 +219,44 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   laserFiring: {fileID: 6357444975033207532}
-  laserLookSpeed: 5
+  laserLookSpeed: 7
   layerMask:
     serializedVersion: 2
     m_Bits: 65
   maxLaserDistance: 40
+  laserAgentSpeed: 2.5
   laserHotBitsRender: {fileID: 5333116405531845639}
-  coolMaterial: {fileID: 2100000, guid: 5278a1dd861dde84b88cd1b3892074dc, type: 2}
-  warmMaterial: {fileID: 2100000, guid: 3afbd5f72b5424e489a08df22206bc23, type: 2}
-  hotMaterial: {fileID: 2100000, guid: a07ac3ab79176934ca0ae16ec4923a93, type: 2}
-  coolDownTime: 3
+  heatGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 0.8152195, b: 0, a: 1}
+    key2: {r: 1, g: 0.49244195, b: 0, a: 0}
+    key3: {r: 1, g: 0.25229907, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 6554
+    ctime1: 13107
+    ctime2: 18119
+    ctime3: 25829
+    ctime4: 50308
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 5
+    m_NumAlphaKeys: 2
+  boostAmount: 2
   coolDownTimeAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -254,6 +282,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   smokeParticles: {fileID: 6474637088512401057}
+  agent: {fileID: 6837231852064015657}
+  agentDistance: 10
 --- !u!114 &5311488372080423082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,6 +297,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfParticles: 1
+--- !u!114 &6320611958590465336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053918754341414674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3effd1ae44636e74bbe54b02838d8b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threatIndicatorPrefab: {fileID: 3352981927554087797, guid: 19d3bc604d1b52b44acda36fa050beaa, type: 3}
 --- !u!1 &3311366544216832410
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,6 +435,7 @@ GameObject:
   - component: {fileID: 1211565103869468968}
   - component: {fileID: 8154540567380791082}
   - component: {fileID: 1386148879570082593}
+  - component: {fileID: 7031807612081069420}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -407,7 +451,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3933967014776264579}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.5004981, z: -0, w: 0.8657376}
+  m_LocalRotation: {x: -0, y: -0.00057531893, z: -0, w: 0.9999999}
   m_LocalPosition: {x: 0, y: 1.618145, z: 0}
   m_LocalScale: {x: 0.50000006, y: 0.49999997, z: 2}
   m_ConstrainProportionsScale: 0
@@ -417,7 +461,7 @@ Transform:
   - {fileID: 3956165519439781035}
   - {fileID: 1071119055982883934}
   m_Father: {fileID: 8058503823745847754}
-  m_LocalEulerAnglesHint: {x: 0, y: -60.066, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.066, z: 0}
 --- !u!33 &8124661944050004649
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -655,6 +699,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfParticles: 2
+--- !u!114 &7031807612081069420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3933967014776264579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8af44790ef6a4b49a01d598301aa4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drop: {fileID: 7146195601594310455, guid: 9e78de257ac6cb94b9462f17673d31dd, type: 3}
+  dropRate: 100
 --- !u!1 &4803712561619411331
 GameObject:
   m_ObjectHideFlags: 0
@@ -5655,7 +5713,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: ab7b9039c29de7f4e8f99cfcc4049c9b, type: 3}
   m_Resource: {fileID: 8300000, guid: ab7b9039c29de7f4e8f99cfcc4049c9b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5663,7 +5721,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 20
+  MinDistance: 10
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -5792,7 +5850,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 20
+  MinDistance: 10
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -5921,7 +5979,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 20
+  MinDistance: 25
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -6200,6 +6258,7 @@ GameObject:
   - component: {fileID: 2876667581542814119}
   - component: {fileID: 5297172876274085182}
   - component: {fileID: 3204903562600695310}
+  - component: {fileID: 4367011377973974615}
   m_Layer: 0
   m_Name: HitBoxFace
   m_TagString: Untagged
@@ -6352,6 +6411,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfParticles: 2
+--- !u!114 &4367011377973974615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8258638923276567519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8af44790ef6a4b49a01d598301aa4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drop: {fileID: 7146195601594310455, guid: 9e78de257ac6cb94b9462f17673d31dd, type: 3}
+  dropRate: 100
 --- !u!1 &8770843671352938211
 GameObject:
   m_ObjectHideFlags: 0
@@ -11203,6 +11276,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8058503823745847754}
+  - component: {fileID: 6837231852064015657}
   m_Layer: 0
   m_Name: Crab
   m_TagString: Untagged
@@ -11219,7 +11293,7 @@ Transform:
   m_GameObject: {fileID: 9063846351880819233}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 78.068, y: 7.271, z: 87.819}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11228,3 +11302,25 @@ Transform:
   - {fileID: 3936050371792536384}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &6837231852064015657
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9063846351880819233}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
