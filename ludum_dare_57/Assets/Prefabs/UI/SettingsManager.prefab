@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4560031684288657425}
   - component: {fileID: 3664850157657787038}
   - component: {fileID: 297803286496373039}
+  - component: {fileID: 5941613590101277971}
   m_Layer: 0
   m_Name: SettingsManager
   m_TagString: Untagged
@@ -80,3 +81,19 @@ MonoBehaviour:
   minDifficulty: 0.1
   maxDifficulty: 2
   difficultyValue: 0
+--- !u!114 &5941613590101277971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731039402133872441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91fa2bf7d5ced9448b0f372c2e357f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxFov: 100
+  minFov: 40
+  defaultFov: 75
+  fovValue: 0

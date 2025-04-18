@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 public class SettingsMenu : MonoBehaviour {
     [SerializeField] Slider volumeSlider;
-    //[SerializeField] Slider fovSlider;
+    [SerializeField] Slider fovSlider;
     [SerializeField] Slider sensSlider;
     [SerializeField] Slider difficultySlider;
     //[SerializeField] Toggle fullToggle;
     //[SerializeField] TMP_Dropdown resolutionDropdown;
     [Space]
     [SerializeField] VolumeManager volumeManager;
-    //[SerializeField] FOVManager fovManager;
+    [SerializeField] FOVManager fovManager;
     [SerializeField] SensitivityManager sensManager;
     //[SerializeField] FullscreenManager fullManager;
     //[SerializeField] ResolutionManager resolutionManager;
@@ -21,7 +21,7 @@ public class SettingsMenu : MonoBehaviour {
 
     private void Awake() {
         volumeManager = FindAnyObjectByType<VolumeManager>();
-        //fovManager = FindAnyObjectByType<FOVManager>();
+        fovManager = FindAnyObjectByType<FOVManager>();
         sensManager = FindAnyObjectByType<SensitivityManager>();
         //fullManager = FindAnyObjectByType<FullscreenManager>();
         //resolutionManager = FindAnyObjectByType<ResolutionManager>();
@@ -35,10 +35,10 @@ public class SettingsMenu : MonoBehaviour {
         volumeSlider.maxValue = 1f;
         volumeSlider.value = volumeManager.volumeValue;
 
-        //fovSlider.onValueChanged.AddListener(delegate { OnFovChanged(); });
-        //fovSlider.minValue = fovManager.minFov;
-        //fovSlider.maxValue = fovManager.maxFov;
-        //fovSlider.value = fovManager.fovValue;
+        fovSlider.onValueChanged.AddListener(delegate { OnFovChanged(); });
+        fovSlider.minValue = fovManager.minFov;
+        fovSlider.maxValue = fovManager.maxFov;
+        fovSlider.value = fovManager.fovValue;
 
         sensSlider.onValueChanged.AddListener(delegate { OnSensChanged(); });
         sensSlider.minValue = sensManager.minSens;
@@ -87,10 +87,9 @@ public class SettingsMenu : MonoBehaviour {
         volumeManager.OnVolumeChanged(volumeSlider.value);
     }
 
-    //public void OnFovChanged() {
-
-    //    fovManager.OnFovChanged(fovSlider.value);
-    //}
+    public void OnFovChanged() {
+        fovManager.OnFovChanged(fovSlider.value);
+    }
 
     public void OnSensChanged() {
         sensManager.OnSensChanged(sensSlider.value);

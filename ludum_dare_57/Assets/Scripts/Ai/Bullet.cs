@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (isPaused) return;
-        //if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player")) return;
 
         other.SendMessage("OnHit", new DamageInstance(damage, airDamage), SendMessageOptions.DontRequireReceiver);
 

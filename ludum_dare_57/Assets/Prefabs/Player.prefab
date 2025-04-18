@@ -36922,7 +36922,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -42836,7 +42836,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 435
-  knockbackForce: 60
+  knockbackForce: 80
 --- !u!114 &2223535657354466694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53098,6 +53098,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: -3828393568186681106, guid: 553c64b66047fcd418d61f4a7f585320, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -2654048531871063311, guid: 553c64b66047fcd418d61f4a7f585320, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -53139,6 +53143,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3453122905267412201, guid: 553c64b66047fcd418d61f4a7f585320, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713558853109251143, guid: 553c64b66047fcd418d61f4a7f585320, type: 3}
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
