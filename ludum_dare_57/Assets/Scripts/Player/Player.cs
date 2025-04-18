@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance;
+
     public float moveSpeed = 5f;
     private CharacterController controller;
     Camera cam;
@@ -47,6 +49,12 @@ public class Player : MonoBehaviour
     private const string MineTagStr = "Mine";
 
     public float maxHeight = 40f;
+
+    public Transform attackPoint;
+
+    private void Awake() {
+        Instance = this;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

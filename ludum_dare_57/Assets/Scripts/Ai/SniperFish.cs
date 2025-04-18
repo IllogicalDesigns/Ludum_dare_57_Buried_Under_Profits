@@ -41,7 +41,7 @@ public class SniperFish : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        attackPoint = GameObject.Find("AttackPoint").transform;
+        attackPoint = Player.Instance.attackPoint;
 
         lineRenderer = GetComponent<LineRenderer>();
         player = FindAnyObjectByType<Player>();

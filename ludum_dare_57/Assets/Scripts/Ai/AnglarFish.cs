@@ -33,7 +33,7 @@ public class AnglarFish : MonoBehaviour {
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
-        attackPoint = GameObject.Find("AttackPoint").transform;
+        attackPoint = Player.Instance.attackPoint;
         player = FindAnyObjectByType<Player>();
         playerHealth = player.GetComponent<Health>();
 

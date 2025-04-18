@@ -9,7 +9,7 @@ public class MoveToPoint : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        targetTransform = GameObject.Find("AttackPoint").transform;
+        targetTransform = Player.Instance.attackPoint;
     }
 
     void Update() {
