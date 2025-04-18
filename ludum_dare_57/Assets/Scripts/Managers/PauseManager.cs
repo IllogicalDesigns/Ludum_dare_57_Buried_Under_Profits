@@ -50,6 +50,11 @@ public class PauseManager : MonoBehaviour
         playerGun.SetPaused(isPaused);
         slowMotion.SetPaused(isPaused);
 
+        var bullets = FindObjectsOfType<Bullet>();
+        foreach (Bullet bullet in bullets) {
+            bullet.SetPaused(isPaused);
+        }
+
         if (tutorialCanvas != null) 
             tutorialCanvas.SetActive(!isPaused);
 

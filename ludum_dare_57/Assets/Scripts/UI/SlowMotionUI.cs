@@ -6,6 +6,7 @@ public class SlowMotionUI : MonoBehaviour
 {
     SloMotion sloMotion;
     Slider slider;
+    public Image vignette;
 
     [SerializeField] Vector3 punchScale = Vector3.one;
     [SerializeField] float duration = 0.5f;
@@ -24,6 +25,7 @@ public class SlowMotionUI : MonoBehaviour
     void Update()
     {
         slider.gameObject.SetActive(!(sloMotion.slowTimer <= 0));
+        vignette.gameObject.SetActive(sloMotion.isSlowMotion);
         slider.value = sloMotion.slowTimer;
 
         if(!(sloMotion.slowTimer <= 0) && Input.GetMouseButtonDown(1)) {

@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         if (godMode) air = 777;
 
         if (air < 0 && currentGameState == GameState.playing) {
-            player.GetComponent<Health>().OnHit(new DamageInstance(1000, 1000));
+            player.GetComponent<PlayerDeath>().OnDead();
         }
 
         if (currentGameState == GameState.waiting && player.transform.position.y < surfacingHeight)

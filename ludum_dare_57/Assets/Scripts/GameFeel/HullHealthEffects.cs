@@ -27,6 +27,7 @@ public class HullHealthEffects : MonoBehaviour
     Tween criticalTween;
     [SerializeField] Vector3 punchScale = Vector3.one * 0.3f;
     [SerializeField] float duration = 0.5f;
+    [SerializeField] AudioSource criticalAudio;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -39,15 +40,33 @@ public class HullHealthEffects : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(hullHealth.hp <= 0) {
+        if(Input.GetKeyDown(KeyCode.Keypad1)) {
+            hullHealth.hp = 19;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2)) {
+            hullHealth.hp = 32;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3)) {
+            hullHealth.hp = 65;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad4)) {
+            hullHealth.hp = 100;
+        }
+
+        if (hullHealth.hp <= 0) {
             SetMissingWindow();
             if (waterParticles2.isPlaying) waterParticles2.Stop();
             if (waterParticles1.isPlaying) waterParticles1.Stop();
         }
-        else if (hullHealth.hp < 20 && criticalTween == null) {
-            criticalText.gameObject.SetActive(true);
-            criticalText.transform.DOKill(true);
-            criticalTween = criticalText.transform.DOPunchScale(punchScale, duration).OnComplete(() => criticalTween = null);
+        else if (hullHealth.hp < 20) {
+            if (criticalTween == null) {
+                criticalText.gameObject.SetActive(true);
+                criticalText.transform.DOKill(true);
+                criticalTween = criticalText.transform.DOPunchScale(punchScale, duration).OnComplete(() => criticalTween = null);
+            }
+
+            if (!criticalAudio.isPlaying) 
+                criticalAudio.Play();
         }
         else if(hullHealth.hp < 33) {
             SetHeavyCrack2();

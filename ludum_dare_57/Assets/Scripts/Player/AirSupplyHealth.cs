@@ -16,6 +16,8 @@ public class AirSupplyHealth : MonoBehaviour
     [SerializeField] float dur = 0.2f;
     Tween tween;
 
+    [SerializeField] AudioSource airCritical;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,8 +30,14 @@ public class AirSupplyHealth : MonoBehaviour
     {
         float air = GameManager.instance.air;
 
-        if(air < hardToBreath2Thresh) {
+        if(air <= 0) {
+            hardToBreath1.Stop();
+            hardToBreath2.Stop();
+            vignette.DOKill(true);
+        }
+        else if(air < hardToBreath2Thresh) {
             if(hardToBreath1.isPlaying) hardToBreath1.Stop();
+            if(!airCritical.isPlaying) airCritical.Play();
 
             if (tween == null) {
                 vignette.DOKill(true);

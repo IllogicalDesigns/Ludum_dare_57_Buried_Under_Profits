@@ -7,6 +7,8 @@ public class HealthBar : MonoBehaviour
     public Health hp;
     public Slider slider;
     public Slider underSlider;
+    float currentVelocity;
+    public float underSmoothingTime = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,7 +25,10 @@ public class HealthBar : MonoBehaviour
     {    
         slider.value = hp.hp;
 
-        if (underSlider.value > slider.value)
-            underSlider.value -= Time.deltaTime;
+        underSlider.value = Mathf.SmoothDamp(underSlider.value, slider.value, ref currentVelocity, underSmoothingTime);
+
+        //if (underSlider.value > slider.value)
+        //    underSlider.value -= Time.deltaTime;
     }
 }
+ 

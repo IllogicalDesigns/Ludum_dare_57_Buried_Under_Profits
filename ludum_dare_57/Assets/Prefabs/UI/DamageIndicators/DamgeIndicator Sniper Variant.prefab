@@ -87,6 +87,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: DamgeIndicator Sniper Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6181263017077930473, guid: 19d3bc604d1b52b44acda36fa050beaa, type: 3}
+      propertyPath: nearThresh
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6181263017077930473, guid: 19d3bc604d1b52b44acda36fa050beaa, type: 3}
+      propertyPath: damgeThresh
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8519277171172572079, guid: 19d3bc604d1b52b44acda36fa050beaa, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

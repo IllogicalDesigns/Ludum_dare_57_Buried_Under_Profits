@@ -36,12 +36,16 @@ public class PlayerGun : MonoBehaviour
     float nextFireTime;
 
     [SerializeField] LayerMask layerMask;
+    [Space]
+    private CharacterController controller;
+    public float knockbackForce = 3f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         cameraShake = GetComponent<CameraShake>();
         origZ = gunBarrel.transform.localPosition.y;
+        controller = GetComponent<CharacterController>();
     }
 
     public void SetPaused(bool paused) {
@@ -91,6 +95,8 @@ public class PlayerGun : MonoBehaviour
     }
 
     private void FireGun(Ray ray) {
+        Vector3 knockbackDirection = -transform.forward; // Opposite to gun's forward
+        controller.Move(knockbackDirection * knockbackForce * Time.deltaTime);
         PlayGunFireEffects();
         ammo--;
         nextFireTime = Time.time + fireRate;

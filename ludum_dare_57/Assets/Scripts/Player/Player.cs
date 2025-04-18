@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
     private const string BubbleTagStr = "Bubble";
     private const string MineTagStr = "Mine";
 
+    public float maxHeight = 40f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -116,6 +118,12 @@ public class Player : MonoBehaviour
         AltitudeControls();
         HandleRotation();
         HandleDodging();
+
+        if(transform.position.y > maxHeight) {
+            var newVec = transform.position;
+            newVec.y = maxHeight;
+            transform.position = newVec;
+        }
     }
 
     private void CameraBasedVerticalAndHorizontalMovement() {

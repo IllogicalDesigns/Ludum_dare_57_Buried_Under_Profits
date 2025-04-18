@@ -55,8 +55,8 @@ MonoBehaviour:
   farColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   nearColor: {r: 1, g: 0, b: 0, a: 1}
   damageColor: {r: 1, g: 1, b: 1, a: 1}
-  damgeThresh: 3
-  nearThresh: 7
+  damgeThresh: 10
+  nearThresh: 15
   damgeImage: {fileID: 5919861000183380147}
   angleRequirement: 30
   dotRequirement: 0.8

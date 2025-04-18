@@ -14987,7 +14987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 8.5
-  damageAmount: 10
+  damageAmount: 50
   airAmount: 10
 --- !u!82 &600244829668830394
 AudioSource:

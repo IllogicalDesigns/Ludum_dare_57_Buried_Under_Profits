@@ -11,7 +11,7 @@ public class SloMotion : MonoBehaviour
     public AnimationCurve refillRate = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(2f, 0.25f));
     public float slowTimer;
 
-    bool isSlowMotion;
+    public bool isSlowMotion;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

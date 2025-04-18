@@ -1,10 +1,12 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MineDamage : MonoBehaviour
 {
     public float radius = 5f;
     public int damageAmount = 10;
     public int airAmount = 10;
+    public List<GameObject> targets = new List<GameObject>();
 
     private void Start() {
         ApplyDamage();
@@ -19,11 +21,18 @@ public class MineDamage : MonoBehaviour
             // Check if the object has a health component
             Health healthComponent = hitCollider.GetComponent<Health>();
             if (healthComponent != null) {
+                if (targets.Contains(healthComponent.gameObject)) 
+                    continue;
+
+                targets.Add(healthComponent.gameObject);
+
+                Debug.Log("Mine damages " + healthComponent.gameObject.name);
+
                 // Apply damage to the health component
-                if(hitCollider.CompareTag("Enemy"))
+                if (hitCollider.CompareTag("Enemy"))
                     healthComponent.SendMessage("OnHit", new DamageInstance(1000, 1000));
                 else
-                    healthComponent.SendMessage("OnHit", new DamageInstance(damageAmount, damageAmount));
+                    healthComponent.SendMessage("OnHit", new DamageInstance(damageAmount, airAmount));
             }
         }
     }

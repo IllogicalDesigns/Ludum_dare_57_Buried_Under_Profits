@@ -30,6 +30,9 @@ public class AirCounter : MonoBehaviour
     [SerializeField] float bounceStrength = 0.1f;
     [SerializeField] float bounceDuration = 0.75f;
 
+    float currentVelocity;
+    public float underSmoothingTime = 1f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -68,11 +71,13 @@ public class AirCounter : MonoBehaviour
 
         slider.value = air;
 
-        if (underSlider.value > slider.value)
-            underSlider.value -= Time.deltaTime * 0.9f;
+        underSlider.value = Mathf.SmoothDamp(underSlider.value, slider.value, ref currentVelocity, underSmoothingTime);
 
-        if (underSlider.value < slider.value)
-            underSlider.value = slider.value;
+        //if (underSlider.value > slider.value)
+        //    underSlider.value -= Time.deltaTime * 0.9f;
+
+        //if (underSlider.value < slider.value)
+        //    underSlider.value = slider.value;
     }
 
     public void DamagedAir(int value) {

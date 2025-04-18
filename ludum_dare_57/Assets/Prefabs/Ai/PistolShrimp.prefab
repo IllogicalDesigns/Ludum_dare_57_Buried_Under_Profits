@@ -142,6 +142,9 @@ MonoBehaviour:
   preGunShot: 1
   preGunShotSfx: {fileID: 8300000, guid: effb7672af571124a8411e90b7eeb3fd, type: 3}
   dashOffset: {x: 0, y: 1.5, z: 0}
+  dashDistance: 5
+  projectileSpeed: 10
+  useGuessAim: 1
 --- !u!114 &2734056602071668388
 MonoBehaviour:
   m_ObjectHideFlags: 0
