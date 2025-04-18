@@ -17,14 +17,10 @@ public class NewAnglarFish : MonoBehaviour {
 
     public float impactDistance = 3f;
 
-    public float jitterRange = 1f;
-    public float jitterUpdate = 2f;
-    float jitterX = 0f;
-    float jitterY = 0f;
-    float jitterZ = 0f;
-
     [SerializeField] AudioSource start;
+    [SerializeField] AudioSource prechargeSFX;
     [SerializeField] AudioSource swim;
+    [SerializeField] AudioSource stunned;
 
     public float dotRequirement = -0.85f;
     public LayerMask layerMask = ~0;
@@ -61,6 +57,7 @@ public class NewAnglarFish : MonoBehaviour {
     public float maxChargeDistance = 20f;
     public LayerMask chargeLayerMask;
     bool shouldStun;
+    public Ease chargeEase = Ease.Linear;
 
     [Space]
     public float stunTime = 5f;
@@ -93,34 +90,15 @@ public class NewAnglarFish : MonoBehaviour {
                     TransitionToIntro();
                 break;
             case AnglarState.intro:
-                //Follow the intro calculation
-                if(chargeTween == null)
-                    chargeTween = transform.DOMove(introChargePosition, introChargeSpeed).SetSpeedBased(true).OnComplete(() => { TransitionToPreCharge(); chargeTween = null; });
+                HandleIntro();
 
                 break;
             case AnglarState.precharge:
-                //hold, turn towards player, precharge animation
-                transform.LookAt(attackPoint.position);
-
-                if (preChargeTimer <= 0)
-                    TransitionToCharge();
-                else
-                    preChargeTimer -= Time.deltaTime;
+                HandlePreCharge();
 
                 break;
             case AnglarState.charge:
-                //Charge through the player, straight line, if it hits a wall, see stunned
-                if (chargeTween == null)
-                    chargeTween = transform.DOMove(chargePosition, chargeSpeed).SetSpeedBased(true).OnComplete(() => { TransitionToStun(); chargeTween = null; });
-
-                if (distance < impactDistance && !playerStruckThisCharge) {
-                    Debug.Log("Hitting player");
-                    playerStruckThisCharge = true;
-                    playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
-                    shouldStun = false;
-                    chargeTween.Kill();
-                    TransitionToPreCharge();
-                }
+                HandleCharge(distance);
 
                 break;
             case AnglarState.stunned:
@@ -135,16 +113,37 @@ public class NewAnglarFish : MonoBehaviour {
         }
     }
 
+
+
     void TransitionToIntro() {
+        //calculate a jump towards the player and chomp
         state = AnglarState.intro;
         introChargePosition = Vector3.Lerp(transform.position, attackPoint.position, introChagePercent);
         sandSystem.Play();
-        //calculate a jump towards the player and chomp
+        if (start != null) start.Play();
+    }
+
+    private void HandleIntro() {
+        //Follow the intro calculation
+        if (chargeTween == null)
+            chargeTween = transform.DOMove(introChargePosition, introChargeSpeed).SetSpeedBased(true).OnComplete(() => { TransitionToPreCharge(); chargeTween = null; });
     }
 
     void TransitionToPreCharge() {
         state = AnglarState.precharge;
         preChargeTimer = preChageTime;
+        if(prechargeSFX != null) prechargeSFX.Play();
+        if (swim != null) swim.Stop();
+    }
+
+    private void HandlePreCharge() {
+        //hold, turn towards player, precharge animation
+        transform.LookAt(attackPoint.position);
+
+        if (preChargeTimer <= 0)
+            TransitionToCharge();
+        else
+            preChargeTimer -= Time.deltaTime;
     }
 
     void TransitionToCharge() {
@@ -155,6 +154,8 @@ public class NewAnglarFish : MonoBehaviour {
         Vector3 origin = transform.position;
         Vector3 target = attackPoint.position;
         Vector3 direction = (target - origin).normalized;
+
+        if (swim != null) swim.Play();
 
         RaycastHit hit;
         if (Physics.Raycast(origin, direction, out hit, maxChargeDistance, chargeLayerMask)) {
@@ -169,13 +170,31 @@ public class NewAnglarFish : MonoBehaviour {
         }
     }
 
+    private void HandleCharge(float distance) {
+        //Charge through the player, straight line, if it hits a wall, see stunned
+        if (chargeTween == null)
+            chargeTween = transform.DOMove(chargePosition, chargeSpeed).SetSpeedBased(true).OnComplete(() => { TransitionToStun(); chargeTween = null; }).SetEase(chargeEase);
+
+        if (distance < impactDistance && !playerStruckThisCharge) {
+            Debug.Log("Hitting player");
+            playerStruckThisCharge = true;
+            playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
+            shouldStun = false;
+            chargeTween.Kill();
+            TransitionToPreCharge();
+        }
+    }
+
     void TransitionToStun() {
         stunTimer = stunTime;
 
+        if (stunned != null) stunned.Play();
+        if (swim != null) swim.Stop();
+
         if (shouldStun)
             state = AnglarState.stunned;
-        else 
-            state = AnglarState.precharge;
+        else
+            TransitionToPreCharge();
     }
 
     public void OnHit(DamageInstance damageInstance) {
