@@ -42800,6 +42800,7 @@ MonoBehaviour:
   dodgeSound: {fileID: 7786844168123414665}
   metal: {fileID: 8300000, guid: 92853b46a1f801d429c2a819eb4fdefe, type: 3}
   maxHeight: 42
+  attackPoint: {fileID: 5878976538373492115}
 --- !u!114 &6620023859442715560
 MonoBehaviour:
   m_ObjectHideFlags: 0
