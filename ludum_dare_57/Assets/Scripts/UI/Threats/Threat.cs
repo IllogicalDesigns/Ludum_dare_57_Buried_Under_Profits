@@ -8,6 +8,7 @@ public class Threat : MonoBehaviour
     GameObject myThreatIndicator;
     [SerializeField] GameObject threatIndicatorPrefab;
 
+    //TODO add threat level which aguments the color of the threat
     public void BecomeThreat() {
         if (myThreatIndicator != null) return;
 

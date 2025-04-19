@@ -37,8 +37,6 @@ public class PistolShrimps : MonoBehaviour {
     public float dotRequirement = -0.65f;
     public LayerMask layerMask = ~0;
 
-
-
     [Space]
     [SerializeField] AudioClip gunShotSFX;
     [SerializeField] AudioClip preGunShotSfx;

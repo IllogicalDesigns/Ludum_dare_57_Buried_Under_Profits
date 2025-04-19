@@ -36,7 +36,21 @@ public class SniperFish : MonoBehaviour
     bool isSniping;
 
     const float whiteThresh = 0.75f;
-    const float redThresh = 1.5f;
+    const float redThresh = 0.5f;
+
+    public Gradient nonWhiteGradient;
+    Material laserMaterial;
+    public float boostAmount = 1f;
+
+    public enum SniperState {
+        idle,
+        charging,
+        cooldown
+    }
+    public SniperState state;
+
+    public float cdTime = 2f;
+    float cdTimer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,6 +60,9 @@ public class SniperFish : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         player = FindAnyObjectByType<Player>();
         playerHealth = player.GetComponent<Health>();
+
+        laserMaterial = lineRenderer.material;
+        laserMaterial.EnableKeyword("_EMISSION");
     }
 
     public void OnRam(Vector3 dir) {
@@ -60,92 +77,125 @@ public class SniperFish : MonoBehaviour
 
         var diffMulti = timeDifficulty.Evaluate(GameManager.instance.difficulty);
 
-        if (timer > timeBeforeSnipeLands) {
-            lineRenderer.enabled = false;
-            timer -= diffMulti * Time.deltaTime;  //We are in cooldown
-            start.Stop();
-            windup.Stop();
-            isSniping = false;
-            gameObject.SendMessage(Threat.unBecomeThreat);
-            return;
-        }
-
-        if (isSniping) {
-            bool hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
-            if(!hasPlayersLineOfSight) {
-                timer = 0;
-                lineRenderer.enabled = false;
-                isSniping = false;
-            }
-
-            transform.LookAt(attackPoint.position);
-            lineRenderer.enabled = true;
-            lineRenderer.SetPosition(0, MouthPoint.position);
-            lineRenderer.SetPosition(1, attackPoint.position);
-
-            var playerDodgeTime = player.dodgeTimer * diffMulti;
-            if (timer <= playerDodgeTime * whiteThresh)
-                lineRenderer.material = laser3;
-            else if (timer <= playerDodgeTime * redThresh)
-                lineRenderer.material = laser2;
-            else
-                lineRenderer.material = laser1;
-
-            if (!windup.isPlaying) {
-                windup.Play();
-            }
-
-            float pitchFactor = 1 - (timer / timeBeforeSnipeLands);
-            windup.pitch = Mathf.Lerp(1.0f, maxPitch, pitchFactor);
-
-            timer -= diffMulti * Time.deltaTime;
-            if (timer < 0) {
-                lineRenderer.enabled = false;
-                if (!gunshot.isPlaying) gunshot.Play();
-                gunSmoke.Play();
-
-                bubbleFire.transform.position = MouthPoint.position;
-                bubbleFire.transform.LookAt(attackPoint.position);
-                bubbleFire.Play();
-
-                hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
-                if(hasPlayersLineOfSight && !player.isDodging) {
-                    playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
-                }
-
-                timer = cooldown;
-            }
-        }
-        else {
-            lineRenderer.enabled = false;
-            timer = timeBeforeSnipeLands;
-        }
-
-        if (!isSniping && AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, 0f, dotRequirement, layerMask)) {
-            StartSniping();
+        switch (state) {
+            case SniperState.idle:
+                if (AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, 0f, dotRequirement, layerMask)) 
+                    TransitionToCharging();
+                break;
+            case SniperState.charging:
+                HandleCharging(diffMulti);
+                break;
+            case SniperState.cooldown:
+                Cooldown();
+                break;
         }
     }
 
-    private void StartSniping() {
-        if(isSniping) { return; }
+    private void SetLaserColor(float diffMulti) {
+        var playerDodgeTime = player.dodgeTimer * diffMulti;
+        if (timer <= playerDodgeTime * whiteThresh)
+            lineRenderer.material = laser3;
+        else if (timer <= timeBeforeSnipeLands * redThresh)
+            lineRenderer.material = laser2;
+        else
+            lineRenderer.material = laser1;
+    }
 
-        isSniping = true;
+    private void TransitionToCharging() {
+        state = SniperState.charging;
         start.Play();
         gameObject.SendMessage(Threat.becomeThreatString);
+        lineRenderer.enabled = true;
+        windup.Play();
+        timer = timeBeforeSnipeLands;
+    }
+
+    private void HandleCharging(float diffMulti) {
+        //Check for line of sight
+        bool hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
+        if (!hasPlayersLineOfSight) {
+            //Lost line of sight, exit sniping
+            timer = 0;
+            lineRenderer.enabled = false;
+            //lineRenderer.SetPosition(0, MouthPoint.position);
+            //lineRenderer.SetPosition(1, attackPoint.position); //TODO move to hitPoint
+            //isSniping = false;
+        }
+
+        //Look at the target
+        transform.LookAt(attackPoint.position);
+
+        //Place line renderer 
+        lineRenderer.SetPosition(0, MouthPoint.position);
+        lineRenderer.SetPosition(1, attackPoint.position);
+
+        //Calculate line renderer color
+        SetLaserColor(diffMulti);
+
+        //windup adjust pitch
+        float pitchFactor = 1 - (timer / timeBeforeSnipeLands);
+        windup.pitch = Mathf.Lerp(1.0f, maxPitch, pitchFactor);
+
+        //Check timer, on zero Fire gun
+        timer -= diffMulti * Time.deltaTime;
+        if (timer < 0) {
+            FireGunTransitonToCooldown(hasPlayersLineOfSight);
+        }
+    }
+
+    private void FireGunTransitonToCooldown(bool hasPlayersLineOfSight) {
+        lineRenderer.enabled = false;
+        gunshot.Play();
+        gunSmoke.Play();
+
+        //Create a line of bubbles for a gunshot
+        bubbleFire.transform.position = MouthPoint.position;
+        bubbleFire.transform.LookAt(attackPoint.position);
+        bubbleFire.Play();
+
+        //hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);  //TODO is this really necessary cuz we are checking for LOS above
+        if (hasPlayersLineOfSight && !player.isDodging) {
+            playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
+        }
+
+        TransitionToCooldown();
+    }
+
+    private void TransitionToCooldown() {
+        state = SniperState.cooldown;
+        timer = cooldown;
+        cdTimer = cooldown;
+
+        lineRenderer.enabled = false;
+        var diffMulti = timeDifficulty.Evaluate(GameManager.instance.difficulty);
+        timer -= diffMulti * Time.deltaTime;  //We are in cooldown
+        start.Stop();
+        windup.Stop();
+        isSniping = false;
+        gameObject.SendMessage(Threat.unBecomeThreat);  //TODO add like a threat level
+    }
+
+    private void Cooldown() {
+        if (cdTimer <= 0)
+            TransitionToCharging();
+        else
+            cdTimer -= Time.deltaTime;
+
+        transform.LookAt(attackPoint);
     }
 
     public void OnHit(DamageInstance damageInstance) {
-        StartSniping();
+        TransitionToCharging();
     }
-
-    //Can we snipe
-    //Are we in range
-    //Can the player see us?
-    //Can we see the player?
-    //Is there an avaliable snipe slot?
 
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.gray;
         Gizmos.DrawWireSphere(transform.position, activationDistance);
     }
 }
+
+//Can we snipe
+//Are we in range
+//Can the player see us?
+//Can we see the player?
+//Is there an avaliable snipe slot?
