@@ -28,6 +28,12 @@ public class ChargeFish : MonoBehaviour
 
     public float distanceToHit = 3f;
 
+    public enum ChargerState {
+        idle,
+        charging,
+    }
+    public ChargerState state;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -41,35 +47,22 @@ public class ChargeFish : MonoBehaviour
     {
         if (GameManager.instance.currentGameState != GameManager.GameState.playing) return;
 
-        var distance = Vector3.Distance(transform.position, attackPoint.position);
-
-        if (!isCharging && AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, minActivationDistance, dotRequirement, layerMask)) {
-            StartCharging();
-        }
-
-        if (isCharging) {
-            transform.LookAt(attackPoint.position);
-
-            Vector3 targetPos = attackPoint.position;
-            
-            if (distance < (activationDistance * 0.75) && distance > minActivationDistance) {       //For some distance offset our main vector by this rand vector
-                targetPos = attackPoint.position + new Vector3(jitterX, jitterY, jitterZ);          //This prevents straight line syndrome
-            }
-            
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
-
-            if (distance < distanceToHit) {
-                //impact
-                playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
-                isCharging = false;
-                gameObject.SendMessage(Threat.unBecomeThreat);
-                swim.Stop();
-            }
+        switch (state) {
+            case ChargerState.idle:
+                if (AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, minActivationDistance, dotRequirement, layerMask)) {
+                    TransitionToCharging();
+                }
+                break;
+            case ChargerState.charging:
+                HandleCharging();
+                break;
         }
     }
 
-    private void StartCharging() {
+    private void TransitionToCharging() {
         if (isCharging) return;
+
+        state = ChargerState.charging;
 
         jitterX = Random.Range(-jitterRange, jitterRange);
         jitterY = Random.Range(-jitterRange, jitterRange);
@@ -81,8 +74,30 @@ public class ChargeFish : MonoBehaviour
         swim.Play();
     }
 
+    private void HandleCharging() {
+        var distance = Vector3.Distance(transform.position, attackPoint.position);
+
+        transform.LookAt(attackPoint.position);
+
+        Vector3 targetPos = attackPoint.position;
+
+        if (distance < (activationDistance * 0.75) && distance > minActivationDistance) {       //For some distance offset our main vector by this rand vector
+            targetPos = attackPoint.position + new Vector3(jitterX, jitterY, jitterZ);          //This prevents straight line syndrome
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+
+        if (distance < distanceToHit) {
+            //impact
+            playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
+            isCharging = false;
+            gameObject.SendMessage(Threat.unBecomeThreat);
+            swim.Stop();
+        }
+    }
+
     public void OnHit(DamageInstance damageInstance) {
-        StartCharging();
+        TransitionToCharging();
     }
 
     private void OnDrawGizmosSelected() {

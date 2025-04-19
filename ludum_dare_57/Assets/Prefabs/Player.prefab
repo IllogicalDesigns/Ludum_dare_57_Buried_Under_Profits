@@ -25101,7 +25101,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: be7538fd5e948c0409cc1155e7e5a492, type: 3}
   m_Resource: {fileID: 8300000, guid: be7538fd5e948c0409cc1155e7e5a492, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -42983,6 +42983,7 @@ MonoBehaviour:
   dur: 0.2
   playerCamera: {fileID: 5915951905047567589}
   deadRotation: {x: -90, y: 0, z: 0}
+  deadRotationDur: 2
   airCritical: {fileID: 2727497356225773484}
 --- !u!114 &3576513698799779526
 MonoBehaviour:
