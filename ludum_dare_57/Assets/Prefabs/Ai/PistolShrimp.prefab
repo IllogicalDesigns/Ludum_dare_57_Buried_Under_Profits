@@ -130,6 +130,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activationDistance: 30
+  state: 0
+  preShotTime: 0.25
+  cdTime: 2
   cooldown: 2
   launchPoint: {fileID: 8698978204407787994}
   launchedObject: {fileID: 4261524308620940799, guid: b11dc9595fe683141b158f931fa8e6ea, type: 3}

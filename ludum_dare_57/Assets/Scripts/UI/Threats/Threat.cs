@@ -9,6 +9,8 @@ public class Threat : MonoBehaviour
     [SerializeField] GameObject threatIndicatorPrefab;
 
     public void BecomeThreat() {
+        if (myThreatIndicator != null) return;
+
         var panelTransform = GameObject.Find("Threat Panel")?.transform;
         myThreatIndicator = Instantiate(threatIndicatorPrefab, panelTransform);
         DamageIndicator threatActor = myThreatIndicator.GetComponent<DamageIndicator>();
