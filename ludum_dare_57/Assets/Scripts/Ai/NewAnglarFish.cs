@@ -107,9 +107,6 @@ public class NewAnglarFish : MonoBehaviour {
                 else
                     stunTimer -= Time.deltaTime;
                 break;
-            default: 
-                //How did you get here?
-                break;
         }
     }
 
@@ -120,6 +117,7 @@ public class NewAnglarFish : MonoBehaviour {
         state = AnglarState.intro;
         introChargePosition = Vector3.Lerp(transform.position, attackPoint.position, introChagePercent);
         sandSystem.Play();
+        gameObject.SendMessage(Threat.becomeThreatString);
         if (start != null) start.Play();
     }
 

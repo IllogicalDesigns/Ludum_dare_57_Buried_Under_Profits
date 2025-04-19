@@ -106,7 +106,7 @@ public class PlayerGun : MonoBehaviour
     private void FireRayAndHandleEffects(Ray ray) {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, maxDist, layerMask)) {
-            Debug.Log("Hit: " + hit.transform.name);
+            //Debug.Log("Hit: " + hit.transform.name);
 
             ApplyDamage(hit);
             PlayHitMarkerOnEnemy(hit);
