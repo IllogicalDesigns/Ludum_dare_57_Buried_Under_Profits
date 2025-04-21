@@ -115,11 +115,12 @@ public class SniperFish : MonoBehaviour
         bool hasPlayersLineOfSight = !Physics.Linecast(transform.position, attackPoint.position, layerMask);
         if (!hasPlayersLineOfSight) {
             //Lost line of sight, exit sniping
-            timer = 0;
-            lineRenderer.enabled = false;
+            //timer = timeBeforeSnipeLands;
+            //lineRenderer.enabled = false;
             //lineRenderer.SetPosition(0, MouthPoint.position);
             //lineRenderer.SetPosition(1, attackPoint.position); //TODO move to hitPoint
             //isSniping = false;
+            TransitionToCooldown();
         }
 
         //Look at the target

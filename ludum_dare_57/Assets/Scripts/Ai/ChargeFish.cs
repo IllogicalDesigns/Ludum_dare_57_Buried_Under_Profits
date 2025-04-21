@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ChargeFish : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class ChargeFish : MonoBehaviour
 
     public float speed = 5f;
 
-    bool isCharging;
 
     public int damage = 5;
     public int airDamage = 2;
@@ -28,9 +28,16 @@ public class ChargeFish : MonoBehaviour
 
     public float distanceToHit = 3f;
 
+    public float cdTime = 2f;
+    float cdTimer;
+
+    NavMeshAgent navAgent;
+
     public enum ChargerState {
         idle,
+        navigateToPlayer,
         charging,
+        cooldown
     }
     public ChargerState state;
 
@@ -40,6 +47,8 @@ public class ChargeFish : MonoBehaviour
         attackPoint = Player.Instance.attackPoint;
         player = FindAnyObjectByType<Player>();
         playerHealth = player.GetComponent<Health>();
+        navAgent = GetComponent<NavMeshAgent>();
+        navAgent.enabled = false;
     }
 
     // Update is called once per frame
@@ -53,28 +62,42 @@ public class ChargeFish : MonoBehaviour
                     TransitionToCharging();
                 }
                 break;
+            case ChargerState.navigateToPlayer:
+                HandleNavigateToPlayer();
+            break;
             case ChargerState.charging:
                 HandleCharging();
+                break;
+            case ChargerState.cooldown:
+                Cooldown();
                 break;
         }
     }
 
     private void TransitionToCharging() {
-        if (isCharging) return;
-
         state = ChargerState.charging;
+        navAgent.enabled = false;
+        navAgent.isStopped = true;
 
         jitterX = Random.Range(-jitterRange, jitterRange);
         jitterY = Random.Range(-jitterRange, jitterRange);
         jitterZ = Random.Range(-jitterRange, jitterRange);
 
-        isCharging = true;
         gameObject.SendMessage(Threat.becomeThreatString);
         start.Play();
         swim.Play();
     }
 
     private void HandleCharging() {
+        bool lineOfSight = Physics.Linecast(transform.position, player.transform.position, layerMask);
+
+       if (lineOfSight) {
+            state = ChargerState.navigateToPlayer;
+            navAgent.enabled = true;
+            navAgent.isStopped = false;
+            return;
+        }
+
         var distance = Vector3.Distance(transform.position, attackPoint.position);
 
         transform.LookAt(attackPoint.position);
@@ -90,10 +113,34 @@ public class ChargeFish : MonoBehaviour
         if (distance < distanceToHit) {
             //impact
             playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
-            isCharging = false;
             gameObject.SendMessage(Threat.unBecomeThreat);
             swim.Stop();
+
+            TransitionToCooldown();
         }
+    }
+
+    public void HandleNavigateToPlayer(){
+            bool lineOfSight = Physics.Linecast(transform.position, player.transform.position, layerMask);
+            if(!lineOfSight)
+                TransitionToCharging();
+            else{
+                navAgent.SetDestination(player.transform.position);
+            }
+    }
+
+    private void TransitionToCooldown() {
+        cdTimer = cdTime;
+        state = ChargerState.cooldown;
+    }
+
+    private void Cooldown() {
+        if (cdTimer <= 0)
+            TransitionToCharging();
+        else
+            cdTimer -= Time.deltaTime;
+
+        transform.LookAt(attackPoint);
     }
 
     public void OnHit(DamageInstance damageInstance) {
