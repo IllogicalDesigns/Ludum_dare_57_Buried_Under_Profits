@@ -60,8 +60,10 @@ Material:
     - _HeightWaveFrequency: 0.05
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _displacement: 5
+    - _scale: 0.2
     - _size: 1
-    - _speed: 5
+    - _speed: 1
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     public float difficulty = 1f;
 
+    bool goneUnderwater;
+
     public enum GameState {
         waiting,
         playing,
@@ -66,9 +68,10 @@ public class GameManager : MonoBehaviour
         if (currentGameState == GameState.waiting && player.transform.position.y < surfacingHeight)
         {
             currentGameState = GameState.playing;
+            goneUnderwater = true;
         }
 
-        if (currentGameState == GameState.playing && player.transform.position.y > surfacingHeight) {
+        if (goneUnderwater && currentGameState == GameState.playing && player.transform.position.y > surfacingHeight) {
             WinGame();
         }
 
@@ -90,6 +93,9 @@ public class GameManager : MonoBehaviour
         if (tutorialCanvas) tutorialCanvas?.SetActive(false);
         if (wonCanvas) wonCanvas?.SetActive(true);
 
+        player.SetPaused(true);
+
+        air = 60;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }

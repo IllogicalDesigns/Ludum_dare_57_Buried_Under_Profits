@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
         // Check if the object has a Health component and send damage
         if (isDodging && hit.gameObject.TryGetComponent<Health>(out Health hp)) {
             hp.gameObject.SendMessage(Health.OnHitString, new DamageInstance(dodgeDamage, 0));
-            hp.gameObject.SendMessage(OnRamStr, (transform.position - hit.transform.position) * -ramForce);
+            hp.gameObject.SendMessage(OnRamStr, (transform.position - hit.transform.position) * -ramForce, SendMessageOptions.DontRequireReceiver);
             //dgTimer = 0;
         } else {
             if (hit.gameObject.CompareTag(EnemyTagStr) || hit.gameObject.CompareTag(BubbleTagStr)) return;
