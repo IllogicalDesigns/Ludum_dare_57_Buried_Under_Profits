@@ -111,7 +111,7 @@ public class Octopus : MonoBehaviour
 
         //TODO make sure we are in the front view cone of the player and navigate to this
 
-        if (distance < distanceToLatch) {
+        if (distance < distanceToLatch && !player.isDodging) {
             //impact
             // playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
             // gameObject.SendMessage(Threat.unBecomeThreat);
@@ -150,6 +150,8 @@ public class Octopus : MonoBehaviour
             swim.Stop();
 
         tickTimer = 0f;
+
+        GetComponent<Health>().canTakeDamage = false;
     }
 
     private void HandleLatching() {
@@ -168,6 +170,8 @@ public class Octopus : MonoBehaviour
             Vector2 force = mouseDirection * mouseSpeed * throwForceMulti;
             rigid.isKinematic = false;
             rigid.AddForce(force);
+
+            GetComponent<Health>().canTakeDamage = true;
 
             TransitionToCooldown();
             return;
