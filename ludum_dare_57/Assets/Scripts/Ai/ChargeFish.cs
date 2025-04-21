@@ -77,7 +77,7 @@ public class ChargeFish : MonoBehaviour
     private void TransitionToCharging() {
         state = ChargerState.charging;
         navAgent.enabled = false;
-        navAgent.isStopped = true;
+        // navAgent.isStopped = true;
 
         jitterX = Random.Range(-jitterRange, jitterRange);
         jitterY = Random.Range(-jitterRange, jitterRange);
@@ -91,10 +91,9 @@ public class ChargeFish : MonoBehaviour
     private void HandleCharging() {
         bool lineOfSight = Physics.Linecast(transform.position, player.transform.position, layerMask);
 
-       if (lineOfSight) {
-            state = ChargerState.navigateToPlayer;
-            navAgent.enabled = true;
-            navAgent.isStopped = false;
+       if (lineOfSight)
+        {
+            TransitionToNavigating();
             return;
         }
 
@@ -117,6 +116,18 @@ public class ChargeFish : MonoBehaviour
             swim.Stop();
 
             TransitionToCooldown();
+        }
+    }
+
+    private void TransitionToNavigating() {
+        state = ChargerState.navigateToPlayer;
+        navAgent.enabled = true;
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, layerMask)) {
+            navAgent.baseOffset = -hit.distance; // Set the base offset to a value that ensures the agent navigates above any obstacles.
+        } else {
+            navAgent.baseOffset = 1f; // Set a default base offset if no obstacle is found.
         }
     }
 

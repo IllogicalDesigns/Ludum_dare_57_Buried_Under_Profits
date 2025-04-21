@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SpawnerWithRaycast : MonoBehaviour {
     [Header("Spawner Settings")]
@@ -76,8 +77,13 @@ public class SpawnerWithRaycast : MonoBehaviour {
                     );
             }
 
-            GameObject spawnedObject = Instantiate(prefabToSpawn, randomPosition, Quaternion.Euler(spawnRotation));
-            spawnedObjects.Add(spawnedObject);
+            if (NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, 10f, NavMesh.AllAreas)) {
+                randomPosition = hit.position;
+                randomPosition.y = hitInfo.point.y + groundOffset;
+
+                GameObject spawnedObject = Instantiate(prefabToSpawn, randomPosition, Quaternion.Euler(spawnRotation));
+                spawnedObjects.Add(spawnedObject);
+            }
         }
         else {
             Debug.LogWarning("Raycast did not hit any ground. Object not spawned.");

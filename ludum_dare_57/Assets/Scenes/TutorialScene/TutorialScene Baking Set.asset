@@ -128,4 +128,4 @@ MonoBehaviour:
       bakeScene: 1
       bounds:
         m_Center: {x: 0, y: 40.5, z: 40.5}
-        m_Extent: {x: 81, y: 40.5, z: 121.5}
+        m_Extent: {x: 81, y: 40.5, z: 40.5}
