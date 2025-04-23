@@ -46,6 +46,10 @@ public class Octopus : MonoBehaviour
     }
     public ChargerState state;
 
+    public Material normalMaterial;
+    public Material latchedMaterial;
+    public MeshRenderer meshRenderer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -152,6 +156,8 @@ public class Octopus : MonoBehaviour
         tickTimer = 0f;
 
         GetComponent<Health>().canTakeDamage = false;
+
+        meshRenderer.material = latchedMaterial;
     }
 
     private void HandleLatching() {
@@ -173,6 +179,7 @@ public class Octopus : MonoBehaviour
 
             GetComponent<Health>().canTakeDamage = true;
 
+            meshRenderer.material = normalMaterial;
             TransitionToCooldown();
             return;
         }

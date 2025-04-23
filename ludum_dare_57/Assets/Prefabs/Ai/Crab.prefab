@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3effd1ae44636e74bbe54b02838d8b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threatIndicatorPrefab: {fileID: 3352981927554087797, guid: 19d3bc604d1b52b44acda36fa050beaa, type: 3}
+  threatIndicatorPrefab: {fileID: 492953202141166888, guid: 0aff8c9ecfe73ed47a99e2af0298718d, type: 3}
 --- !u!1 &3311366544216832410
 GameObject:
   m_ObjectHideFlags: 0
