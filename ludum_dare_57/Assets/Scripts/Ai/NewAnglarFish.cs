@@ -169,6 +169,7 @@ public class NewAnglarFish : MonoBehaviour {
     }
 
     private void HandleCharge(float distance) {
+        //TODO figure out why it can get stuck here?
         //Charge through the player, straight line, if it hits a wall, see stunned
         if (chargeTween == null)
             chargeTween = transform.DOMove(chargePosition, chargeSpeed).SetSpeedBased(true).OnComplete(() => { TransitionToStun(); chargeTween = null; }).SetEase(chargeEase);

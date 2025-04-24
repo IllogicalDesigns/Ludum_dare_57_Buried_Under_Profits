@@ -21560,6 +21560,7 @@ GameObject:
   - component: {fileID: 1371830348}
   - component: {fileID: 1371830349}
   - component: {fileID: 1371830350}
+  - component: {fileID: 1371830351}
   m_Layer: 2
   m_Name: SpawnCube
   m_TagString: Untagged
@@ -21760,6 +21761,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 9063846351880819233, guid: baca37b6ba79bf645a1eff8761c1c105, type: 3}
+  spawnHeight: 25
+  groundOffset: 2
+  spawnRadius: 60
+  player: {fileID: 8300318653300194981}
+  minSpawnDistance: 40
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  spawnedObjects: []
+  desiredSpawnCount: 1
+  spawnDelay: 20
+  spawnRate: 10
+  spawnRotation: {x: 0, y: 0, z: 0}
+  randomRotation: 0
+  spawnCenter: {fileID: 1460174582}
+--- !u!114 &1371830351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371830340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98278868122de694e8831bf814c393bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabToSpawn: {fileID: 92955132196702924, guid: 8adaf69c8f651614d9c249823cf81adc, type: 3}
   spawnHeight: 25
   groundOffset: 2
   spawnRadius: 60
@@ -30629,6 +30658,11 @@ MonoBehaviour:
   underwater: {fileID: 1243374204}
   aboveWater: {fileID: 694645995}
   waterLineHeight: 41.5
+  dive: {fileID: 0}
+  surface: {fileID: 0}
+  rotation: {x: 0, y: 0, z: 0}
+  rotationDuration: 10
+  ease: 1
 --- !u!4 &1966342130
 Transform:
   m_ObjectHideFlags: 0
