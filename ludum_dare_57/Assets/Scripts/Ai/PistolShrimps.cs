@@ -52,6 +52,7 @@ public class PistolShrimps : MonoBehaviour {
     [Space]
     public float projectileSpeed = 20f;
     public bool useGuessAim = true;
+    Threat threat;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -59,6 +60,8 @@ public class PistolShrimps : MonoBehaviour {
 
         player = FindAnyObjectByType<Player>();
         playerController = player.GetComponent<CharacterController>();
+        threat = GetComponent<Threat>();
+
     }
 
     public void OnRam(Vector3 dir) {
@@ -106,7 +109,7 @@ public class PistolShrimps : MonoBehaviour {
 
     void TransitionToPreShot() {
         AudioManager.instance.PlaySoundOnPoint(preGunShotSfx, transform.position);
-        gameObject.SendMessage(Threat.becomeThreatString);
+        threat.BecomeThreat();
         state = ShrimpState.preShot;
         preShotTimer = preShotTime;
     }

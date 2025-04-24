@@ -35,7 +35,7 @@ public class TriggerBubbleAdd : TriggerBase {
         GameManager.instance.ProvideAir(providedAir);
         AudioManager.instance.PlaySoundOnPoint(popSFX, transform.position);
 
-        Instantiate(bubblePop, transform.position, transform.rotation);
+        Instantiate(bubblePop, transform.position, transform.rotation); //TODO pool this
 
         Destroy(gameObject);
     }

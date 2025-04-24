@@ -41,6 +41,7 @@ public class SniperFish : MonoBehaviour
     public Gradient nonWhiteGradient;
     Material laserMaterial;
     public float boostAmount = 1f;
+    Threat threat;
 
     public enum SniperState {
         idle,
@@ -63,6 +64,8 @@ public class SniperFish : MonoBehaviour
 
         laserMaterial = lineRenderer.material;
         laserMaterial.EnableKeyword("_EMISSION");
+        threat = GetComponent<Threat>();
+
     }
 
     public void OnRam(Vector3 dir) {
@@ -104,7 +107,7 @@ public class SniperFish : MonoBehaviour
     private void TransitionToCharging() {
         state = SniperState.charging;
         start.Play();
-        gameObject.SendMessage(Threat.becomeThreatString);
+        threat.BecomeThreat();
         lineRenderer.enabled = true;
         windup.Play();
         timer = timeBeforeSnipeLands;
@@ -173,7 +176,7 @@ public class SniperFish : MonoBehaviour
         start.Stop();
         windup.Stop();
         isSniping = false;
-        gameObject.SendMessage(Threat.unBecomeThreat);  //TODO add like a threat level
+        threat.UnBecomeThreat();
     }
 
     private void Cooldown() {

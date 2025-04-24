@@ -13,7 +13,7 @@ public class Threat : MonoBehaviour
         if (myThreatIndicator != null) return;
 
         var panelTransform = GameObject.Find("Threat Panel")?.transform;
-        myThreatIndicator = Instantiate(threatIndicatorPrefab, panelTransform);
+        myThreatIndicator = Instantiate(threatIndicatorPrefab, panelTransform); //TODO pool this
         DamageIndicator threatActor = myThreatIndicator.GetComponent<DamageIndicator>();
         threatActor.damageLocation = this.transform;
     }

@@ -50,6 +50,8 @@ public class Octopus : MonoBehaviour
     public Material latchedMaterial;
     public MeshRenderer meshRenderer;
 
+    Threat threat;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -59,6 +61,8 @@ public class Octopus : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.enabled = false;
         rigid = GetComponent<Rigidbody>();
+        threat = GetComponent<Threat>();
+
     }
 
     // Update is called once per frame
@@ -91,7 +95,8 @@ public class Octopus : MonoBehaviour
         state = ChargerState.charging;
         navAgent.enabled = false;
 
-        gameObject.SendMessage(Threat.becomeThreatString);
+        threat.BecomeThreat();
+
         if(start != null) start.Play();
         if(swim != null) swim.Play();
     }
@@ -118,7 +123,6 @@ public class Octopus : MonoBehaviour
         if (distance < distanceToLatch && !player.isDodging) {
             //impact
             // playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
-            // gameObject.SendMessage(Threat.unBecomeThreat);
             transform.SetParent(player.transform);
             swim.Stop();
 

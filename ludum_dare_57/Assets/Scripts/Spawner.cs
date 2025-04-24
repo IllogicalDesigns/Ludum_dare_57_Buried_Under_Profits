@@ -81,7 +81,7 @@ public class SpawnerWithRaycast : MonoBehaviour {
                 randomPosition = hit.position;
                 randomPosition.y = hitInfo.point.y + groundOffset;
 
-                GameObject spawnedObject = Instantiate(prefabToSpawn, randomPosition, Quaternion.Euler(spawnRotation));
+                GameObject spawnedObject = Instantiate(prefabToSpawn, randomPosition, Quaternion.Euler(spawnRotation)); //TODO pool this
                 spawnedObjects.Add(spawnedObject);
             }
         }

@@ -135,7 +135,7 @@ public class PlayerGun : MonoBehaviour
 
     private void PlaceDecalOnHit(RaycastHit hit) {
         if (hit.collider.CompareTag("Enemy")) {
-            var hitDecal = Instantiate(bloodDecal, hit.point, Quaternion.EulerAngles(-hit.normal)) as GameObject;
+            var hitDecal = Instantiate(bloodDecal, hit.point, Quaternion.EulerAngles(-hit.normal)) as GameObject; //TODO pool this
             hitDecal.transform.SetParent(hit.transform);
         }
         else {

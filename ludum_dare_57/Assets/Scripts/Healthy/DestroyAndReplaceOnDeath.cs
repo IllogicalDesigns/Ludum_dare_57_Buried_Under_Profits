@@ -9,7 +9,7 @@ public class DestroyAndReplaceOnDeath : MonoBehaviour
         if(isDead) return;
         isDead = true;
 
-        Instantiate(replacement, transform.position, transform.rotation);
+        Instantiate(replacement, transform.position, transform.rotation); //TODO pool this
         Destroy(gameObject);
     }
 }

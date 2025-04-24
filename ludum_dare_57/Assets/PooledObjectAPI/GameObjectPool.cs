@@ -47,7 +47,7 @@ public class GameObjectPool {
     // We have to specify GameObject.Instantiate because
     // this isn't a Monobehavior.
     GameObject CreatePooledObject() {
-        GameObject newObject = GameObject.Instantiate(prefab);
+        GameObject newObject = GameObject.Instantiate(prefab); //TODO pool this
         Debug.Log("Instantiated marble");
         return newObject;
     }

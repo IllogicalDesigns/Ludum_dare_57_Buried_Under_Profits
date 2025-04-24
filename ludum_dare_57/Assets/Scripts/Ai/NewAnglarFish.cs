@@ -67,11 +67,15 @@ public class NewAnglarFish : MonoBehaviour {
 
     Tween chargeTween;
 
+    Threat threat;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         attackPoint = Player.Instance.attackPoint;
         player = FindAnyObjectByType<Player>();
         playerHealth = player.GetComponent<Health>();
+        threat = GetComponent<Threat>();
+
     }
 
     // Update is called once per frame
@@ -117,7 +121,7 @@ public class NewAnglarFish : MonoBehaviour {
         state = AnglarState.intro;
         introChargePosition = Vector3.Lerp(transform.position, attackPoint.position, introChagePercent);
         sandSystem.Play();
-        gameObject.SendMessage(Threat.becomeThreatString);
+        threat.BecomeThreat();
         if (start != null) start.Play();
     }
 

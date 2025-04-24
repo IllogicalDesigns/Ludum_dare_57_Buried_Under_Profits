@@ -30,6 +30,7 @@ public class AnglarFish : MonoBehaviour {
 
     float coolDown = 2f;
     float timer;
+    Threat threat;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -38,6 +39,7 @@ public class AnglarFish : MonoBehaviour {
         playerHealth = player.GetComponent<Health>();
 
         InvokeRepeating(nameof(UpdateJitter), jitterUpdate, jitterUpdate);
+        threat = gameObject.GetComponent<Threat>();
     }
 
     void UpdateJitter() {
@@ -75,7 +77,7 @@ public class AnglarFish : MonoBehaviour {
                 Debug.Log("Hitting player");
                 playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
                 isCharging = false;
-                gameObject.SendMessage(Threat.unBecomeThreat);
+                threat.UnBecomeThreat();
                 timer = coolDown;
                 swim.Stop();
             }
@@ -86,7 +88,7 @@ public class AnglarFish : MonoBehaviour {
         if(isCharging) return;
 
         isCharging = true;
-        gameObject.SendMessage(Threat.becomeThreatString);
+        threat.BecomeThreat();
         start.Play();
         swim.Play();
         timer = coolDown;

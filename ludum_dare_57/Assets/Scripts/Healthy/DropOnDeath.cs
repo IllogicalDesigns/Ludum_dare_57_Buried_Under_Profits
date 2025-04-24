@@ -7,7 +7,7 @@ public class DropOnDeath : MonoBehaviour
 
     public void OnDead() {
         if(Random.Range(0, 100) < dropRate) {
-            Instantiate(drop, transform.position, Quaternion.identity);
+            Instantiate(drop, transform.position, Quaternion.identity); //TODO pool this
         }
     }
 }

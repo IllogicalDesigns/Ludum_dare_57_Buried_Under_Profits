@@ -65,6 +65,7 @@ public class Crab : MonoBehaviour
     float timeBetweenTicks = 1f;
     int damage = 2;
     int airDamage = 1;
+    Threat threat;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -72,6 +73,9 @@ public class Crab : MonoBehaviour
         attackPoint = Player.Instance.transform;
         hotBitMaterial = laserHotBitsRender.material;
         hotBitMaterial.EnableKeyword("_EMISSION");
+
+        threat = GetComponent<Threat>();
+
     }
 
     // Update is called once per frame
@@ -98,7 +102,7 @@ public class Crab : MonoBehaviour
         var distance = Vector3.Distance(transform.position, attackPoint.transform.position);
 
         if (distance < activationDistance) {
-            gameObject.SendMessage(Threat.becomeThreatString);
+            threat.BecomeThreat();
             TransitionToPreLasering();
         }
             

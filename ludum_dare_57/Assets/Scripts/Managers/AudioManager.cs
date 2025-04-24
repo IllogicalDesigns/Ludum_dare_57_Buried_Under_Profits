@@ -18,14 +18,14 @@ public class AudioManager : MonoBehaviour
     }
 
     public void PlaySoundOnPlayer(AudioClip clip) {
-        var audioSource = Instantiate(playerSound, player.position, player.rotation, player).GetComponent<AudioSource>();
+        var audioSource = Instantiate(playerSound, player.position, player.rotation, player).GetComponent<AudioSource>(); //TODO pool this
         audioSource.clip = clip;
         audioSource.Play();
         Destroy(audioSource.gameObject, clip.length);
     }
 
     public void PlaySoundOnPoint(AudioClip clip, Vector3 point) {
-        var audioSource = Instantiate(playerSound, player.position, player.rotation, player).GetComponent<AudioSource>();
+        var audioSource = Instantiate(playerSound, player.position, player.rotation, player).GetComponent<AudioSource>();  //TODO pool this
         audioSource.clip = clip;
         audioSource.Play();
         Destroy(audioSource.gameObject, clip.length);

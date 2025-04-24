@@ -40,6 +40,7 @@ public class ChargeFish : MonoBehaviour
         cooldown
     }
     public ChargerState state;
+    Threat threat;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,6 +50,7 @@ public class ChargeFish : MonoBehaviour
         playerHealth = player.GetComponent<Health>();
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.enabled = false;
+        threat = GetComponent<Threat>();
     }
 
     // Update is called once per frame
@@ -83,7 +85,7 @@ public class ChargeFish : MonoBehaviour
         jitterY = Random.Range(-jitterRange, jitterRange);
         jitterZ = Random.Range(-jitterRange, jitterRange);
 
-        gameObject.SendMessage(Threat.becomeThreatString);
+        threat.BecomeThreat();
         start.Play();
         swim.Play();
     }
@@ -112,7 +114,7 @@ public class ChargeFish : MonoBehaviour
         if (distance < distanceToHit) {
             //impact
             playerHealth.SendMessage(Health.OnHitString, new DamageInstance(damage, airDamage));
-            gameObject.SendMessage(Threat.unBecomeThreat);
+            threat.UnBecomeThreat();
             swim.Stop();
 
             TransitionToCooldown();
