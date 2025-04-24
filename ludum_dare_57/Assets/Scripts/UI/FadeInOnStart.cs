@@ -15,10 +15,4 @@ public class FadeInOnStart : MonoBehaviour
         image = GetComponent<Image>();
         image.DOFade(fadeTarget, fadeTime).SetEase(ease);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

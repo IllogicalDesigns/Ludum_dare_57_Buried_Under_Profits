@@ -12,10 +12,4 @@ public class ShakeOnAwake : MonoBehaviour
         var cameraShake = FindAnyObjectByType<CameraShake>();
         cameraShake.PunchScreen(duration, positionPunch, rotationPunch);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

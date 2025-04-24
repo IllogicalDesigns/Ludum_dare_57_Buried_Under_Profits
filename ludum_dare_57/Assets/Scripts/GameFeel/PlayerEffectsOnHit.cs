@@ -4,16 +4,6 @@ public class PlayerEffectsOnHit : MonoBehaviour {
     [SerializeField] ParticleSystem Sparks;
     [SerializeField] AudioSource sparkSounds;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
-
     public void deaf() {
         AudioListener.volume = 0f;
     }

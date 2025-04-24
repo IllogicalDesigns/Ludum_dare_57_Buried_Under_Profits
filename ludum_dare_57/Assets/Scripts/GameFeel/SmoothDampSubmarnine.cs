@@ -7,12 +7,6 @@ public class SmoothDampSubmarnine : MonoBehaviour
     [SerializeField] Vector3 offset = new Vector3(0.258f, -0.033f, 0.84f);
     [SerializeField] float rotationSpeed = 2f; // Adjust this value for desired 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void LateUpdate()
     {

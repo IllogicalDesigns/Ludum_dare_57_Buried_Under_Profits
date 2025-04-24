@@ -6,12 +6,12 @@ public class QuitButton : MonoBehaviour
 {
     public bool hideInWeb = true;
 
-    void Awake() {
 #if UNITY_WEBGL
+    void Awake() {
         if(hideInWeb)
             gameObject.SetActive(false);
-#endif
     }
+#endif
 
     public void QuitGame() {
         Debug.Log("QuitGame() has been called");

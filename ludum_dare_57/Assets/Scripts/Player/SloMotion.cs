@@ -13,12 +13,6 @@ public class SloMotion : MonoBehaviour
 
     public bool isSlowMotion;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
     public void SetPaused(bool paused) {
         if (paused) {
             Cursor.lockState = CursorLockMode.None;

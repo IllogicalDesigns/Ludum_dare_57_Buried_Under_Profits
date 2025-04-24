@@ -12,10 +12,4 @@ public class GrowShrink : MonoBehaviour
         transform.localScale = minScale;
         transform.DOScale(maxScale, totalDuration / 2).OnComplete(() => { transform.DOScale(minScale, totalDuration / 2); });
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

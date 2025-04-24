@@ -20,10 +20,6 @@ public class UIMouseAnimations : MonoBehaviour, IPointerEnterHandler, IPointerEx
         originalScale = transform.localScale;
     }
 
-    // Update is called once per frame
-    void Update() {
-    }
-
     private void OnEnable() {
         transform.localScale = originalScale;
     }

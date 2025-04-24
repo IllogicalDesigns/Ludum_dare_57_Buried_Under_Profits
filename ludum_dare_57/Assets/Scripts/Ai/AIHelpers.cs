@@ -3,17 +3,6 @@ using UnityEngine;
 public class AIHelpers : MonoBehaviour
 {
     bool isDebug;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public static bool CanThePlayerSeeUs(Transform ourTransform, Transform playerTransform, float activationDistance, float minActivationDistance, float dotRequirement, LayerMask layerMask) {
         Debug.DrawLine(ourTransform.position, playerTransform.position, Color.grey); // out of range

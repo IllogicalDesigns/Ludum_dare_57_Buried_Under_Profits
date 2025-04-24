@@ -2,18 +2,6 @@ using UnityEngine;
 
 public class ResolutionManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnResolutionChange(int newIndex) {
         Resolution[] resolutions = Screen.resolutions;
         // Assuming your dropdown's options are set up to match the available screen resolutions.

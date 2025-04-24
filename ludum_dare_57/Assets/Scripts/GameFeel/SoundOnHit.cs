@@ -8,18 +8,6 @@ public class SoundOnHit : MonoBehaviour
     [SerializeField] AudioSource onDead;
     [SerializeField] AudioClip onDeadClip;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnHit(DamageInstance damageInst) {
         if(onHit != null) {
             if(onHitClip != null) onHit.clip = onHitClip;

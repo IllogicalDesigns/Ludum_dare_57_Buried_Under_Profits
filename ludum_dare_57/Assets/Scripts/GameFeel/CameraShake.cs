@@ -7,17 +7,6 @@ public class CameraShake : MonoBehaviour
     [SerializeField] float duration = 0.1f;
     [SerializeField] Vector3 positionPunch = Vector3.one;
     [SerializeField] Vector3 rotationPunch = Vector3.one * 15f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        cameraTRans = Camera.main.transform;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void PunchScreen() {
         PunchScreen(duration, positionPunch, rotationPunch);

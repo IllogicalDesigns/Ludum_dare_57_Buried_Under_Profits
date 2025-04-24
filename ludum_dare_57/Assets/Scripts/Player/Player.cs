@@ -79,9 +79,6 @@ public class Player : MonoBehaviour
             return; // Skip processing if it's already handled
         }
 
-        // Log the name of the object hit
-        Debug.Log("Collided with: " + hit.gameObject.name);
-
         AudioManager.instance.PlaySoundOnPlayer(metal);
 
         collidedObjects.Add(hit.gameObject);

@@ -158,7 +158,6 @@ public class NewAnglarFish : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(origin, direction, out hit, maxChargeDistance, chargeLayerMask)) {
             // The ray hit something between origin and target
-            Debug.Log("Hit: " + hit.collider.name);
             chargePosition = hit.point;
             shouldStun = true;
         } else {

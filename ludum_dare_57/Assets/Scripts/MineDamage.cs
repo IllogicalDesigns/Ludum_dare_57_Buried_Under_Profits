@@ -26,8 +26,6 @@ public class MineDamage : MonoBehaviour
 
                 targets.Add(healthComponent.gameObject);
 
-                Debug.Log("Mine damages " + healthComponent.gameObject.name);
-
                 // Apply damage to the health component
                 if (hitCollider.CompareTag("Enemy"))
                     healthComponent.SendMessage("OnHit", new DamageInstance(1000, 1000));
