@@ -21704,7 +21704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98278868122de694e8831bf814c393bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 1218647995356165105, guid: 5f580174c745c0c438be80c0f6b97760, type: 3}
+  prefabToSpawn: {fileID: 2063782827751707080, guid: 4be5236e17b1625428dc993d496bd80f, type: 3}
   spawnHeight: 25
   groundOffset: -1
   spawnRadius: 60
