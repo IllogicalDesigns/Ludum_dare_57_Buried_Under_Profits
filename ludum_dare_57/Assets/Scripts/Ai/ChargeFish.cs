@@ -51,6 +51,11 @@ public class ChargeFish : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.enabled = false;
         threat = GetComponent<Threat>();
+
+        //Randomly flips the fish
+        var scale = transform.localScale;
+        scale.x = scale.x * ((Random.value < 0.5f) ? -1 : 1);
+        transform.localScale = scale;
     }
 
     // Update is called once per frame

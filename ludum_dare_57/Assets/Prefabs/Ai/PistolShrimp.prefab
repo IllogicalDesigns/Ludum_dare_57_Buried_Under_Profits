@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 3663121281267663859}
   m_Layer: 7
   m_Name: PistolShrimp
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,7 +143,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   gunShotSFX: {fileID: 8300000, guid: 39c86c36fdfc10d4892f1ffb51331a12, type: 3}
-  preGunShot: 1
   preGunShotSfx: {fileID: 8300000, guid: effb7672af571124a8411e90b7eeb3fd, type: 3}
   dashOffset: {x: 0, y: 1.5, z: 0}
   dashDistance: 5

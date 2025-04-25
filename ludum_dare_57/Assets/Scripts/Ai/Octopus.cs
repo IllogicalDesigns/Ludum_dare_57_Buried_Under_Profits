@@ -62,7 +62,6 @@ public class Octopus : MonoBehaviour
         navAgent.enabled = false;
         rigid = GetComponent<Rigidbody>();
         threat = GetComponent<Threat>();
-
     }
 
     // Update is called once per frame
@@ -75,6 +74,7 @@ public class Octopus : MonoBehaviour
                 if (AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, minActivationDistance, dotRequirement, layerMask)) {
                     TransitionToCharging();
                 }
+                transform.LookAt(player.transform);
                 break;
             case ChargerState.navigateToPlayer:
                 HandleNavigateToPlayer();

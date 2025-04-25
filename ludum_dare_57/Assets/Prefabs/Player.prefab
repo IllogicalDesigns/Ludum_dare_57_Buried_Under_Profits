@@ -17534,6 +17534,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3035651105310291052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1608745325617456248}
+  m_Layer: 6
+  m_Name: missleLaunch
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1608745325617456248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3035651105310291052}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5915951905047567589}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3066347489314929433
 GameObject:
   m_ObjectHideFlags: 0
@@ -34782,6 +34813,7 @@ GameObject:
   - component: {fileID: 225676595900382688}
   - component: {fileID: 84612775023950729}
   - component: {fileID: 6049046103697673474}
+  - component: {fileID: 1372951219881664271}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -34892,6 +34924,21 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &1372951219881664271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5119007521666730467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8bca95f7c947b4db5fb152a0d693d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anisotropy: 0.25
+  scattering: 1
+  radius: 0.2
 --- !u!1 &5157359347307381530
 GameObject:
   m_ObjectHideFlags: 0
@@ -46799,6 +46846,7 @@ Transform:
   m_Children:
   - {fileID: 225676595900382688}
   - {fileID: 3825233122464832191}
+  - {fileID: 1608745325617456248}
   m_Father: {fileID: 1637959247190649879}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1469008250892013828
@@ -52500,6 +52548,7 @@ GameObject:
   - component: {fileID: 3576513698799779526}
   - component: {fileID: 4117877180305183569}
   - component: {fileID: 4856106695210417323}
+  - component: {fileID: 5845208490657468278}
   m_Layer: 6
   m_Name: Player Sphere
   m_TagString: Player
@@ -52606,10 +52655,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8691263855352739950}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -52955,6 +53004,24 @@ MonoBehaviour:
   punchScale: {x: 0.001, y: 0.001, z: 0.001}
   duration: 1
   criticalAudio: {fileID: 683078204065365724}
+--- !u!114 &5845208490657468278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691263855352739950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb9802abd414a4844ad685a348b99ce6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missilePrefab: {fileID: 7042416596330774231, guid: 9a5524c3745e858418d816bcd593d3fb, type: 3}
+  launchPoint: {fileID: 1608745325617456248}
+  cameraShake: {fileID: 0}
+  duration: 0.1
+  positionPunch: {x: 0.1, y: 0.1, z: 0.1}
+  rotationPunch: {x: 0.15, y: 0.15, z: 0.15}
 --- !u!1 &8833196529394613440
 GameObject:
   m_ObjectHideFlags: 0

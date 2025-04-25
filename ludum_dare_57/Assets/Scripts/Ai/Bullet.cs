@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour {
     public int airDamage = 1;
     bool isPaused;
 
+    [SerializeField] string onlyHitTag = "Player"; 
+
     void Update() {
         if (isPaused) return;
 
@@ -27,7 +29,10 @@ public class Bullet : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (isPaused) return;
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag(onlyHitTag)) {
+            Destroy(gameObject);
+            return;
+        }
 
         other.SendMessage("OnHit", new DamageInstance(damage, airDamage), SendMessageOptions.DontRequireReceiver);
 
