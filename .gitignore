@@ -80,3 +80,4 @@ crashlytics-build.properties
 ludum_dare_57/Packages/packages-lock.json
 /ludum_dare_57/Logs
 /ludum_dare_57/builds
+*.bytes

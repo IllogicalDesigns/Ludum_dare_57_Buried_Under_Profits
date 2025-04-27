@@ -1,0 +1,12 @@
+name: deepcoder:1.5b
+version: 0.0.1
+schema: v1
+models:
+  - provider: ollama
+    model: deepcoder:1.5b
+    name: deepcoder:1.5b
+    roles:
+      - autocomplete
+      - chat
+      - edit
+      - apply

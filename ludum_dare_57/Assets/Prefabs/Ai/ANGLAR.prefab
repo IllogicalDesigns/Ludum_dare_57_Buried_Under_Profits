@@ -10111,7 +10111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82a968a7235c4734fbf1d14644785eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activationDistance: 8
+  activationDistance: 20
   minActivationDistance: 5
   speed: 5
   damage: 50

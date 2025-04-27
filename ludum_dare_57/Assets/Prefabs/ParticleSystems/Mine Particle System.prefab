@@ -4921,6 +4921,7 @@ GameObject:
   - component: {fileID: 4157859257711874527}
   - component: {fileID: 8569531250543541630}
   - component: {fileID: 4909332163729596517}
+  - component: {fileID: 7973724787381217496}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -5044,6 +5045,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 0.3
+--- !u!114 &7973724787381217496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512686261309716385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8bca95f7c947b4db5fb152a0d693d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anisotropy: 0.25
+  scattering: 0.98
+  radius: 0.2
 --- !u!1 &2938306628273478994
 GameObject:
   m_ObjectHideFlags: 0
@@ -14989,6 +15005,7 @@ MonoBehaviour:
   radius: 8.5
   damageAmount: 50
   airAmount: 10
+  targets: []
 --- !u!82 &600244829668830394
 AudioSource:
   m_ObjectHideFlags: 0

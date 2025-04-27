@@ -160,6 +160,7 @@ public class Octopus : MonoBehaviour
         tickTimer = 0f;
 
         GetComponent<Health>().canTakeDamage = false;
+        FindFirstObjectByType<ShakeItOffUI>()?.ShakeItOff(true);
 
         meshRenderer.material = latchedMaterial;
     }
@@ -184,6 +185,7 @@ public class Octopus : MonoBehaviour
             GetComponent<Health>().canTakeDamage = true;
 
             meshRenderer.material = normalMaterial;
+            FindFirstObjectByType<ShakeItOffUI>()?.ShakeItOff(false);
             TransitionToCooldown();
             return;
         }

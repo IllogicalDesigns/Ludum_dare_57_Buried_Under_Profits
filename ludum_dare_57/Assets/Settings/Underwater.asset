@@ -205,19 +205,19 @@ MonoBehaviour:
     m_Value: 64
   baseHeight:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: -50
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 50
+    m_Value: 40
   enableGround:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   groundHeight:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: -50
   density:
     m_OverrideState: 1
-    m_Value: 0.024
+    m_Value: 0.208
   attenuationDistance:
     m_OverrideState: 0
     m_Value: 128
@@ -225,29 +225,29 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   APVContributionWeight:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 0.104
   enableMainLightContribution:
     m_OverrideState: 1
     m_Value: 1
   anisotropy:
-    m_OverrideState: 0
-    m_Value: 0.4
+    m_OverrideState: 1
+    m_Value: 0.44
   scattering:
-    m_OverrideState: 0
-    m_Value: 0.15
+    m_OverrideState: 1
+    m_Value: 0.682
   tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.049394794, g: 0.6981132, b: 0.6588336, a: 1}
   enableAdditionalLightsContribution:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   maxSteps:
     m_OverrideState: 1
-    m_Value: 64
+    m_Value: 32
   blurIterations:
-    m_OverrideState: 0
-    m_Value: 2
+    m_OverrideState: 1
+    m_Value: 1
   enabled:
     m_OverrideState: 1
     m_Value: 1

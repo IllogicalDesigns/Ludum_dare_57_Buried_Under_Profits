@@ -53,7 +53,8 @@ public class GameManager : MonoBehaviour
         //}
 
         if (Input.GetKeyDown(KeyCode.Keypad8)) {
-            FindFirstObjectByType<PlayerGun>().addAmmo(10);
+            var gun = FindFirstObjectByType<PlayerGun>();
+            gun.gameObject.SendMessage("addAmmo", 10);
         }
 
         if (currentGameState == GameState.playing)

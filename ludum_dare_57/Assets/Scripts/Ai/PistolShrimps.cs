@@ -38,6 +38,8 @@ public class PistolShrimps : MonoBehaviour {
     public LayerMask layerMask = ~0;
 
     [Space]
+    
+    [SerializeField] AudioClip alertSFX;
     [SerializeField] AudioClip gunShotSFX;
     [SerializeField] AudioClip preGunShotSfx;
 
@@ -75,8 +77,10 @@ public class PistolShrimps : MonoBehaviour {
 
         switch (state) {
             case ShrimpState.idle:
-                if (AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, 0f, dotRequirement, layerMask)) 
+                if (AIHelpers.CanThePlayerSeeUs(transform, player.transform, activationDistance, 0f, dotRequirement, layerMask)) {
+                    if(alertSFX != null) AudioManager.instance.PlaySoundOnPoint(alertSFX, transform.position);
                     TransitionToPreShot();
+                }
                 break;
             case ShrimpState.preShot:
                 PreShot();  //Just look at players

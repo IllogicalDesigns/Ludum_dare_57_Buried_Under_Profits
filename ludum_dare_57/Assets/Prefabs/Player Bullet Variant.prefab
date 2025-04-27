@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7739804467489794012, guid: b11dc9595fe683141b158f931fa8e6ea, type: 3}
       propertyPath: ignoreTag
-      value: Enemy
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7739804467489794012, guid: b11dc9595fe683141b158f931fa8e6ea, type: 3}
       propertyPath: onlyHitTag

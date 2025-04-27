@@ -29,7 +29,8 @@ public class TriggerBubbleAmmo : TriggerBase {
         toPoint.enabled = true;
 
         var gun = FindAnyObjectByType<PlayerGun>();
-        gun?.addAmmo(Mathf.RoundToInt(ammoProvidedCurve.Evaluate(gun.ammo)));
+        // gun?.addAmmo());
+        gun.gameObject.SendMessage("addAmmo", Mathf.RoundToInt(ammoProvidedCurve.Evaluate(gun.ammo)));
         FindAnyObjectByType<AmmoCounter>()?.ProvidedAmmo();
         AudioManager.instance.PlaySoundOnPoint(popSFX, transform.position);
         Destroy(gameObject);

@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour {
     bool isPaused;
 
     [SerializeField] string onlyHitTag = "Player"; 
+    [SerializeField] string ignoreTag = "Enemy"; 
 
     void Update() {
         if (isPaused) return;
@@ -30,7 +31,7 @@ public class Bullet : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (isPaused) return;
         if (!other.CompareTag(onlyHitTag)) {
-            Destroy(gameObject);
+            if(!other.CompareTag(ignoreTag)) Destroy(gameObject);
             return;
         }
 

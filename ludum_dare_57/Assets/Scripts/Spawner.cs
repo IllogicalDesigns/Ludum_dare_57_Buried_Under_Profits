@@ -28,6 +28,8 @@ public class SpawnerWithRaycast : MonoBehaviour {
     private int maxAttempts = 10; // Prevent infinite loops
 
     private void Start() {
+        player = FindAnyObjectByType<Player>().transform;
+
         if (prefabToSpawn == null || player == null) {
             Debug.LogError("Please assign all required references in the inspector.");
             return;
@@ -87,6 +89,7 @@ public class SpawnerWithRaycast : MonoBehaviour {
         }
         else {
             Debug.LogWarning("Raycast did not hit any ground. Object not spawned.");
+            return;
         }
     }
 
