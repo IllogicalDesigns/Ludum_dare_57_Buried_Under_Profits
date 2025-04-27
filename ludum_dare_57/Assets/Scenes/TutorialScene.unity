@@ -12370,7 +12370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &482483925
 Transform:
   m_ObjectHideFlags: 0
@@ -15302,7 +15302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
-  size: {x: 273.2429, y: 51.402878, z: 151.01001}
+  size: {x: 273.2429, y: 51.40288, z: 151.01001}
   overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
   objectLayerMask:
@@ -15342,7 +15342,7 @@ Transform:
   m_GameObject: {fileID: 597152559}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 132.38356, y: 18.670149, z: 27.000004}
+  m_LocalPosition: {x: 132.38356, y: 18.670153, z: 27.000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22236,7 +22236,7 @@ Transform:
   m_GameObject: {fileID: 959680525}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 219, y: 12.5, z: 48}
+  m_LocalPosition: {x: 219, y: 7, z: 48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27709,7 +27709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1170895694
 Transform:
   m_ObjectHideFlags: 0
@@ -28091,7 +28091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1224609396
 Transform:
   m_ObjectHideFlags: 0
@@ -34517,7 +34517,7 @@ Transform:
   m_GameObject: {fileID: 1501444793}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 120, y: 12.5, z: -6}
+  m_LocalPosition: {x: 120, y: 6.5, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -38660,20 +38660,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae4626835f6bd945b55b35a375afb92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnHeight: 15
-  groundOffset: 3
-  spawnRadius: 25.3
   player: {fileID: 2119001944}
   minSpawnDistance: 20
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1
   spawnedObjects: []
-  desiredSpawnCount: 5
-  spawnDelay: 1
-  spawnRate: 1
   spawnRotation: {x: 0, y: 0, z: 0}
-  randomRotation: 0
   spawnCenter: {fileID: 959680526}
   waves:
   - spawnObjects:
@@ -38765,6 +38755,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1647033393}
+        m_TargetAssemblyTypeName: TransitionManager, Assembly-CSharp
+        m_MethodName: TransitionToLevel
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 60
+          m_FloatArgument: 0
+          m_StringArgument: TutorialScene
+          m_BoolArgument: 0
+        m_CallState: 2
+  spawnSize: {x: 44.52, y: 7.75, z: 42.42}
 --- !u!1 &1646706893
 GameObject:
   m_ObjectHideFlags: 0
@@ -42603,20 +42606,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae4626835f6bd945b55b35a375afb92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnHeight: 13
-  groundOffset: 3
-  spawnRadius: 20
   player: {fileID: 2119001944}
   minSpawnDistance: 15
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1
   spawnedObjects: []
-  desiredSpawnCount: 5
-  spawnDelay: 1
-  spawnRate: 1
   spawnRotation: {x: 0, y: 0, z: 0}
-  randomRotation: 0
   spawnCenter: {fileID: 1501444794}
   waves:
   - spawnObjects:
@@ -42706,6 +42699,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  spawnSize: {x: 36, y: 15.64, z: 50}
 --- !u!4 &1786950278
 Transform:
   m_ObjectHideFlags: 0
@@ -44527,7 +44521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1856580306
 Transform:
   m_ObjectHideFlags: 0

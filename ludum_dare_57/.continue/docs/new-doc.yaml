@@ -1,0 +1,6 @@
+name: Unity Doc
+version: 0.0.1
+schema: v1
+docs:
+  - name: Unity docs
+    startUrl: https://docs.unity3d.com
