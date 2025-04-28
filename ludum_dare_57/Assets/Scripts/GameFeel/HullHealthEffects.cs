@@ -53,12 +53,14 @@ public class HullHealthEffects : MonoBehaviour
             hullHealth.hp = 100;
         }
 
-        if (hullHealth.hp <= 0) {
+        var hp = hullHealth.hp;
+
+        if (hp <= 0) {
             SetMissingWindow();
             if (waterParticles2.isPlaying) waterParticles2.Stop();
             if (waterParticles1.isPlaying) waterParticles1.Stop();
         }
-        else if (hullHealth.hp < 20) {
+        else if (hp < 20) {
             if (criticalTween == null) {
                 criticalText.gameObject.SetActive(true);
                 criticalText.transform.DOKill(true);
@@ -68,16 +70,34 @@ public class HullHealthEffects : MonoBehaviour
             if (!criticalAudio.isPlaying) 
                 criticalAudio.Play();
         }
-        else if(hullHealth.hp < 33) {
+        else if(hp < 33) {
             SetHeavyCrack2();
             if(!waterParticles2.isPlaying) waterParticles2.Play();
+            criticalText.gameObject.SetActive(false);
+            if (criticalTween == null) { 
+                criticalTween.Kill();
+                 criticalTween = null;
+            }
         }
-        else if(hullHealth.hp < 66) {
+        else if(hp < 66) {
             SetCrack1();
             if (!waterParticles1.isPlaying) waterParticles1.Play();
+            if (waterParticles2.isPlaying) waterParticles2.Stop();
+            criticalText.gameObject.SetActive(false);
+            if (criticalTween == null) { 
+                criticalTween.Kill();
+                 criticalTween = null;
+            }
         }
         else {
+            if (waterParticles2.isPlaying) waterParticles2.Stop();
+            if (waterParticles1.isPlaying) waterParticles1.Stop();
             windowRenderer.material = window;
+            criticalText.gameObject.SetActive(false);
+            if (criticalTween == null) { 
+                criticalTween.Kill();
+                 criticalTween = null;
+            }
         }
     }
 

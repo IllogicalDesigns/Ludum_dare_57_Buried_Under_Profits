@@ -20,6 +20,11 @@ public class Health : MonoBehaviour
             gameObject.SendMessage(OnDeadString);
         }
     }
+
+    public void Heal(int value){
+        hp += value;
+        hp = Mathf.Clamp(hp, 0, maxHp);
+    }
 }
 
 public class DamageInstance {

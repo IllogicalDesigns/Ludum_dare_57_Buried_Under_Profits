@@ -712,8 +712,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8af44790ef6a4b49a01d598301aa4c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drop: {fileID: 7146195601594310455, guid: 9e78de257ac6cb94b9462f17673d31dd, type: 3}
-  dropRate: 100
+  ammoBubble: {fileID: 2004440659124543780, guid: b01742d157a08e14aad2532b106651ca, type: 3}
+  hullBubble: {fileID: 8394808527413797328, guid: 6f6844d15673d5b4db6dd45f5ec67bd6, type: 3}
+  airBubble: {fileID: 8760911727733434088, guid: 2884e906cfc3d2b4f99b2c55f6a466db, type: 3}
 --- !u!1 &4803712561619411331
 GameObject:
   m_ObjectHideFlags: 0
@@ -6424,8 +6425,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8af44790ef6a4b49a01d598301aa4c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drop: {fileID: 7146195601594310455, guid: 9e78de257ac6cb94b9462f17673d31dd, type: 3}
-  dropRate: 100
+  ammoBubble: {fileID: 2004440659124543780, guid: b01742d157a08e14aad2532b106651ca, type: 3}
+  hullBubble: {fileID: 8394808527413797328, guid: 6f6844d15673d5b4db6dd45f5ec67bd6, type: 3}
+  airBubble: {fileID: 8760911727733434088, guid: 2884e906cfc3d2b4f99b2c55f6a466db, type: 3}
 --- !u!1 &8770843671352938211
 GameObject:
   m_ObjectHideFlags: 0

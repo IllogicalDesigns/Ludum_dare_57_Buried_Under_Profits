@@ -12414,6 +12414,7 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   randomRotation: 0
   spawnCenter: {fileID: 959680526}
+  spawnSize: {x: 15, y: 15, z: 15}
 --- !u!114 &482483931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12442,6 +12443,7 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   randomRotation: 0
   spawnCenter: {fileID: 959680526}
+  spawnSize: {x: 15, y: 15, z: 15}
 --- !u!23 &482483932
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15302,7 +15304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
-  size: {x: 273.2429, y: 51.40288, z: 151.01001}
+  size: {x: 273.2429, y: 51.402878, z: 151.01001}
   overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
   objectLayerMask:
@@ -15342,7 +15344,7 @@ Transform:
   m_GameObject: {fileID: 597152559}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 132.38356, y: 18.670153, z: 27.000004}
+  m_LocalPosition: {x: 132.38356, y: 18.67015, z: 27.000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27753,6 +27755,7 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   randomRotation: 0
   spawnCenter: {fileID: 959680526}
+  spawnSize: {x: 15, y: 15, z: 15}
 --- !u!114 &1170895696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27781,6 +27784,7 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   randomRotation: 0
   spawnCenter: {fileID: 959680526}
+  spawnSize: {x: 15, y: 15, z: 15}
 --- !u!23 &1170895697
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -28091,7 +28095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1224609396
 Transform:
   m_ObjectHideFlags: 0
@@ -28135,6 +28139,7 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   randomRotation: 0
   spawnCenter: {fileID: 1501444794}
+  spawnSize: {x: 15, y: 15, z: 15}
 --- !u!114 &1224609398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28163,6 +28168,7 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   randomRotation: 0
   spawnCenter: {fileID: 1501444794}
+  spawnSize: {x: 15, y: 15, z: 15}
 --- !u!23 &1224609399
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -42699,7 +42705,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  spawnSize: {x: 36, y: 15.64, z: 50}
+  spawnSize: {x: 36, y: 15.5, z: 50}
 --- !u!4 &1786950278
 Transform:
   m_ObjectHideFlags: 0
@@ -44521,7 +44527,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1856580306
 Transform:
   m_ObjectHideFlags: 0
@@ -44565,6 +44571,7 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   randomRotation: 0
   spawnCenter: {fileID: 1501444794}
+  spawnSize: {x: 36, y: 15.5, z: 50}
 --- !u!114 &1856580312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44593,6 +44600,7 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   randomRotation: 0
   spawnCenter: {fileID: 1501444794}
+  spawnSize: {x: 36, y: 15.5, z: 50}
 --- !u!23 &1856580313
 MeshRenderer:
   m_ObjectHideFlags: 0

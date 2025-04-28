@@ -25,6 +25,8 @@ public class SpawnerWithRaycast : MonoBehaviour {
     public bool randomRotation;
     public Transform spawnCenter;
 
+    public Vector3 spawnSize = Vector3.one * 15;
+
     private int maxAttempts = 10; // Prevent infinite loops
 
     private void Start() {
@@ -42,56 +44,47 @@ public class SpawnerWithRaycast : MonoBehaviour {
         spawnedObjects.RemoveAll(obj => obj == null);
 
         if (spawnedObjects.Count < desiredSpawnCount)
-            SpawnObject();
+            SpawnOnNavMesh(prefabToSpawn);
     }
 
-    private void SpawnObject() {
-        Vector3 randomPosition = Vector3.zero;
-        bool validPositionFound = false;
+    private void SpawnOnNavMesh(GameObject _prefabToSpawn){
+        var randomPosition = GetRandomPositionInsideBox(spawnCenter.position, spawnSize);
 
         // Try to find a valid position within maxAttempts
         for (int attempt = 0; attempt < maxAttempts; attempt++) {
-            randomPosition = GetRandomPositionInCircle(spawnCenter.position, spawnRadius);
-            randomPosition.y = spawnHeight;
-
             if (Vector3.Distance(randomPosition, player.position) >= minSpawnDistance) {
-                validPositionFound = true;
                 break;
             }
+
+            randomPosition = GetRandomPositionInsideBox(spawnCenter.position, spawnSize);
         }
 
-        if (!validPositionFound) {
-            Debug.LogWarning("Failed to find a valid spawn position after maximum attempts.");
-            return;
-        }
+        if(NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, 20f, NavMesh.AllAreas))
+            randomPosition = hit.position;
 
-        // Raycast down to find the ground position
-        if (Physics.Raycast(randomPosition, Vector3.down, out RaycastHit hitInfo, Mathf.Infinity, groundLayer)) {
-            // Adjust position based on raycast hit point and offset
-            randomPosition.y = hitInfo.point.y + groundOffset;
+        randomPosition.y += groundOffset;
 
-            // Instantiate the prefab at the calculated position
-            if (randomRotation) {
-                spawnRotation = new Vector3(
-                    Random.Range(-180, 180),
-                    Random.Range(-180, 180),
-                    Random.Range(-180, 180)
-                    );
-            }
-
-            if (NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, 10f, NavMesh.AllAreas)) {
-                randomPosition = hit.position;
-                randomPosition.y = hitInfo.point.y + groundOffset;
-
-                GameObject spawnedObject = Instantiate(prefabToSpawn, randomPosition, Quaternion.Euler(spawnRotation)); //TODO pool this
-                spawnedObjects.Add(spawnedObject);
-            }
-        }
-        else {
-            Debug.LogWarning("Raycast did not hit any ground. Object not spawned.");
-            return;
-        }
+        GameObject spawnedObject = Instantiate(_prefabToSpawn, randomPosition, Quaternion.Euler(spawnRotation)); //TODO pool this
+        spawnedObjects.Add(spawnedObject);
     }
+
+    Vector3 GetRandomPositionInsideBox(Vector3 center, Vector3 size)
+    {
+        // Calculate half of the size to determine the bounds
+        Vector3 halfSize = size / 2f;
+
+        // Generate a random position within the bounds of the box
+        Vector3 randomPosition = new Vector3(
+            Random.Range(-halfSize.x, halfSize.x),
+            Random.Range(-halfSize.y, halfSize.y),
+            Random.Range(-halfSize.z, halfSize.z)
+        );
+
+        // Add the center position to the random position
+        return center + randomPosition;
+    }
+
+
 
     private Vector3 GetRandomPositionInCircle(Vector3 center, float radius) {
         // Generate a random point inside a unit circle and scale it by the radius

@@ -10,6 +10,9 @@ public class TriggerBubbleAdd : TriggerBase {
 
     public GameObject bubblePop;
 
+    public Transform ammobox;
+    public MoveToPoint toPoint;
+
     protected override void Awake() {
         base.Awake();
         player = FindFirstObjectByType<Player>().transform;
@@ -31,6 +34,9 @@ public class TriggerBubbleAdd : TriggerBase {
 
         var providedAir = Mathf.RoundToInt(airAmount * diffMultii);
         if (providedAir <= 0) providedAir = 1;
+
+        ammobox.SetParent(null);
+        toPoint.enabled = true;
 
         GameManager.instance.ProvideAir(providedAir);
         AudioManager.instance.PlaySoundOnPoint(popSFX, transform.position);
