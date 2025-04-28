@@ -4,9 +4,18 @@ using DG.Tweening;
 public class CameraShake : MonoBehaviour
 {
     [SerializeField] Transform cameraTRans;
+    [Space]
     [SerializeField] float duration = 0.1f;
     [SerializeField] Vector3 positionPunch = Vector3.one;
     [SerializeField] Vector3 rotationPunch = Vector3.one * 15f;
+    [Space]
+    [SerializeField] float collisionDuration = 0.5f;
+    [SerializeField] Vector3 collisionPositionPunch = Vector3.one * 0.1f;
+    [SerializeField] Vector3 collisionRotationPunch = Vector3.one * 0.1f;
+    [Space]
+    [SerializeField] float laserDuration = 0.5f;
+    [SerializeField] Vector3 laserPositionPunch = Vector3.one * 0.1f;
+    [SerializeField] Vector3 laserRotationPunch = Vector3.one * 0.1f;
 
     public void PunchScreen() {
         PunchScreen(duration, positionPunch, rotationPunch);
@@ -28,6 +37,16 @@ public class CameraShake : MonoBehaviour
     }
 
     public void OnHit(DamageInstance damageInstance) {
-        PunchScreen();
+        switch (damageInstance.damageType) {
+            case DamageInstance.DamageType.collision:
+                PunchScreen(collisionDuration, collisionPositionPunch, collisionRotationPunch);
+                break;
+            case DamageInstance.DamageType.laser:
+                PunchScreen(laserDuration, laserPositionPunch, laserRotationPunch);
+                break;
+            default:
+                PunchScreen(duration, positionPunch, rotationPunch);
+                break;
+        }
     }
 }

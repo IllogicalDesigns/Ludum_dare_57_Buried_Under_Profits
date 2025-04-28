@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static event System.Action<bool> OnPauseChanged;
+    public static event System.Action OnWinEvent;
+    public static event System.Action OnDeadEvent;
+    public static event System.Action GemCollectedEvent;
     public static GameManager instance;
 
     public int gemCount;
@@ -14,8 +18,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject inGameCanvas;
     [SerializeField] GameObject tutorialCanvas;
     [SerializeField] GameObject wonCanvas;
-
-    [SerializeField] GameObject godActivated;
     [SerializeField] AudioClip bubbles;
     [SerializeField] AudioClip ammo;
     bool godMode;
@@ -46,12 +48,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        //if(currentGameState == GameState.playing && gemCount >= 5) {
-        //    WinGame();  // you win by getting out
-        //}
-
+    void Update() {
         if (Input.GetKeyDown(KeyCode.Keypad8)) {
             var gun = FindFirstObjectByType<PlayerGun>();
             gun.gameObject.SendMessage("addAmmo", 10);
@@ -66,8 +63,7 @@ public class GameManager : MonoBehaviour
             player.GetComponent<PlayerDeath>().OnDead();
         }
 
-        if (currentGameState == GameState.waiting && player.transform.position.y < surfacingHeight)
-        {
+        if (currentGameState == GameState.waiting && player.transform.position.y < surfacingHeight) {
             currentGameState = GameState.playing;
             goneUnderwater = true;
         }
@@ -77,7 +73,6 @@ public class GameManager : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.Keypad0)) {
-            if(godActivated) godActivated.SetActive(true);
             godMode = true;
             Debug.Log("Activated god mode");
             var playerHealthy = player.GetComponent<Health>();
@@ -87,6 +82,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void WinGame() {
+        OnWinEvent?.Invoke();
+
         currentGameState = GameState.won;
         if (pauseCanvas) pauseCanvas?.SetActive(false);
         if (deadCanvas) deadCanvas?.SetActive(false);
@@ -94,7 +91,7 @@ public class GameManager : MonoBehaviour
         if (tutorialCanvas) tutorialCanvas?.SetActive(false);
         if (wonCanvas) wonCanvas?.SetActive(true);
 
-        player.SetPaused(true);
+        player.SetPaused(true);  //TODO find SetPaused, convert all these to use new OnPauseEvent
 
         air = 60;
         Cursor.lockState = CursorLockMode.None;
@@ -102,6 +99,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void PlayerDeath() {
+        OnDeadEvent?.Invoke();
+
         currentGameState = GameState.dead;
         if (pauseCanvas) pauseCanvas?.SetActive(false);
         if (deadCanvas) deadCanvas?.SetActive(true);
@@ -117,7 +116,8 @@ public class GameManager : MonoBehaviour
 
     public void AddGem(int value) {
         gemCount += value;
-        FindAnyObjectByType<GemCounter>().BounceCounter();
+        // FindAnyObjectByType<GemCounter>().BounceCounter();
+        GemCollectedEvent?.Invoke();
     }
 
     public void DamageAir(int value) {

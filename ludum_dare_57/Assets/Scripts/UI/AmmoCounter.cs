@@ -26,10 +26,20 @@ public class AmmoCounter : MonoBehaviour {
     void Start() {
         playerGun = FindAnyObjectByType<PlayerGun>();
         origScale = bulletText.transform.localScale;
+        PlayerGun.GunFiredEvent += UpdateAmmo;
+        PlayerGun.AmmoAddedEvent += UpdateAmmo;
+        PlayerGun.OutOfAmmoEvent += UpdateAmmo;
+        UpdateAmmo();
+    }
+
+    void OnDestroy() {
+        PlayerGun.GunFiredEvent -= UpdateAmmo;
+        PlayerGun.AmmoAddedEvent -= UpdateAmmo;
+        PlayerGun.OutOfAmmoEvent -= UpdateAmmo;
     }
 
     // Update is called once per frame
-    void Update() {
+    void UpdateAmmo() {
         var ammo = playerGun.ammo;
 
         if (tween == null && ammo < pulseThreshold)

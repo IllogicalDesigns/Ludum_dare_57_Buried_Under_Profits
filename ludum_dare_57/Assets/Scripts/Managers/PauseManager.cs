@@ -34,8 +34,6 @@ public class PauseManager : MonoBehaviour
     }
 
     public void TogglePause() {
-
-
         if (gameManager.currentGameState != GameManager.GameState.paused) {
             lastGameState = gameManager.currentGameState;
             gameManager.currentGameState = GameManager.GameState.paused;

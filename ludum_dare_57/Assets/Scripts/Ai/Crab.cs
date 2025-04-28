@@ -207,7 +207,7 @@ public class Crab : MonoBehaviour
             } 
             
             if(hitObjects[hit.collider] < Time.time) {
-                hit.collider.SendMessage("OnHit", new DamageInstance(damage, airDamage));
+                hit.collider.SendMessage("OnHit", new DamageInstance(damage, airDamage, DamageInstance.DamageType.laser));
                 hitObjects[hit.collider] = Time.time + timeBetweenTicks;
             }
         }

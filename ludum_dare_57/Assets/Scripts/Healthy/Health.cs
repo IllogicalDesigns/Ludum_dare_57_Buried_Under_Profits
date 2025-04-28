@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    public static event System.Action OnHitEvent;
+    public static event System.Action OnHealEvent;
+
     public const string OnHitString = "OnHit";
     public const string OnDeadString = "OnDead";
     public int hp = 1;
@@ -11,6 +14,8 @@ public class Health : MonoBehaviour
 
     public void OnHit(DamageInstance damageInstance) {
         if (!canTakeDamage) return;
+
+        OnHitEvent?.Invoke();
 
         hp -= damageInstance.damage;
 
@@ -24,6 +29,7 @@ public class Health : MonoBehaviour
     public void Heal(int value){
         hp += value;
         hp = Mathf.Clamp(hp, 0, maxHp);
+        OnHealEvent?.Invoke();
     }
 }
 
@@ -40,5 +46,8 @@ public class DamageInstance {
 
     public enum DamageType {
         normal,
+        collision,
+        laser,
+        explosion
     }
 }

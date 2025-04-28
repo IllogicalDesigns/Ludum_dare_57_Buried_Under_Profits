@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class PlayerGun : MonoBehaviour
 {
+    public static event System.Action OutOfAmmoEvent;
+    public static event System.Action GunFiredEvent;
+    public static event System.Action AmmoAddedEvent;
     bool isPaused;
     public float maxDist = 100f;
     public int baseDamage = 20;
@@ -60,6 +63,7 @@ public class PlayerGun : MonoBehaviour
     public void addAmmo(int value) {
         ammo += value;
         AudioManager.instance.PlaySoundOnPlayer(ammoPickupSfx);
+        AmmoAddedEvent?.Invoke();
     }
 
     public void HideLight() {
@@ -92,9 +96,11 @@ public class PlayerGun : MonoBehaviour
     private void OutOfAmmo() {
         PlayOutOfAmmoEffects();
         nextFireTime = Time.time + fireRate;
+        OutOfAmmoEvent?.Invoke();
     }
 
     private void FireGun(Ray ray) {
+        GunFiredEvent?.Invoke();
         Vector3 knockbackDirection = -transform.forward; // Opposite to gun's forward
         controller.Move(knockbackDirection * knockbackForce * Time.deltaTime);
         PlayGunFireEffects();

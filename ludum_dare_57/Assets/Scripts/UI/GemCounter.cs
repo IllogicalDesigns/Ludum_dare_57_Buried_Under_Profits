@@ -9,11 +9,21 @@ public class GemCounter : MonoBehaviour
     [SerializeField] float bounceStrength = 0.1f;
     [SerializeField] float bounceDuration = 0.75f;
 
+    void Start() {
+        GameManager.GemCollectedEvent += UpdateGemCounter;
+    }
+
+    void OnDestroy() {
+        GameManager.GemCollectedEvent -= UpdateGemCounter;
+    }
+
     // Update is called once per frame
-    void Update()
+    void UpdateGemCounter()
     {
-        if(gemText != null) 
+        if(gemText != null) {
             gemText.text = preText +  GameManager.instance.gemCount.ToString();
+            BounceCounter();
+        }
     }
 
     public void BounceCounter() {

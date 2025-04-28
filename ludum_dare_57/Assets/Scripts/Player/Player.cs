@@ -52,6 +52,8 @@ public class Player : MonoBehaviour
 
     public Transform attackPoint;
 
+    bool exitedDodgeEarly;
+
     private void Awake() {
         Instance = this;
     }
@@ -91,7 +93,7 @@ public class Player : MonoBehaviour
         } else {
             if (hit.gameObject.CompareTag(EnemyTagStr) || hit.gameObject.CompareTag(BubbleTagStr)) return;
             if (hit.gameObject.CompareTag(MineTagStr)) hit.gameObject.SendMessage(Health.OnHitString, new DamageInstance(100, 100), SendMessageOptions.DontRequireReceiver);
-            gameObject.SendMessage(Health.OnHitString, new DamageInstance(collisionDamage, collisionAirDamage), SendMessageOptions.DontRequireReceiver);  //We hit something, take damage
+            gameObject.SendMessage(Health.OnHitString, new DamageInstance(collisionDamage, collisionAirDamage, DamageInstance.DamageType.collision), SendMessageOptions.DontRequireReceiver);  //We hit something, take damage
         }
     }
 
@@ -173,10 +175,15 @@ public class Player : MonoBehaviour
             if (dodgeMovement == Vector3.zero) dodgeMovement = dodgeDirection * moveSpeed * dodgeSpeed;
             GameManager.instance.DamageAir(2);
             health.canTakeDamage = false;
+            exitedDodgeEarly = false;
+        }
+
+        if(!exitedDodgeEarly && dgTimer > 0 && isDodging && Input.GetKeyUp(KeyCode.LeftShift)) {
+            exitedDodgeEarly = true;  //Allows for movement to stop early, but keep the I Frames
         }
 
         if (dgTimer > 0 && isDodging) {
-            controller.Move(dodgeMovement * Time.deltaTime);
+            if(!exitedDodgeEarly) controller.Move(dodgeMovement * Time.deltaTime);
             dgTimer -= Time.deltaTime;
         }
         else {

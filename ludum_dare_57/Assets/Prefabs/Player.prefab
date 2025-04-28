@@ -52908,6 +52908,12 @@ MonoBehaviour:
   duration: 0.1
   positionPunch: {x: 1, y: 1, z: 1}
   rotationPunch: {x: 15, y: 15, z: 15}
+  collisionDuration: 0.5
+  collisionPositionPunch: {x: 0.1, y: 0.1, z: 0.1}
+  collisionRotationPunch: {x: 0.1, y: 0.1, z: 0.1}
+  laserDuration: 1
+  laserPositionPunch: {x: 0.1, y: 0.1, z: 0.1}
+  laserRotationPunch: {x: 0.1, y: 0.1, z: 0.1}
 --- !u!114 &1190078106323982175
 MonoBehaviour:
   m_ObjectHideFlags: 0
