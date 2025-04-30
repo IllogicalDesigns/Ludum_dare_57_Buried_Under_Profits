@@ -110,7 +110,7 @@ public class WaveSpawner : MonoBehaviour {
     }
 
     private void OnDrawGizmosSelected() {
-        if (player == null) return;
+        if (player != null) return;
 
         // Optionally, draw another circle to represent the minimum spawn distance
         Gizmos.color = Color.red;

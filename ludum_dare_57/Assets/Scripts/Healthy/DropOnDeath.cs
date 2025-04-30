@@ -24,21 +24,23 @@ public class DropOnDeath : MonoBehaviour
         var hullProportion = (float)hull / maxHp;
         var airProportion = (float)air / maxAir;
 
-        GameObject selectedDrop = airBubble.gameObject;
-        // Determine the lowest proportion and spawn the corresponding bubble
-        if (ammoProportion <= hullProportion && ammoProportion <= airProportion)
-        {
-            selectedDrop = ammoBubble.gameObject;
-        }
-        else if (hullProportion <= ammoProportion && hullProportion <= airProportion)
-        {
-            selectedDrop = hullBubble.gameObject;
-        }
-        else
-        {
-            selectedDrop = airBubble.gameObject;
-        }
+        //GameObject selectedDrop = airBubble.gameObject;
+        //// Determine the lowest proportion and spawn the corresponding bubble
+        //if (ammoProportion <= hullProportion && ammoProportion <= airProportion)
+        //{
+        //    selectedDrop = ammoBubble.gameObject;
+        //}
+        //else if (hullProportion <= ammoProportion && hullProportion <= airProportion)
+        //{
+        //    selectedDrop = hullBubble.gameObject;
+        //}
+        //else
+        //{
+        //    selectedDrop = airBubble.gameObject;
+        //}
 
-        Instantiate(selectedDrop, transform.position, Quaternion.identity); 
+        Instantiate(ammoBubble, transform.position, Quaternion.identity); 
+        Instantiate(hullBubble, transform.position, Quaternion.identity); 
+        Instantiate(airBubble, transform.position, Quaternion.identity); 
     }
 }

@@ -13,6 +13,7 @@ public class Crab : MonoBehaviour
         idle,
         preLaser,
         lasering,
+        melee,
         coolingDown,
     }
     public CrabState state;
@@ -67,6 +68,13 @@ public class Crab : MonoBehaviour
     int airDamage = 1;
     Threat threat;
 
+    [Space]
+    public bool hasCannon;
+    public float meleeDistance = 5f;
+
+    [Space]
+    bool isPaused;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -76,11 +84,22 @@ public class Crab : MonoBehaviour
 
         threat = GetComponent<Threat>();
 
+        GameManager.OnPauseChanged += OnPausedEvent;
+    }
+
+    private void OnDestroy() {
+        GameManager.OnPauseChanged -= OnPausedEvent;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(isPaused) {
+            agent.isStopped = true;
+            return;
+        } else if(agent.isStopped)
+            agent.isStopped = false;
+
         switch (state) {
             case CrabState.idle:
                 HandleIdle();
@@ -90,7 +109,8 @@ public class Crab : MonoBehaviour
                 break;
             case CrabState.lasering:
                 HandleLasering();
-
+                break;
+            case CrabState.melee:
                 break;
             case CrabState.coolingDown:
                 HandleCoolingDown();
@@ -98,15 +118,18 @@ public class Crab : MonoBehaviour
         }
     }
 
+    private void OnPausedEvent(bool _isPaused) {
+        isPaused = _isPaused;
+    }
+
     private void HandleIdle() {
         var distance = Vector3.Distance(transform.position, attackPoint.transform.position);
 
         if (distance < activationDistance) {
             threat.BecomeThreat();
-            TransitionToPreLasering();
+
+            TransitionToLaserOrMelee();
         }
-            
-        //wander?
     }
 
     private void TransitionToPreLasering() {
@@ -192,27 +215,6 @@ public class Crab : MonoBehaviour
             laseringTimer -= Time.deltaTime;
     }
 
-    private void OnRaycastHit(RaycastHit hit) {
-        lineRenderer.SetPosition(1, hit.point);
-
-        laserFiring.transform.position = Vector3.Lerp(laseringEnd.position, hit.point, 0.5f);  //Place laser sound near center of laser
-
-        Debug.DrawLine(transform.position, hit.point, Color.green);
-
-        if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Mine")) {
-            const float nudge = 0.1f;
-
-            if (!hitObjects.ContainsKey(hit.collider)) {
-                hitObjects.Add(hit.collider, Time.time-nudge);
-            } 
-            
-            if(hitObjects[hit.collider] < Time.time) {
-                hit.collider.SendMessage("OnHit", new DamageInstance(damage, airDamage, DamageInstance.DamageType.laser));
-                hitObjects[hit.collider] = Time.time + timeBetweenTicks;
-            }
-        }
-    }
-
     private void TransitionToCooldown() {
         state = CrabState.coolingDown;
 
@@ -235,10 +237,22 @@ public class Crab : MonoBehaviour
             if (smokeParticles != null) smokeParticles.Stop();
             lasering.Kill();
             lasering = null;
-            TransitionToPreLasering();
+
+            TransitionToLaserOrMelee();
         }
         else
             coolDownTimer -= Time.deltaTime;
+    }
+
+    private void TransitionToLaserOrMelee() {
+        var distance = Vector3.Distance(transform.position, attackPoint.transform.position);
+
+        if (hasCannon || distance < meleeDistance)
+            TransitionToPreLasering();
+        else {
+            Debug.Log("TODO add melee");
+            TransitionToPreLasering();
+        }
     }
 
     private void MoveIntoActRange() {
@@ -249,5 +263,26 @@ public class Crab : MonoBehaviour
         }
         else if (!agent.isStopped)
             agent.isStopped = true;
+    }
+
+    private void OnRaycastHit(RaycastHit hit) {
+        lineRenderer.SetPosition(1, hit.point);
+
+        laserFiring.transform.position = Vector3.Lerp(laseringEnd.position, hit.point, 0.5f);  //Place laser sound near center of laser
+
+        Debug.DrawLine(transform.position, hit.point, Color.green);
+
+        if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Mine")) {
+            const float nudge = 0.1f;
+
+            if (!hitObjects.ContainsKey(hit.collider)) {
+                hitObjects.Add(hit.collider, Time.time - nudge);
+            }
+
+            if (hitObjects[hit.collider] < Time.time) {
+                hit.collider.SendMessage("OnHit", new DamageInstance(damage, airDamage, DamageInstance.DamageType.laser));
+                hitObjects[hit.collider] = Time.time + timeBetweenTicks;
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ public class Health : MonoBehaviour
 {
     public static event System.Action OnHitEvent;
     public static event System.Action OnHealEvent;
+    public event System.Action OnDeathEvent;
 
     public const string OnHitString = "OnHit";
     public const string OnDeadString = "OnDead";
@@ -23,6 +24,7 @@ public class Health : MonoBehaviour
 
         if(hp <= 0) {
             gameObject.SendMessage(OnDeadString);
+            OnDeathEvent?.Invoke();
         }
     }
 
@@ -38,7 +40,7 @@ public class DamageInstance {
     public int airDamage;
     public DamageType damageType;
 
-    public DamageInstance(int damage, int airDamage, DamageType damageType = DamageType.normal) {
+    public DamageInstance(int damage, int airDamage, DamageType damageType = DamageType.normal, RaycastHit hit = default) {
         this.damage = damage;
         this.airDamage = airDamage;
         this.damageType = damageType;

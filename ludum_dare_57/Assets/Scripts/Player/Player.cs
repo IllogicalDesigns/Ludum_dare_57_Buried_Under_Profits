@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public float dodgeTimer = 1f;
     public bool isDodging;
     public float dgTimer;
+    public float minimumDodge = 0.25f;
     //public float refillSpeed = 0.25f;
     public AnimationCurve refillSpeedCurve = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(1f, 0.25f));
     public float dodgeSpeed = 4f;
@@ -178,7 +179,7 @@ public class Player : MonoBehaviour
             exitedDodgeEarly = false;
         }
 
-        if(!exitedDodgeEarly && dgTimer > 0 && isDodging && Input.GetKeyUp(KeyCode.LeftShift)) {
+        if(!exitedDodgeEarly && dgTimer > 0 && dgTimer < minimumDodge && isDodging && !Input.GetKey(KeyCode.LeftShift)) {
             exitedDodgeEarly = true;  //Allows for movement to stop early, but keep the I Frames
         }
 

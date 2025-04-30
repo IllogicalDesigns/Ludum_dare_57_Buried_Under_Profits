@@ -34936,8 +34936,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8bca95f7c947b4db5fb152a0d693d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anisotropy: 0.25
-  scattering: 0.02
+  anisotropy: 0.43
+  scattering: 0.1
   radius: 0.2
 --- !u!1 &5157359347307381530
 GameObject:
@@ -52721,6 +52721,7 @@ MonoBehaviour:
   dodgeTimer: 0.75
   isDodging: 0
   dgTimer: 0
+  minimumDodge: 0.5
   refillSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -52794,7 +52795,7 @@ MonoBehaviour:
   pointLight: {fileID: 4436675545989398473}
   gunBarrel: {fileID: 1703589589846522353}
   localZBounce: -0.5
-  bounceDuration: 0.2
+  bounceDuration: 0.4
   lightDuration: 0.2
   fireRate: 0.1
   layerMask:

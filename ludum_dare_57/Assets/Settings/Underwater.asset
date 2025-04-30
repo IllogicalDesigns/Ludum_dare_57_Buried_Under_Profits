@@ -204,50 +204,50 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 64
   baseHeight:
-    m_OverrideState: 1
-    m_Value: -50
+    m_OverrideState: 0
+    m_Value: 0
   maximumHeight:
-    m_OverrideState: 1
-    m_Value: 40
+    m_OverrideState: 0
+    m_Value: 50
   enableGround:
-    m_OverrideState: 1
-    m_Value: 1
+    m_OverrideState: 0
+    m_Value: 0
   groundHeight:
-    m_OverrideState: 1
-    m_Value: -50
+    m_OverrideState: 0
+    m_Value: 0
   density:
     m_OverrideState: 1
-    m_Value: 0.208
+    m_Value: 0.2
   attenuationDistance:
     m_OverrideState: 0
     m_Value: 128
   enableAPVContribution:
-    m_OverrideState: 1
-    m_Value: 1
+    m_OverrideState: 0
+    m_Value: 0
   APVContributionWeight:
-    m_OverrideState: 1
-    m_Value: 0.104
+    m_OverrideState: 0
+    m_Value: 1
   enableMainLightContribution:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   anisotropy:
-    m_OverrideState: 1
-    m_Value: 0.44
+    m_OverrideState: 0
+    m_Value: 0.4
   scattering:
-    m_OverrideState: 1
-    m_Value: 0.682
+    m_OverrideState: 0
+    m_Value: 0.15
   tint:
-    m_OverrideState: 1
-    m_Value: {r: 0.049394794, g: 0.6981132, b: 0.6588336, a: 1}
+    m_OverrideState: 0
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
   enableAdditionalLightsContribution:
     m_OverrideState: 1
     m_Value: 1
   maxSteps:
-    m_OverrideState: 1
-    m_Value: 32
+    m_OverrideState: 0
+    m_Value: 128
   blurIterations:
-    m_OverrideState: 1
-    m_Value: 1
+    m_OverrideState: 0
+    m_Value: 2
   enabled:
     m_OverrideState: 1
     m_Value: 1
@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Name: Underwater
   m_EditorClassIdentifier: 
   components:
+  - {fileID: -592412485222146229}
   - {fileID: -5995897811405997300}
   - {fileID: 7890248622417236935}
   - {fileID: -4330589594975694336}
@@ -275,7 +276,6 @@ MonoBehaviour:
   - {fileID: -4996610979205872547}
   - {fileID: -8534106355977609377}
   - {fileID: 635137737523693262}
-  - {fileID: -592412485222146229}
 --- !u!114 &635137737523693262
 MonoBehaviour:
   m_ObjectHideFlags: 3

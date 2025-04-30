@@ -38,7 +38,6 @@ public class PistolShrimps : MonoBehaviour {
     public LayerMask layerMask = ~0;
 
     [Space]
-    
     [SerializeField] AudioClip alertSFX;
     [SerializeField] AudioClip gunShotSFX;
     [SerializeField] AudioClip preGunShotSfx;
@@ -60,7 +59,7 @@ public class PistolShrimps : MonoBehaviour {
     void Start() {
         attackPoint = Player.Instance.attackPoint;
 
-        player = FindAnyObjectByType<Player>();
+        player = Player.Instance;
         playerController = player.GetComponent<CharacterController>();
         threat = GetComponent<Threat>();
 
@@ -106,8 +105,9 @@ public class PistolShrimps : MonoBehaviour {
             if (!blocked)
                 return (hit.position + dashOffset);
         }
-        
+
         //Give garbage, to filter out later
+        Debug.LogWarning("PistolShrimp::GetDashPosition::Failed to find valid dash position.");
         return Vector3.zero;
     }
 
@@ -138,23 +138,7 @@ public class PistolShrimps : MonoBehaviour {
 
         var shot = Instantiate(launchedObject, launchPoint.position, Quaternion.identity);
         if (useGuessAim) {
-            // Get player position and velocity
-            Vector3 playerPos = player.transform.position;
-            Vector3 playerVel = playerController.velocity;
-
-            // Calculate direction and distance to player
-            Vector3 toPlayer = playerPos - launchPoint.position;
-            float bulletSpeed = shot.GetComponent<Bullet>().speed * 2;
-            float distance = Vector3.Distance(transform.position, player.transform.position);
-
-            // Calculate time to reach current player position
-            float timeToReach = distance / bulletSpeed;
-
-            // Predict future player position
-            Vector3 futurePos = playerPos + playerVel * timeToReach;
-
-            // Aim bullet at predicted position
-            shot.transform.LookAt(futurePos);
+            AimTheShotBasedOnGuess(shot);
         }
         else {
             shot.transform.LookAt(player.transform.position);
@@ -186,6 +170,26 @@ public class PistolShrimps : MonoBehaviour {
             cdTimer -= Time.deltaTime;
 
         transform.LookAt(attackPoint);
+    }
+
+    private void AimTheShotBasedOnGuess(Transform shot) {
+        // Get player position and velocity
+        Vector3 playerPos = player.transform.position;
+        Vector3 playerVel = playerController.velocity;
+
+        // Calculate direction and distance to player
+        Vector3 toPlayer = playerPos - launchPoint.position;
+        float bulletSpeed = shot.GetComponent<Bullet>().speed * 2;
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+
+        // Calculate time to reach current player position
+        float timeToReach = distance / bulletSpeed;
+
+        // Predict future player position
+        Vector3 futurePos = playerPos + playerVel * timeToReach;
+
+        // Aim bullet at predicted position
+        shot.transform.LookAt(futurePos);
     }
 
     public void OnHit(DamageInstance damageInstance) {

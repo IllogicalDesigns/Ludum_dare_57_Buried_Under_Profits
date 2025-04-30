@@ -45,6 +45,18 @@ public class TransitionManager : MonoBehaviour
         OnTransitionComplete += LoadLevel;
     }
 
+    public void TransitionToRestart() {
+        if (isTransitioning) return;
+
+        transition?.gameObject.SetActive(true);
+
+        OnTransitionStart?.Invoke();
+        isTransitioning = true;
+        transition?.PlayOutTransition();
+        levelNameToTransitionTo = Application.loadedLevelName;
+        OnTransitionComplete += LoadLevel;
+    }
+
     public void TransitionToEvent() {
 
     }

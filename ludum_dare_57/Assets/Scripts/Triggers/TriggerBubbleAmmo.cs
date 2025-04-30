@@ -9,9 +9,18 @@ public class TriggerBubbleAmmo : TriggerBase {
     Transform player;
     public AnimationCurve pickupDistance = new AnimationCurve(new Keyframe(0, 15), new Keyframe(2, 3));
 
+    Rigidbody rb;
+    public float force = 5f;
+    //const float gravity = 1f;
+
     protected override void Awake() {
         base.Awake();
-        player = FindFirstObjectByType<Player>().transform;
+        player = Player.Instance.transform;
+    }
+
+    private void Start() {
+        rb = GetComponent<Rigidbody>();
+        rb.AddForce(Random.onUnitSphere * force, ForceMode.Impulse);
     }
 
 
@@ -44,6 +53,8 @@ public class TriggerBubbleAmmo : TriggerBase {
         if (Vector3.Distance(transform.position, player.position) < pickupDistance.Evaluate(GameManager.instance.difficulty)) {
             PopBubble();
         }
+
+        //rb.AddForce(Vector3.up * gravity, ForceMode.Acceleration); // * Time.deltaTime
     }
 }
 

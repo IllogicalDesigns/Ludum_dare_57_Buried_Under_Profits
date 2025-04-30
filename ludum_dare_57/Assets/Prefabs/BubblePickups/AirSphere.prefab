@@ -172,7 +172,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 0.5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -349,7 +349,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -364,7 +364,7 @@ Rigidbody:
   m_GameObject: {fileID: 7604317364066380378}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 1
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -377,8 +377,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -470,17 +470,26 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.8960953
       value: 8.727332
-      inSlope: -7
-      outSlope: -7
+      inSlope: -26.248398
+      outSlope: -26.248398
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
+      time: 1
+      value: 4
+      inSlope: -2.5590851
+      outSlope: -2.5590851
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.955649
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 2
-      value: 1
-      inSlope: -6.999999
-      outSlope: -6.999999
+      value: 4
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -491,6 +500,7 @@ MonoBehaviour:
   bubblePop: {fileID: 2785771756303573500, guid: ffbd705e999b5cb44b5c48ec3ddb0459, type: 3}
   ammobox: {fileID: 1120759004453210766}
   toPoint: {fileID: 7824841203786251043}
+  force: 5
 --- !u!114 &6174196017382530580
 MonoBehaviour:
   m_ObjectHideFlags: 0

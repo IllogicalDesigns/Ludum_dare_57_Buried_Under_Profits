@@ -18,7 +18,7 @@ public class EnemyHitEffect : MonoBehaviour
     }
 
     void Start() {
-        originalMat = renderer.material;
+        if(renderer) originalMat = renderer.material;
         flashMat = Resources.Load<Material>("FlashMaterial"); // Load your flash material
         rb = gameObject.GetComponent<Rigidbody>();
     }
@@ -41,12 +41,12 @@ public class EnemyHitEffect : MonoBehaviour
     IEnumerator Flash() {
         yield return null; // Wait for next frame
 
-        renderer.material = flashMat;
+        if (renderer) renderer.material = flashMat;
 
         transform.DOPunchScale(punchScale, duration);
 
         yield return null; // Wait for another frame
 
-        renderer.material = originalMat;
+        if (renderer) renderer.material = originalMat;
     }
 }

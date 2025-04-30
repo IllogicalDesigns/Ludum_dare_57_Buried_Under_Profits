@@ -103,6 +103,8 @@ public class SpawnerWithRaycast : MonoBehaviour {
         // Draw a wireframe circle to represent the spawn radius
         Gizmos.DrawWireSphere(spawnCenter.position, spawnRadius);
 
+        Gizmos.DrawWireCube(spawnCenter.position, spawnSize);
+
         // Optionally, draw another circle to represent the minimum spawn distance
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(player.position, minSpawnDistance);
