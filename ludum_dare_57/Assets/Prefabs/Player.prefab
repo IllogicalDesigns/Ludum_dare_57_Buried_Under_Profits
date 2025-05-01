@@ -52539,6 +52539,7 @@ GameObject:
   - component: {fileID: 2816211662495570792}
   - component: {fileID: 8461342759339953694}
   - component: {fileID: 6620023859442715560}
+  - component: {fileID: 671285232261949935}
   - component: {fileID: 2223535657354466694}
   - component: {fileID: 2494651610717952735}
   - component: {fileID: 1489190186594635619}
@@ -52736,7 +52737,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0.35
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -52782,26 +52783,41 @@ MonoBehaviour:
   minExtra: 5
   maxExtra: 10
   ammo: 15
-  gunSfx: {fileID: 263000120037967400}
-  hitMarkerSfx: {fileID: 1325617448491266798}
-  ammoPickupSfx: {fileID: 8300000, guid: c636716e62e36d74e859109f9e4269d3, type: 3}
-  outOfAmmoSfx: {fileID: 8300000, guid: 891f4e1f3d9545849ba4f4cc508a55d0, type: 3}
-  cameraShake: {fileID: 0}
-  duration: 0.1
-  positionPunch: {x: 0.1, y: 0.1, z: 0.1}
-  rotationPunch: {x: 1, y: 1, z: 1}
-  bloodDecal: {fileID: 4419967644885193991, guid: c09939bdfb6151b44b701cad9d342f08, type: 3}
-  gunSparksSystem: {fileID: 455008089051827199}
-  pointLight: {fileID: 4436675545989398473}
-  gunBarrel: {fileID: 1703589589846522353}
-  localZBounce: -0.5
-  bounceDuration: 0.4
-  lightDuration: 0.2
   fireRate: 0.1
   layerMask:
     serializedVersion: 2
     m_Bits: 435
+  upwardsRecoil: -1
+  sidewaysRecoil: 0.25
+  recoilDuration: 0.1
   knockbackForce: 50
+--- !u!114 &671285232261949935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691263855352739950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b454b4e7de5c5a84c9c10700982ce375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraShake: {fileID: 9111327370941036299}
+  duration: 0.1
+  positionPunch: {x: 0.1, y: 0.1, z: 0.1}
+  rotationPunch: {x: 0.1, y: 0.1, z: 0.1}
+  gunSfx: {fileID: 263000120037967400}
+  hitMarkerSfx: {fileID: 1325617448491266798}
+  ammoPickupSfx: {fileID: 8300000, guid: c636716e62e36d74e859109f9e4269d3, type: 3}
+  outOfAmmoSfx: {fileID: 8300000, guid: effb7672af571124a8411e90b7eeb3fd, type: 3}
+  pointLight: {fileID: 4436675545989398473}
+  lightDuration: 0.2
+  gunSparksSystem: {fileID: 455008089051827199}
+  gunBarrel: {fileID: 4952834125626957988}
+  localZBounce: 0
+  bounceDuration: 0.2
+  bloodDecal: {fileID: 94463090157910020, guid: f20cd66edd18fcc45a24d2ab75fe3647, type: 3}
 --- !u!114 &2223535657354466694
 MonoBehaviour:
   m_ObjectHideFlags: 0

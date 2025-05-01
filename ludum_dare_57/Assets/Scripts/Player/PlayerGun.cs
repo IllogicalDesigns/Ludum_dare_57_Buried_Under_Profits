@@ -6,7 +6,11 @@ public class PlayerGun : MonoBehaviour
     public static event System.Action OutOfAmmoEvent;
     public static event System.Action GunFiredEvent;
     public static event System.Action AmmoAddedEvent;
+    public static event System.Action<RaycastHit> OnGunHit;
+
     bool isPaused;
+
+    [Header("Damage")]
     public float maxDist = 100f;
     public int baseDamage = 20;
     public int minExtra = 5;
@@ -14,40 +18,22 @@ public class PlayerGun : MonoBehaviour
 
     public int ammo = 10;
 
-    [SerializeField] AudioSource gunSfx;
-    [SerializeField] AudioSource hitMarkerSfx;
-    [SerializeField] AudioClip ammoPickupSfx;
-    [SerializeField] AudioClip outOfAmmoSfx;
-    [SerializeField] CameraShake cameraShake;
-
-    [SerializeField] float duration = 0.1f;
-    [SerializeField] Vector3 positionPunch = Vector3.one;
-    [SerializeField] Vector3 rotationPunch = Vector3.one * 15f;
-
-    [SerializeField] GameObject bloodDecal;
-    [SerializeField] ParticleSystem gunSparksSystem;
-    [SerializeField] GameObject pointLight;
-
-    [SerializeField] Transform gunBarrel;
-    [SerializeField] float localZBounce;
-    float origZ;
-    [SerializeField] float bounceDuration = 0.2f;
-
-    public float lightDuration = 0.2f;
-
     public float fireRate = 0.2f;
     float nextFireTime;
 
     [SerializeField] LayerMask layerMask;
     [Space]
-    private CharacterController controller;
+
+    [Header("Recoil")]
+    public float upwardsRecoil = -5f;
+    public float sidewaysRecoil = 1f;
+    public float recoilDuration = 0.1f;
     public float knockbackForce = 3f;
+    private CharacterController controller;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        cameraShake = GetComponent<CameraShake>();
-        origZ = gunBarrel.transform.localPosition.y;
         controller = GetComponent<CharacterController>();
     }
 
@@ -62,12 +48,7 @@ public class PlayerGun : MonoBehaviour
 
     public void addAmmo(int value) {
         ammo += value;
-        AudioManager.instance.PlaySoundOnPlayer(ammoPickupSfx);
         AmmoAddedEvent?.Invoke();
-    }
-
-    public void HideLight() {
-        pointLight.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -94,85 +75,46 @@ public class PlayerGun : MonoBehaviour
     }
 
     private void OutOfAmmo() {
-        PlayOutOfAmmoEffects();
+        //PlayOutOfAmmoEffects();
         nextFireTime = Time.time + fireRate;
         OutOfAmmoEvent?.Invoke();
     }
 
     private void FireGun(Ray ray) {
         GunFiredEvent?.Invoke();
-        Vector3 knockbackDirection = -transform.forward; // Opposite to gun's forward
-        controller.Move(knockbackDirection * knockbackForce * Time.deltaTime);
-        PlayGunFireEffects();
+
+        AddKnockback(); //TODO should this be in the player???
+
         ammo--;
+
         nextFireTime = Time.time + fireRate;
-        FireRayAndHandleEffects(ray);
+
+        FireRay(ray);
     }
 
-    private void FireRayAndHandleEffects(Ray ray) {
+    private void AddKnockback() {
+        Vector3 knockbackDirection = -transform.forward; // Opposite to gun's forward
+        controller.Move(knockbackDirection * knockbackForce * Time.deltaTime);
+    }
+
+    private void FireRay(Ray ray) {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, maxDist, layerMask)) {
-            //Debug.Log("Hit: " + hit.transform.name);
+            Debug.Log("Hit: " + hit.transform.name);
+
+            //Do recoil
+            transform.DOBlendableLocalRotateBy(new Vector3(upwardsRecoil, Random.Range(-sidewaysRecoil, sidewaysRecoil), 0), recoilDuration);
 
             ApplyDamage(hit);
-            PlayHitMarkerOnEnemy(hit);
-            PlaceDecalOnHit(hit);
-            PlayParticleAtHit(hit);
+            OnGunHit?.Invoke(hit);
         }
         else {
             Debug.Log("Missed");
         }
     }
 
-    private void PlayOutOfAmmoEffects() {
-        AudioManager.instance.PlaySoundOnPlayer(outOfAmmoSfx);
-    }
-
     private void ApplyDamage(RaycastHit hit) {
         var damage = baseDamage + Random.Range(minExtra, maxExtra);
         hit.collider.SendMessage(Health.OnHitString, new DamageInstance(damage, 0), SendMessageOptions.DontRequireReceiver);
-    }
-
-    private void PlayHitMarkerOnEnemy(RaycastHit hit) {
-        if (hit.collider.TryGetComponent<Health>(out Health hp)) {
-            hitMarkerSfx.Play();
-        }
-    }
-
-    private void PlaceDecalOnHit(RaycastHit hit) {
-        if (hit.collider.CompareTag("Enemy")) {
-            var hitDecal = Instantiate(bloodDecal, hit.point, Quaternion.EulerAngles(-hit.normal)) as GameObject; //TODO pool this
-            hitDecal.transform.SetParent(hit.transform);
-        }
-        else {
-            //Add non enemy hit decal
-        }
-    }
-
-    private void PlayGunFireEffects() {
-        gunSfx.Play();
-        gunSparksSystem.Play();
-        cameraShake.PunchScreen(duration, positionPunch, rotationPunch);
-
-        pointLight.gameObject.SetActive(true);
-        Invoke(nameof(HideLight), lightDuration);
-
-        gunBarrel.DOKill(true);
-        gunBarrel.DOLocalMoveY(localZBounce, bounceDuration / 2).SetLoops(2, LoopType.Yoyo);
-    }
-
-    private static void PlayParticleAtHit(RaycastHit hit) {
-        if (hit.collider.TryGetComponent<OnHitSpawnParticle>(out OnHitSpawnParticle spawnParticle)) {
-            ParticleManager.instance?.PlayParticle(spawnParticle.typeOfParticles, hit.point, hit.normal);
-            //spawnParticle.particleSystem.transform.position = hit.point;
-            //spawnParticle.particleSystem.transform.forward = hit.normal;
-            //spawnParticle.particleSystem.Play();
-        }
-        else {
-            ParticleManager.instance?.PlayParticle(ParticleManager.Particles.sand, hit.point, hit.normal);
-            //sandSystem.transform.position = hit.point;
-            //sandSystem.transform.forward = hit.normal;
-            //sandSystem.Play();
-        }
     }
 }
