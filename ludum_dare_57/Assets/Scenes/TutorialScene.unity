@@ -39609,18 +39609,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8461342759339953694, guid: 0530e36dc0b3ddb40af036ea643eb50c, type: 3}
-      propertyPath: dodgeTimer
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 8461342759339953694, guid: 0530e36dc0b3ddb40af036ea643eb50c, type: 3}
-      propertyPath: minimumDodge
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8461342759339953694, guid: 0530e36dc0b3ddb40af036ea643eb50c, type: 3}
-      propertyPath: refillSpeedCurve.m_Curve.Array.data[1].value
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 9022395602096456485, guid: 0530e36dc0b3ddb40af036ea643eb50c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

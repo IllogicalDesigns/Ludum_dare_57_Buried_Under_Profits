@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static event System.Action DodgeRefilled;
+    bool hasRefilled;
+    public static event System.Action DodgeStart;
     public static Player Instance;
 
     public float moveSpeed = 5f;
@@ -36,6 +39,7 @@ public class Player : MonoBehaviour
     Vector3 dodgeMovement;
 
     public AudioSource dodgeSound;
+    public AudioSource dodgeRefilledSFX;
     [Space]
     public AudioClip metal;
     Health health;
@@ -169,6 +173,35 @@ public class Player : MonoBehaviour
         Vector3 movement = GetMovementVector();
 
         if (dgTimer >= dodgeTimer && Input.GetKeyDown(KeyCode.LeftShift) && movement.magnitude != 0) {
+            movement = StartDodge(movement);
+        }
+
+        if (!exitedDodgeEarly && dgTimer > 0 && dgTimer < minimumDodge && isDodging && !Input.GetKey(KeyCode.LeftShift)) {
+            exitedDodgeEarly = true;  //Allows for movement to stop early, but keep the I Frames
+        }
+
+        if (dgTimer > 0 && isDodging) {
+            if(!exitedDodgeEarly) controller.Move(dodgeMovement * Time.deltaTime);
+            
+            dgTimer -= Time.deltaTime;
+        }
+        else {
+            ExitDodge();
+        }
+
+        if (!isDodging) {
+            if (dgTimer <= dodgeTimer)
+                dgTimer += Time.deltaTime * refillSpeedCurve.Evaluate(GameManager.instance.difficulty);
+            else if(!hasRefilled) {
+                hasRefilled = true;
+                DodgeRefilled?.Invoke();
+                dodgeRefilledSFX?.Play();
+            }
+        }
+
+        Vector3 StartDodge(Vector3 movement) {
+            hasRefilled = false;
+            DodgeStart?.Invoke();
             isDodging = true;
             dodgeSound.Play();
             movement = Quaternion.LookRotation(camTrans.forward) * movement;
@@ -177,25 +210,13 @@ public class Player : MonoBehaviour
             GameManager.instance.DamageAir(2);
             health.canTakeDamage = false;
             exitedDodgeEarly = false;
+            return movement;
         }
 
-        if(!exitedDodgeEarly && dgTimer > 0 && dgTimer < minimumDodge && isDodging && !Input.GetKey(KeyCode.LeftShift)) {
-            exitedDodgeEarly = true;  //Allows for movement to stop early, but keep the I Frames
-        }
-
-        if (dgTimer > 0 && isDodging) {
-            if(!exitedDodgeEarly) controller.Move(dodgeMovement * Time.deltaTime);
-            dgTimer -= Time.deltaTime;
-        }
-        else {
+        void ExitDodge() {
             isDodging = false;
             dodgeMovement = Vector3.zero;
             health.canTakeDamage = true;
-        }
-
-        if (!isDodging) {
-            if (dgTimer <= dodgeTimer)
-                dgTimer += Time.deltaTime * refillSpeedCurve.Evaluate(GameManager.instance.difficulty);
         }
     }
 

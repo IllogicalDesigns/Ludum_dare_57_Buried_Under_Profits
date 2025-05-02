@@ -51,12 +51,19 @@ public class PlayerGunEffects : MonoBehaviour
         originalGunZ = gunBarrel.transform.localPosition.y;
     }
 
-    public void HideLight() {
-        pointLight.gameObject.SetActive(false);
-    }
-
+    #region AmmoEffects
     private void PlayOutOfAmmoEffects() {
         AudioManager.instance.PlaySoundOnPlayer(outOfAmmoSfx);
+    }
+
+    public void OnAmmoAdd() {
+        AudioManager.instance.PlaySoundOnPlayer(ammoPickupSfx);
+    }
+    #endregion
+
+    #region GunShot
+    public void HideLight() {
+        pointLight.gameObject.SetActive(false);
     }
 
     private void PlayGunFireEffects() {
@@ -74,6 +81,14 @@ public class PlayerGunEffects : MonoBehaviour
         gunBarrel.DOKill(true);
         gunBarrel.DOLocalMoveY(localZBounce, bounceDuration / 2).SetLoops(2, LoopType.Yoyo);
     }
+    #endregion
+
+    #region GunHit
+    private void OnGunHit(RaycastHit hit) {
+        PlayHitMarkerOnEnemy(hit);
+        PlaceDecalOnHit(hit);
+        PlayParticleAtHit(hit);
+    }
 
     private void PlayHitMarkerOnEnemy(RaycastHit hit) {
         if (hit.collider.CompareTag("Enemy")) {
@@ -87,8 +102,12 @@ public class PlayerGunEffects : MonoBehaviour
             hitDecal.transform.up = hit.normal;
             hitDecal.transform.localScale = new Vector3(Random.Range(0.5f, 1.25f), Random.Range(0.5f, 1.25f), Random.Range(0.5f, 1.25f));
             hitDecal.transform.SetParent(hit.transform);
+
             var rb = hitDecal.GetComponentInChildren<Rigidbody>();
-            rb?.AddForce(hit.normal * 5f, ForceMode.Impulse);
+            var angle = Random.Range(0f, 30f); // Cone angle in degrees
+            var randomDir = Random.insideUnitCircle;
+            var direction = Quaternion.AngleAxis(angle, hit.normal) * randomDir;
+            rb?.AddForce(direction * 5f, ForceMode.Impulse);
             rb?.transform.SetParent(null);
         }
         else {
@@ -110,14 +129,5 @@ public class PlayerGunEffects : MonoBehaviour
             //sandSystem.Play();
         }
     }
-
-    public void OnAmmoAdd() {
-        AudioManager.instance.PlaySoundOnPlayer(ammoPickupSfx);
-    }
-
-    private void OnGunHit(RaycastHit hit) {
-        PlayHitMarkerOnEnemy(hit);
-        PlaceDecalOnHit(hit);
-        PlayParticleAtHit(hit);
-    }
+    #endregion
 }

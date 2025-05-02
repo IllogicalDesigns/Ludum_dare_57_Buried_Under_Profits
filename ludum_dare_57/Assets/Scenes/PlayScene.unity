@@ -24357,7 +24357,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 806138356}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ae4626835f6bd945b55b35a375afb92, type: 3}
   m_Name: 
@@ -32430,12 +32430,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371830340}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98278868122de694e8831bf814c393bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 2158535598732584035, guid: dadd440d90718c443b749421701f6cc3, type: 3}
+  prefabToSpawn: {fileID: 919132149155446097, guid: 98a3ab8925fbc914aaab9d817c107e0f, type: 3}
   spawnHeight: 25
   groundOffset: 6
   spawnRadius: 60
@@ -32445,13 +32445,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   spawnedObjects: []
-  desiredSpawnCount: 2
+  desiredSpawnCount: 10
   spawnDelay: 10
   spawnRate: 5
   spawnRotation: {x: 0, y: 0, z: 0}
   randomRotation: 0
   spawnCenter: {fileID: 1460174582}
-  spawnSize: {x: 15, y: 15, z: 15}
+  spawnSize: {x: 100, y: 50, z: 100}
 --- !u!114 &1371830348
 MonoBehaviour:
   m_ObjectHideFlags: 0

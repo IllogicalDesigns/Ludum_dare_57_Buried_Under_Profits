@@ -53,6 +53,8 @@ public class SniperFish : MonoBehaviour
     public float cdTime = 2f;
     float cdTimer;
 
+    float laserColorTimer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -96,15 +98,21 @@ public class SniperFish : MonoBehaviour
 
     private void SetLaserColor(float diffMulti) {
         var playerDodgeTime = player.dodgeTimer * diffMulti;
-        if (timer <= playerDodgeTime * whiteThresh)
+        if (timer <= playerDodgeTime * whiteThresh) {
             lineRenderer.material = laser3;
-        else if (timer <= timeBeforeSnipeLands * redThresh)
-            lineRenderer.material = laser2;
-        else
+        }
+        else {
             lineRenderer.material = laser1;
+
+            float threshold = playerDodgeTime * whiteThresh;
+            laserColorTimer += Time.deltaTime;
+
+            lineRenderer.material.SetColor("_EmissionColor", nonWhiteGradient.Evaluate(laserColorTimer/(timeBeforeSnipeLands-threshold)));
+        }
     }
 
     private void TransitionToCharging() {
+        laserColorTimer = 0;
         state = SniperState.charging;
         start.Play();
         threat.BecomeThreat();
@@ -119,7 +127,7 @@ public class SniperFish : MonoBehaviour
         if (!hasPlayersLineOfSight) {
             //Lost line of sight, exit sniping
             //timer = timeBeforeSnipeLands;
-            //lineRenderer.enabled = false;
+            lineRenderer.enabled = false;
             //lineRenderer.SetPosition(0, MouthPoint.position);
             //lineRenderer.SetPosition(1, attackPoint.position); //TODO move to hitPoint
             //isSniping = false;
@@ -128,6 +136,8 @@ public class SniperFish : MonoBehaviour
 
         //Look at the target
         transform.LookAt(attackPoint.position);
+
+        lineRenderer.enabled = true;
 
         //Place line renderer 
         lineRenderer.SetPosition(0, MouthPoint.position);
@@ -189,7 +199,8 @@ public class SniperFish : MonoBehaviour
     }
 
     public void OnHit(DamageInstance damageInstance) {
-        TransitionToCharging();
+        if(state == SniperState.idle)
+            TransitionToCharging();
     }
 
     private void OnDrawGizmosSelected() {
