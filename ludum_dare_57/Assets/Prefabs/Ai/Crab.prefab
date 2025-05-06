@@ -48,6 +48,11 @@ GameObject:
   - component: {fileID: 6753987929139397652}
   - component: {fileID: 5311488372080423082}
   - component: {fileID: 6320611958590465336}
+  - component: {fileID: 8791806697762980895}
+  - component: {fileID: 1008345375445306685}
+  - component: {fileID: 5766553978700311527}
+  - component: {fileID: 5548256988417444280}
+  - component: {fileID: 3977508478386159146}
   m_Layer: 0
   m_Name: CrabModel
   m_TagString: Untagged
@@ -285,6 +290,9 @@ MonoBehaviour:
   smokeParticles: {fileID: 6474637088512401057}
   agent: {fileID: 6837231852064015657}
   agentDistance: 10
+  hasCannon: 0
+  meleeDistance: 5
+  gunHealth: {fileID: 0}
 --- !u!114 &5311488372080423082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +319,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   threatIndicatorPrefab: {fileID: 492953202141166888, guid: 0aff8c9ecfe73ed47a99e2af0298718d, type: 3}
+--- !u!114 &8791806697762980895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053918754341414674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96a721a8e3769564c9a4c5cfa43c30fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 400
+  maxHp: 400
+  canTakeDamage: 1
+--- !u!114 &1008345375445306685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053918754341414674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0b53d5f649fb148ad1820ae245b468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objToDestroy: {fileID: 9063846351880819233}
+--- !u!114 &5766553978700311527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053918754341414674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9018747af7a125b478b621db7b52df10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 5289675715959474351}
+  punchScale: {x: 0.5, y: 0.5, z: 0.5}
+  duration: 0.1
+--- !u!114 &5548256988417444280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053918754341414674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe7c3c391c350445887c99b44a16d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeOfParticles: 2
+--- !u!114 &3977508478386159146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053918754341414674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8af44790ef6a4b49a01d598301aa4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoBubble: {fileID: 2004440659124543780, guid: b01742d157a08e14aad2532b106651ca, type: 3}
+  hullBubble: {fileID: 8394808527413797328, guid: 6f6844d15673d5b4db6dd45f5ec67bd6, type: 3}
+  airBubble: {fileID: 8760911727733434088, guid: 2884e906cfc3d2b4f99b2c55f6a466db, type: 3}
 --- !u!1 &3311366544216832410
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +515,6 @@ GameObject:
   - component: {fileID: 1211565103869468968}
   - component: {fileID: 8154540567380791082}
   - component: {fileID: 1386148879570082593}
-  - component: {fileID: 7031807612081069420}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Enemy
@@ -671,7 +749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0b53d5f649fb148ad1820ae245b468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objToDestroy: {fileID: 9063846351880819233}
+  objToDestroy: {fileID: 3933967014776264579}
 --- !u!114 &8154540567380791082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,7 +762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9018747af7a125b478b621db7b52df10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 5289675715959474351}
+  renderer: {fileID: 3184034745682253693}
   punchScale: {x: 0.5, y: 0.5, z: 0.5}
   duration: 0.1
 --- !u!114 &1386148879570082593
@@ -699,22 +777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe7c3c391c350445887c99b44a16d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeOfParticles: 2
---- !u!114 &7031807612081069420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3933967014776264579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8af44790ef6a4b49a01d598301aa4c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoBubble: {fileID: 2004440659124543780, guid: b01742d157a08e14aad2532b106651ca, type: 3}
-  hullBubble: {fileID: 8394808527413797328, guid: 6f6844d15673d5b4db6dd45f5ec67bd6, type: 3}
-  airBubble: {fileID: 8760911727733434088, guid: 2884e906cfc3d2b4f99b2c55f6a466db, type: 3}
+  typeOfParticles: 1
 --- !u!1 &4803712561619411331
 GameObject:
   m_ObjectHideFlags: 0
@@ -6267,7 +6330,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4601004948722455970
 Transform:
   m_ObjectHideFlags: 0

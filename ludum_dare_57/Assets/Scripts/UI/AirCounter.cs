@@ -33,6 +33,13 @@ public class AirCounter : MonoBehaviour
     float currentVelocity;
     public float underSmoothingTime = 1f;
 
+    [Space]
+    public Color originalColor = Color.white;
+    public Color flashGoodColor = Color.green;
+    public Color flashBadColor = Color.red;
+    public float flashDuration = 0.1f;
+    bool isFlashing;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,6 +51,8 @@ public class AirCounter : MonoBehaviour
 
         underSlider.maxValue = air;
         underSlider.value = air;
+
+        originalColor = airText.color;
     }
 
     // Update is called once per frame
@@ -56,6 +65,8 @@ public class AirCounter : MonoBehaviour
             colorText = "<color=\"red\">";
         else if (air < yellowThreshold)
             colorText = "<color=\"yellow\">";
+
+        if (isFlashing) colorText = "";
 
         if (tween == null && air < pulseThreshold)
             tween = airText.transform.DOShakeScale(pulseTime, pulseScale).SetLoops(-1, LoopType.Yoyo);
@@ -83,10 +94,21 @@ public class AirCounter : MonoBehaviour
     public void DamagedAir(int value) {
         airText.transform.DOKill(true);
         airText.transform.DOPunchScale(transform.localScale * bounceStrength, bounceDuration);
-        }
+        airText.color = flashBadColor;
+        isFlashing = true;
+        Invoke(nameof(RevertText), flashDuration);
+    }
 
     public void ProvidedAir(int value) {
         airText.transform.DOKill(true);
         airText.transform.DOPunchScale(transform.localScale * bounceStrength, bounceDuration);
+        airText.color = flashGoodColor;
+        isFlashing = true;
+        Invoke(nameof(RevertText), flashDuration);
+    }
+
+    public void RevertText() {
+        airText.color = originalColor;
+        isFlashing = false; 
     }
 }

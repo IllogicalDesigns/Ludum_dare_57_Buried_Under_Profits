@@ -22,6 +22,12 @@ public class AmmoCounter : MonoBehaviour {
 
     Vector3 origScale;
 
+    [Space]
+    public Color originalColor = Color.white;
+    public Color flashGoodColor = Color.green;
+    public float flashDuration = 0.4f;
+    bool isFlashing;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         playerGun = FindAnyObjectByType<PlayerGun>();
@@ -30,6 +36,8 @@ public class AmmoCounter : MonoBehaviour {
         PlayerGun.AmmoAddedEvent += UpdateAmmo;
         PlayerGun.OutOfAmmoEvent += UpdateAmmo;
         UpdateAmmo();
+
+        originalColor = bulletText.color;
     }
 
     void OnDestroy() {
@@ -62,6 +70,18 @@ public class AmmoCounter : MonoBehaviour {
     public void ProvidedAmmo() {
         bulletText.transform.DOKill(true);
         bulletText.transform.DOPunchScale(transform.localScale * bounceStrength, bounceDuration);
+        FlashText();
+    }
+
+    public void FlashText() {
+        bulletText.color = flashGoodColor;
+        isFlashing = true;
+        Invoke(nameof(RevertText), flashDuration);
+    }
+
+    public void RevertText() {
+        bulletText.color = originalColor;
+        isFlashing = false;
     }
 }
 

@@ -274,30 +274,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.066142134
-      outSlope: 0.066142134
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.056468487
-    - serializedVersion: 3
-      time: 2
-      value: 1.5
-      inSlope: 0.5
-      outSlope: 0.5
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -10610,6 +10601,10 @@ PrefabInstance:
     - target: {fileID: 138459117649783519, guid: fb3e97eb332addf4895e891a6cdf8384, type: 3}
       propertyPath: m_Name
       value: archer fire Particle System
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585487469412868985, guid: fb3e97eb332addf4895e891a6cdf8384, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5895572694992903167, guid: fb3e97eb332addf4895e891a6cdf8384, type: 3}
       propertyPath: m_LocalPosition.x

@@ -17,6 +17,7 @@ public class PlayerGun : MonoBehaviour
     public int maxExtra = 10;
 
     public int ammo = 10;
+    public int maxAmmo = 20;
 
     public float fireRate = 0.2f;
     float nextFireTime;
@@ -48,6 +49,8 @@ public class PlayerGun : MonoBehaviour
 
     public void addAmmo(int value) {
         ammo += value;
+        if(ammo > maxAmmo) { ammo = maxAmmo; }
+
         AmmoAddedEvent?.Invoke();
     }
 

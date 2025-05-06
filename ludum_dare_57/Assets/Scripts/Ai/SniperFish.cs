@@ -131,13 +131,15 @@ public class SniperFish : MonoBehaviour
             //lineRenderer.SetPosition(0, MouthPoint.position);
             //lineRenderer.SetPosition(1, attackPoint.position); //TODO move to hitPoint
             //isSniping = false;
-            TransitionToCooldown();
-        }
+            //TransitionToCooldown();
+            //return;
+        } else
+            lineRenderer.enabled = true;
 
         //Look at the target
         transform.LookAt(attackPoint.position);
 
-        lineRenderer.enabled = true;
+        
 
         //Place line renderer 
         lineRenderer.SetPosition(0, MouthPoint.position);

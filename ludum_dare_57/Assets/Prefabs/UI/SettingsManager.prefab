@@ -79,7 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultDifficulty: 0.3
   minDifficulty: 0.1
-  maxDifficulty: 2
+  maxDifficulty: 1.2
   difficultyValue: 0
 --- !u!114 &5941613590101277971
 MonoBehaviour:

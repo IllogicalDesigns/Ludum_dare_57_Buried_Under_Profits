@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public static event System.Action OnHitEvent;
-    public static event System.Action OnHealEvent;
+    public event System.Action OnHitEvent;
+    public event System.Action OnHealEvent;
     public event System.Action OnDeathEvent;
 
     public const string OnHitString = "OnHit";

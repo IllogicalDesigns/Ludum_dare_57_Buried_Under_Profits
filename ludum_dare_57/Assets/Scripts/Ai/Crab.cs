@@ -75,6 +75,10 @@ public class Crab : MonoBehaviour
     [Space]
     bool isPaused;
 
+    [Space]
+    public Health gunHealth;
+    bool hasGun = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -85,10 +89,18 @@ public class Crab : MonoBehaviour
         threat = GetComponent<Threat>();
 
         GameManager.OnPauseChanged += OnPausedEvent;
+        gunHealth.OnDeathEvent += handleGunDeath;
     }
 
     private void OnDestroy() {
         GameManager.OnPauseChanged -= OnPausedEvent;
+        gunHealth.OnDeathEvent -= handleGunDeath;
+    }
+
+    private void handleGunDeath() {
+        Debug.Log("Gun death");
+        hasGun = false;
+        gunHealth.OnDeathEvent -= handleGunDeath;
     }
 
     // Update is called once per frame
@@ -133,6 +145,11 @@ public class Crab : MonoBehaviour
     }
 
     private void TransitionToPreLasering() {
+        if (!hasGun) {
+            TransitionToCooldown();
+            return;
+        }
+
         state = CrabState.preLaser;
 
         if (laserWindup != null) laserWindup.Play();
@@ -147,13 +164,14 @@ public class Crab : MonoBehaviour
     }
 
     private void HandlePreLasering() {
-        laserWindup.pitch += Time.deltaTime * pitchUpSpeed;
-
-        lasering = laseringCube.DODynamicLookAt(attackPoint.position, preLaserLookSpeed).SetSpeedBased(true);
+        if (hasGun) {
+            laserWindup.pitch += Time.deltaTime * pitchUpSpeed;
+            lasering = laseringCube.DODynamicLookAt(attackPoint.position, preLaserLookSpeed).SetSpeedBased(true);
+        }
 
         MoveIntoActRange();
 
-        if (preLaserTimer <= 0) {
+        if (!hasGun || preLaserTimer <= 0) {
             if (laserWindup != null) laserWindup.Stop();
             if (windupParticles != null) windupParticles.Stop();
             lasering.Kill();
@@ -165,14 +183,21 @@ public class Crab : MonoBehaviour
     }
 
     private void TransitionToLasering() {
+        if (!hasGun) {
+            TransitionToCooldown();
+            return;
+        }
+
         state = CrabState.lasering;
 
         if (laserFiring != null) laserFiring.Play();
 
-        lineRenderer.enabled = true;
+        if (hasGun) {
+            lineRenderer.enabled = true;
 
-        laseringTime = laseringTimeAnimationCurve.Evaluate(GameManager.instance.difficulty);
-        laseringTimer = laseringTime;
+            laseringTime = laseringTimeAnimationCurve.Evaluate(GameManager.instance.difficulty);
+            laseringTimer = laseringTime;
+        }
 
         hitObjects.Clear();
 
@@ -180,6 +205,11 @@ public class Crab : MonoBehaviour
     }
 
     private void HandleLasering() {
+        if(!hasGun) {
+            TransitionToCooldown();
+            return;
+        }
+
         lineRenderer.SetPosition(0, laseringEnd.position);
 
         lasering = laseringCube.DODynamicLookAt(attackPoint.position, laserLookSpeed).SetSpeedBased(true);
@@ -231,7 +261,8 @@ public class Crab : MonoBehaviour
         Color emissionColor = heatGradient.Evaluate(invertedT) * boostAmount; // Boost intensity if needed
         hotBitMaterial.SetColor("_EmissionColor", emissionColor);
 
-        lasering = laseringCube.DODynamicLookAt(attackPoint.position, preLaserLookSpeed).SetSpeedBased(true);
+        if(hasGun)
+            lasering = laseringCube.DODynamicLookAt(attackPoint.position, preLaserLookSpeed).SetSpeedBased(true);
 
         if (coolDownTimer <= 0) {
             if (smokeParticles != null) smokeParticles.Stop();
@@ -247,7 +278,7 @@ public class Crab : MonoBehaviour
     private void TransitionToLaserOrMelee() {
         var distance = Vector3.Distance(transform.position, attackPoint.transform.position);
 
-        if (hasCannon || distance < meleeDistance)
+        if (hasGun && distance > meleeDistance)
             TransitionToPreLasering();
         else {
             Debug.Log("TODO add melee");
