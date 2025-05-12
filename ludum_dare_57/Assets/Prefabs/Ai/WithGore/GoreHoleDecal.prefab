@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 7154834870942594806}
   - component: {fileID: 3363369427384384363}
   - component: {fileID: 3472074227045525162}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Gib
   m_TagString: Untagged
   m_Icon: {fileID: 0}
