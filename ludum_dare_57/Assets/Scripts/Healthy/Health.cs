@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
         hp = Mathf.Clamp(hp, 0, maxHp);
 
         if(hp <= 0) {
-            gameObject.SendMessage(OnDeadString);
+            gameObject.SendMessage(OnDeadString, SendMessageOptions.DontRequireReceiver);  //TODO remove this
             OnDeathEvent?.Invoke();
         }
     }
@@ -39,11 +39,13 @@ public class DamageInstance {
     public int damage;
     public int airDamage;
     public DamageType damageType;
+    public RaycastHit hit;
 
     public DamageInstance(int damage, int airDamage, DamageType damageType = DamageType.normal, RaycastHit hit = default) {
         this.damage = damage;
         this.airDamage = airDamage;
         this.damageType = damageType;
+        this.hit = hit;
     }
 
     public enum DamageType {

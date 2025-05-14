@@ -18,6 +18,10 @@ public class EnemyHitEffect : MonoBehaviour
     }
 
     void Start() {
+        if(TryGetComponent<Health>(out Health health)) {
+            
+        }
+
         if(renderer) originalMat = renderer.material;
         flashMat = Resources.Load<Material>("FlashMaterial"); // Load your flash material
         rb = gameObject.GetComponent<Rigidbody>();

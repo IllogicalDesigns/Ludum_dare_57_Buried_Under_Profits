@@ -17,6 +17,18 @@ public class CameraShake : MonoBehaviour
     [SerializeField] Vector3 laserPositionPunch = Vector3.one * 0.1f;
     [SerializeField] Vector3 laserRotationPunch = Vector3.one * 0.1f;
 
+    private void Start() {
+        if(TryGetComponent<Test_gun>(out Test_gun gun)) {
+            gun.OnFireEvent += PunchScreen;
+        }
+    }
+
+    private void OnDestroy() {
+        if (TryGetComponent<Test_gun>(out Test_gun gun)) {
+            gun.OnFireEvent -= PunchScreen;
+        }
+    }
+
     public void PunchScreen() {
         PunchScreen(duration, positionPunch, rotationPunch);
     }
