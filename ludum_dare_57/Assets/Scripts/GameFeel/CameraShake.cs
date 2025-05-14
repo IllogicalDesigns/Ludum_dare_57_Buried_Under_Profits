@@ -16,9 +16,14 @@ public class CameraShake : MonoBehaviour
     [SerializeField] float laserDuration = 0.5f;
     [SerializeField] Vector3 laserPositionPunch = Vector3.one * 0.1f;
     [SerializeField] Vector3 laserRotationPunch = Vector3.one * 0.1f;
+    Vector3 startLocalPos;
+    Quaternion startLocalRot;
 
     private void Start() {
-        if(TryGetComponent<Test_gun>(out Test_gun gun)) {
+        startLocalPos = cameraTRans.localPosition;
+        startLocalRot = cameraTRans.localRotation;
+
+        if (TryGetComponent<Test_gun>(out Test_gun gun)) {
             gun.OnFireEvent += PunchScreen;
         }
     }
@@ -35,6 +40,9 @@ public class CameraShake : MonoBehaviour
 
     public void PunchScreen(float _duration, Vector3 _positionPunch, Vector3 _rotationPunch) {
         cameraTRans.DOKill(true);
+
+        cameraTRans.localPosition = startLocalPos;
+        cameraTRans.localRotation = startLocalRot;
 
         var x = Random.Range(-_positionPunch.x, _positionPunch.x);
         var y = Random.Range(-_positionPunch.y, _positionPunch.y);
