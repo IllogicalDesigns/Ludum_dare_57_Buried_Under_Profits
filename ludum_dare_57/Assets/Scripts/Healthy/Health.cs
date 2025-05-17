@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
         hp = Mathf.Clamp(hp, 0, maxHp);
 
         if(hp <= 0) {
-            gameObject.SendMessage(OnDeadString, SendMessageOptions.DontRequireReceiver);  //TODO remove this
+            gameObject.SendMessage(OnDeadString);  //TODO remove this
             OnDeathEvent?.Invoke();
         }
     }

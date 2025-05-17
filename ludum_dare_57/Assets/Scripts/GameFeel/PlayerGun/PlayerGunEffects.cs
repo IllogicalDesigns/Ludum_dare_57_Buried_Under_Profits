@@ -1,14 +1,14 @@
 using DG.Tweening;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerGunEffects : MonoBehaviour
 {
     [Header("Camera Shake")]
     [SerializeField] CameraShake cameraShake;
     [SerializeField] float duration = 0.1f;
-    [SerializeField] Vector3 positionPunch = Vector3.one;
-    [SerializeField] Vector3 rotationPunch = Vector3.one * 15f;
+    [SerializeField] Vector3 positionPunch = Vector3.one * 0.1f;
+    [SerializeField] Vector3 rotationPunch = Vector3.one * 0.1f;
 
     [Header("Sound effects")]
     [SerializeField] AudioSource gunSfx;
@@ -23,12 +23,19 @@ public class PlayerGunEffects : MonoBehaviour
 
     [Header("Gun Barrel")]
     [SerializeField] Transform gunBarrel;
-    [SerializeField] float localZBounce;
-    [SerializeField] float bounceDuration = 0.2f;
+    [SerializeField] float localZBounce = 0.5f;
+    [SerializeField] float bounceDuration = 0.3f;
     float originalGunZ;
 
     [Header("Hit effects")]
     [SerializeField] GameObject bloodDecal;
+
+    public event System.Action OnHitMarker;
+
+    private void Reset() {
+        ammoPickupSfx = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sounds/ammoPickup.mp3");
+        outOfAmmoSfx = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Sounds/ammoPickup.mp3");
+    }
 
     private void Awake() {
         PlayerGun.GunFiredEvent += PlayGunFireEffects;
@@ -93,6 +100,7 @@ public class PlayerGunEffects : MonoBehaviour
     private void PlayHitMarkerOnEnemy(RaycastHit hit) {
         if (hit.collider.CompareTag("Enemy")) {
             hitMarkerSfx.Play();
+            OnHitMarker?.Invoke();
         }
     }
 

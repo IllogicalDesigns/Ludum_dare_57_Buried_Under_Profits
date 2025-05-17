@@ -10006,8 +10006,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 164200940699124662}
-  - {fileID: 4514646178851325241}
   - {fileID: 6602802822549949862}
+  - {fileID: 4514646178851325241}
   m_Father: {fileID: 5159887836248354326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6675829579802714817
@@ -10353,58 +10353,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10450878a15db5c42ac20c281f24a0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1
   activationDistance: 45
+  dotRequirement: 0.9
   timeBeforeSnipeLands: 2.5
   timeDifficulty:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 1
-      outSlope: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.066142134
-      outSlope: 0.066142134
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.056468487
-    - serializedVersion: 3
-      time: 2
-      value: 1.5
-      inSlope: 0.5
-      outSlope: 0.5
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   cooldown: 5
-  maxPitch: 1.5
   damage: 5
   airDamage: 4
-  dotRequirement: 0.9
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  start: {fileID: 7045924404837742140}
-  gunshot: {fileID: 7973571746380795902}
-  windup: {fileID: 68903646476309278}
-  laser1: {fileID: 2100000, guid: 5278a1dd861dde84b88cd1b3892074dc, type: 2}
-  laser2: {fileID: 2100000, guid: 3afbd5f72b5424e489a08df22206bc23, type: 2}
-  laser3: {fileID: 2100000, guid: a07ac3ab79176934ca0ae16ec4923a93, type: 2}
   MouthPoint: {fileID: 4165904083438115530}
   gunSmoke: {fileID: 7883805416141601610}
   bubbleFire: {fileID: 396302148588529009}
+  startSFX: {fileID: 7045924404837742140}
+  gunshotSFX: {fileID: 7973571746380795902}
+  windupSFX: {fileID: 68903646476309278}
+  maxPitch: 1.5
+  preWhiteMaterial: {fileID: 2100000, guid: 72faa68305a372d4ca0cd5ce556deb22, type: 2}
+  whiteMaterial: {fileID: 2100000, guid: ec387962bddce0243b20abcfcc8830dd, type: 2}
+  whiteThreshold: 1.5
+  maxTime: 2
+  timerBeforeShot: 0
+  autoAdvance: 0
+  preWhiteGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.06392128, b: 0, a: 1}
+    key1: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 328
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  emissionIntensity: 1
   nonWhiteGradient:
     serializedVersion: 2
     key0: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
@@ -10436,6 +10461,9 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   boostAmount: 1
+  laser1: {fileID: 2100000, guid: 5278a1dd861dde84b88cd1b3892074dc, type: 2}
+  laser2: {fileID: 2100000, guid: 3afbd5f72b5424e489a08df22206bc23, type: 2}
+  laser3: {fileID: 2100000, guid: a07ac3ab79176934ca0ae16ec4923a93, type: 2}
   state: 0
   cdTime: 2
 --- !u!114 &6838394329312565467

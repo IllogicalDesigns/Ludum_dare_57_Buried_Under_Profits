@@ -19,18 +19,32 @@ public class CameraShake : MonoBehaviour
     Vector3 startLocalPos;
     Quaternion startLocalRot;
 
+    PlayerChain playerChain;
+
     private void Start() {
         startLocalPos = cameraTRans.localPosition;
         startLocalRot = cameraTRans.localRotation;
 
+        playerChain = FindAnyObjectByType<PlayerChain>();
+
         if (TryGetComponent<Test_gun>(out Test_gun gun)) {
             gun.OnFireEvent += PunchScreen;
+        }
+
+        if (playerChain) {
+            PlayerChain.impactEvent += PunchScreen;
+            PlayerChain.LaunchEvent += PunchScreen;
         }
     }
 
     private void OnDestroy() {
         if (TryGetComponent<Test_gun>(out Test_gun gun)) {
             gun.OnFireEvent -= PunchScreen;
+        }
+
+        if (playerChain) {
+            PlayerChain.impactEvent -= PunchScreen;
+            PlayerChain.LaunchEvent -= PunchScreen;
         }
     }
 

@@ -9968,9 +9968,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: {fileID: 9179194573923788371}
+  fillImage: {fileID: 0}
   slider: {fileID: 1593122017}
   underSlider: {fileID: 0}
   underSmoothingTime: 1
+  originalColor: {r: 1, g: 1, b: 1, a: 1}
+  flashGoodColor: {r: 0, g: 1, b: 0, a: 1}
+  flashBadColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.1
+  bounceStrength: 0.1
+  bounceDuration: 0.75
 --- !u!114 &1593122017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10752,6 +10759,10 @@ PrefabInstance:
     - target: {fileID: 7146716304948696726, guid: 1663f6d4fc069f94197bbee464eaf85d, type: 3}
       propertyPath: m_Name
       value: Gore_ArcherFish
+      objectReference: {fileID: 0}
+    - target: {fileID: 7785348169685201258, guid: 1663f6d4fc069f94197bbee464eaf85d, type: 3}
+      propertyPath: cooldown
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12521,6 +12532,9 @@ MonoBehaviour:
   bounceStrength: 0.1
   bounceDuration: 0.75
   outOfBullets: left shift?
+  originalColor: {r: 1, g: 1, b: 1, a: 1}
+  flashGoodColor: {r: 0, g: 1, b: 0, a: 1}
+  flashDuration: 0.4
 --- !u!1 &1824994394
 GameObject:
   m_ObjectHideFlags: 0

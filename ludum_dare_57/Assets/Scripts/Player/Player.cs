@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static event System.Action Rammed;
     public static event System.Action DodgeRefilled;
     bool hasRefilled;
     public static event System.Action DodgeStart;
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
 
     public AudioSource dodgeSound;
     public AudioSource dodgeRefilledSFX;
+    public AudioSource ramSound;
     [Space]
     public AudioClip metal;
     Health health;
@@ -59,6 +61,8 @@ public class Player : MonoBehaviour
 
     bool exitedDodgeEarly;
 
+    CameraShake cameraShake;
+
     private void Awake() {
         Instance = this;
     }
@@ -72,6 +76,8 @@ public class Player : MonoBehaviour
         cam = Camera.main;
         camTrans = cam.transform;
         health = GetComponent<Health>();
+
+        cameraShake = FindAnyObjectByType<CameraShake>();
 
         InvokeRepeating(nameof(clearCollided), clearColliderTimer, clearColliderTimer);
     }
@@ -95,6 +101,9 @@ public class Player : MonoBehaviour
             hp.gameObject.SendMessage(Health.OnHitString, new DamageInstance(dodgeDamage, 0));
             hp.gameObject.SendMessage(OnRamStr, (transform.position - hit.transform.position) * -ramForce, SendMessageOptions.DontRequireReceiver);
             //dgTimer = 0;
+            ramSound?.Play();
+            cameraShake.PunchScreen();
+            Rammed?.Invoke();
         } else {
             if (hit.gameObject.CompareTag(EnemyTagStr) || hit.gameObject.CompareTag(BubbleTagStr)) return;
             if (hit.gameObject.CompareTag(MineTagStr)) hit.gameObject.SendMessage(Health.OnHitString, new DamageInstance(100, 100), SendMessageOptions.DontRequireReceiver);

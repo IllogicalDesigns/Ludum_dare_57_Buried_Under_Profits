@@ -30,12 +30,13 @@ public class PlayerGun : MonoBehaviour
     public float sidewaysRecoil = 1f;
     public float recoilDuration = 0.1f;
     public float knockbackForce = 3f;
-    private CharacterController controller;
+    public CharacterController controller;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        controller = GetComponent<CharacterController>();
+        if(controller == null) 
+            controller = GetComponent<CharacterController>();
     }
 
     public void SetPaused(bool paused) {
@@ -60,7 +61,6 @@ public class PlayerGun : MonoBehaviour
         if(isPaused) { return; }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
 
         bool waitedForFireRate = Time.time > nextFireTime;
         if(Input.GetMouseButtonDown(0) && ammo > 0) {
@@ -118,6 +118,7 @@ public class PlayerGun : MonoBehaviour
 
     private void ApplyDamage(RaycastHit hit) {
         var damage = baseDamage + Random.Range(minExtra, maxExtra);
-        hit.collider.SendMessage(Health.OnHitString, new DamageInstance(damage, 0), SendMessageOptions.DontRequireReceiver);
+        if(hit.collider.CompareTag("Enemy"))
+            hit.collider.SendMessage("OnHit", new DamageInstance(damage, 0));
     }
 }

@@ -8,8 +8,8 @@ public class DropOnDeath : MonoBehaviour
     public TriggerBubbleAdd airBubble;
 
     public void OnDead() {
-        // Drop selectedDrop = drops[UnityEngine.Random.Range(0, drops.Count)];
         var playerGun = FindAnyObjectByType<PlayerGun>();
+        var player = FindAnyObjectByType<Player>();
 
         // Define the maximum values
         const int maxAmmo = 10;
@@ -17,27 +17,12 @@ public class DropOnDeath : MonoBehaviour
         const int maxAir = 45;
 
         var ammo = playerGun.ammo;
-        var hull = playerGun.GetComponent<Health>().hp;
+        var hull = player.GetComponent<Health>().hp;
         var air = GameManager.instance.air;
 
         var ammoProportion = (float)ammo / maxAmmo;
         var hullProportion = (float)hull / maxHp;
         var airProportion = (float)air / maxAir;
-
-        //GameObject selectedDrop = airBubble.gameObject;
-        //// Determine the lowest proportion and spawn the corresponding bubble
-        //if (ammoProportion <= hullProportion && ammoProportion <= airProportion)
-        //{
-        //    selectedDrop = ammoBubble.gameObject;
-        //}
-        //else if (hullProportion <= ammoProportion && hullProportion <= airProportion)
-        //{
-        //    selectedDrop = hullBubble.gameObject;
-        //}
-        //else
-        //{
-        //    selectedDrop = airBubble.gameObject;
-        //}
 
         Instantiate(ammoBubble, transform.position, Quaternion.identity); 
         Instantiate(hullBubble, transform.position, Quaternion.identity); 
